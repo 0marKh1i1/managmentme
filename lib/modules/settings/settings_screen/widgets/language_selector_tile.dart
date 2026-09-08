@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:managementme/core/constants/app_colors.dart';
-import 'package:managementme/modules/profile/profile_screen/controllers/profile_controller.dart';
+import 'package:managementme/modules/settings/settings_screen/controllers/settings_controller.dart';
 
-class LanguageSelectorTile extends GetView<ProfileController> {
+class LanguageSelectorTile extends GetView<SettingsController> {
   const LanguageSelectorTile({super.key});
 
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
-    final customColors = Theme.of(context).extension<AppColors>()!;
 
     return Container(
       decoration: BoxDecoration(
@@ -27,17 +25,17 @@ class LanguageSelectorTile extends GetView<ProfileController> {
               Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: customColors.statTotalColor?.withValues(alpha: 0.1),
+                  color: cs.primary.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Icon(
                   Icons.language_rounded,
-                  color: customColors.statTotalColor,
+                  color: cs.primary,
                   size: 24,
                 ),
               ),
               const SizedBox(width: 16),
-               Expanded(
+              Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -52,16 +50,16 @@ class LanguageSelectorTile extends GetView<ProfileController> {
                     const SizedBox(height: 2),
                     Text(
                       'select_language'.tr,
-                     style: GoogleFonts.beVietnamPro(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w400,
-                      color: cs.onSurface.withValues(alpha: 0.45),
-                    ),
+                      style: GoogleFonts.beVietnamPro(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400,
+                        color: cs.onSurface.withValues(alpha: 0.45),
+                      ),
                     ),
                   ],
                 ),
               ),
-              GetBuilder<ProfileController>(
+              GetBuilder<SettingsController>(
                 builder: (controller) {
                   final isAr = Get.locale?.languageCode == 'ar';
                   return Container(

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:managementme/modules/auth/signup_screen/controllers/signup_controller.dart';
 import 'package:managementme/core/widgets/custom_text_field.dart';
+import 'package:managementme/modules/auth/signup_screen/views/widgets/role_toggle_switch.dart';
 
 class SignUp extends GetView<SignupController> {
   const SignUp({super.key});
@@ -32,7 +33,11 @@ class SignUp extends GetView<SignupController> {
                                 onTap: () {
                                   Get.offAllNamed("/onBoarding");
                                 },
-                                child: Icon(Icons.arrow_back, color: Theme.of(context).colorScheme.primary, size: 24),
+                                child: Icon(
+                                  Icons.arrow_back,
+                                  color: Theme.of(context).colorScheme.primary,
+                                  size: 24,
+                                ),
                               ),
                               const SizedBox(width: 24),
                               Text(
@@ -40,7 +45,9 @@ class SignUp extends GetView<SignupController> {
                                 style: GoogleFonts.inter(
                                   fontSize: 18,
                                   fontWeight: FontWeight.normal,
-                                  color: Theme.of(context).colorScheme.onSurface,
+                                  color: Theme.of(
+                                    context,
+                                  ).colorScheme.onSurface,
                                 ),
                                 textAlign: TextAlign.center,
                               ),
@@ -50,13 +57,15 @@ class SignUp extends GetView<SignupController> {
                           SizedBox(
                             width: double.infinity,
                             child: Text.rich(
-                              textAlign: TextAlign.center, 
+                              textAlign: TextAlign.center,
                               TextSpan(
                                 text: 'signup_welcome_title'.tr,
                                 style: GoogleFonts.inter(
                                   fontSize: 24,
                                   fontWeight: FontWeight.bold,
-                                  color: Theme.of(context).colorScheme.onSurface,
+                                  color: Theme.of(
+                                    context,
+                                  ).colorScheme.onSurface,
                                 ),
                                 children: <InlineSpan>[
                                   TextSpan(
@@ -64,9 +73,10 @@ class SignUp extends GetView<SignupController> {
                                     style: GoogleFonts.inter(
                                       fontSize: 18,
                                       fontWeight: FontWeight.w400,
-                                      color: Theme.of(
-                                        context,
-                                      ).colorScheme.onSurface.withValues(alpha: 0.8),
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSurface
+                                          .withValues(alpha: 0.8),
                                     ),
                                   ),
                                 ],
@@ -74,6 +84,7 @@ class SignUp extends GetView<SignupController> {
                             ),
                           ),
                           const SizedBox(height: 30),
+
                           CustomTextField(
                             controller: controller.username,
                             hintText: 'display_name'.tr,
@@ -98,47 +109,69 @@ class SignUp extends GetView<SignupController> {
                             },
                           ),
                           const SizedBox(height: 20),
-                          Obx(() => CustomTextField(
-                            controller: controller.pass,
-                            hintText: 'password'.tr,
-                            prefixIcon: Icons.lock_outline,
-                            obscureText: controller.hidePass.value,
-                            onChanged: controller.updatePasswordStr,
-                            suffixIcon: IconButton(
-                              icon: Icon(
-                                controller.hidePass.value ? Icons.visibility_off : Icons.visibility,
-                                color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
-                              ),
-                              onPressed: controller.togglePass,
-                            ),
+                          CustomTextField(
+                            controller: controller.phone,
+                            hintText: 'phone_number'.tr,
+                            prefixIcon: Icons.phone_outlined,
                             validator: (value) {
                               if (value == null || value.trim().isEmpty) {
-                                return 'password_empty_error'.tr;
-                              }
-                              if (value.length < 6) {
-                                return 'password_length_error'.tr;
+                                return 'phone_empty_error'.tr;
                               }
                               return null;
                             },
-                          )),
+                          ),
                           const SizedBox(height: 20),
-                          Obx(() => CustomTextField(
-                            controller: controller.confirmPass,
-                            hintText: 'confirm_password'.tr,
-                            prefixIcon: Icons.lock_outline,
-                            obscureText: controller.hideConfirmPass.value,
-                            validator: (value) {
-                              if (value == null || value.trim().isEmpty) {
-                                return 'confirm_password_empty_error'.tr;
-                              }
-                              if (value != controller.passwordstr) {
-                                return 'passwords_do_not_match_error'.tr;
-                              }
-                              return null;
-                            },
-                          )),
-                          
-                          const SizedBox(height: 50),
+                          Obx(
+                            () => CustomTextField(
+                              controller: controller.pass,
+                              hintText: 'password'.tr,
+                              prefixIcon: Icons.lock_outline,
+                              obscureText: controller.hidePass.value,
+                              onChanged: controller.updatePasswordStr,
+                              suffixIcon: IconButton(
+                                icon: Icon(
+                                  controller.hidePass.value
+                                      ? Icons.visibility_off
+                                      : Icons.visibility,
+                                  color: Theme.of(context).colorScheme.onSurface
+                                      .withValues(alpha: 0.7),
+                                ),
+                                onPressed: controller.togglePass,
+                              ),
+                              validator: (value) {
+                                if (value == null || value.trim().isEmpty) {
+                                  return 'password_empty_error'.tr;
+                                }
+                                if (value.length < 6) {
+                                  return 'password_length_error'.tr;
+                                }
+                                return null;
+                              },
+                            ),
+                          ),
+                          const SizedBox(height: 20),
+                          Obx(
+                            () => CustomTextField(
+                              controller: controller.confirmPass,
+                              hintText: 'confirm_password'.tr,
+                              prefixIcon: Icons.lock_outline,
+                              obscureText: controller.hideConfirmPass.value,
+                              validator: (value) {
+                                if (value == null || value.trim().isEmpty) {
+                                  return 'confirm_password_empty_error'.tr;
+                                }
+                                if (value != controller.passwordstr) {
+                                  return 'passwords_do_not_match_error'.tr;
+                                }
+                                return null;
+                              },
+                            ),
+                          ),
+                          const SizedBox(height: 24),
+
+                          RoleToggleSwitch(controller: controller),
+
+                          const SizedBox(height: 40),
                           Text.rich(
                             textAlign: TextAlign.center,
                             TextSpan(
@@ -146,7 +179,9 @@ class SignUp extends GetView<SignupController> {
                               style: GoogleFonts.inter(
                                 fontWeight: FontWeight.w400,
                                 fontSize: 14,
-                                color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.8),
+                                color: Theme.of(
+                                  context,
+                                ).colorScheme.onSurface.withValues(alpha: 0.8),
                                 height: 1.4,
                               ),
                               children: [
@@ -154,7 +189,9 @@ class SignUp extends GetView<SignupController> {
                                   text: 'terms_of_use'.tr,
                                   style: GoogleFonts.inter(
                                     fontWeight: FontWeight.bold,
-                                    color: Theme.of(context).colorScheme.onSurface,
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.onSurface,
                                   ),
                                 ),
                                 const TextSpan(text: ' '),
@@ -164,7 +201,9 @@ class SignUp extends GetView<SignupController> {
                                   text: 'privacy_policy'.tr,
                                   style: GoogleFonts.inter(
                                     fontWeight: FontWeight.bold,
-                                    color: Theme.of(context).colorScheme.onSurface,
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.onSurface,
                                   ),
                                 ),
                               ],
@@ -176,35 +215,52 @@ class SignUp extends GetView<SignupController> {
                               borderRadius: BorderRadius.circular(16),
                               boxShadow: [
                                 BoxShadow(
-                                  color: Theme.of(context).shadowColor.withValues(alpha: 0.08),
+                                  color: Theme.of(
+                                    context,
+                                  ).shadowColor.withValues(alpha: 0.08),
                                   offset: const Offset(0, 4),
                                   blurRadius: 10,
                                 ),
                               ],
                             ),
-                            child: Obx(() => MaterialButton(
-                              onPressed: controller.isLoading.value ? null : (() async => (await controller.onSignupButton())),
-                              height: 52,
-                              minWidth: double.infinity,
-                              color: Theme.of(context).colorScheme.primary,
-                              disabledColor: Colors.grey,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16),
+                            child: Obx(
+                              () => MaterialButton(
+                                onPressed: controller.isLoading.value
+                                    ? null
+                                    : (() async =>
+                                          (await controller.onSignupButton())),
+                                height: 52,
+                                minWidth: double.infinity,
+                                color: Theme.of(context).colorScheme.primary,
+                                disabledColor: Colors.grey,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(16),
+                                ),
+                                elevation: 0,
+                                child: controller.isLoading.value
+                                    ? SizedBox(
+                                        height: 24,
+                                        width: 24,
+                                        child: CircularProgressIndicator(
+                                          color: Theme.of(
+                                            context,
+                                          ).colorScheme.onPrimary,
+                                        ),
+                                      )
+                                    : Text(
+                                        "create_account_button".tr,
+                                        style: GoogleFonts.inter(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w400,
+                                          color: Theme.of(
+                                            context,
+                                          ).colorScheme.onPrimary,
+                                        ),
+                                      ),
                               ),
-                              elevation: 0,
-                              child: controller.isLoading.value 
-                                ? SizedBox(height: 24, width: 24, child: CircularProgressIndicator(color: Theme.of(context).colorScheme.onPrimary))
-                                : Text(
-                                    "create_account_button".tr,
-                                    style: GoogleFonts.inter(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w400,
-                                      color: Theme.of(context).colorScheme.onPrimary,
-                                    ),
-                                  ),
-                            )),
+                            ),
                           ),
-                          const SizedBox(height: 50),
+                          const SizedBox(height: 40),
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -216,7 +272,10 @@ class SignUp extends GetView<SignupController> {
                                     style: GoogleFonts.inter(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w400,
-                                      color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.8),
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSurface
+                                          .withValues(alpha: 0.8),
                                     ),
                                   ),
                                   const SizedBox(height: 2),
@@ -229,12 +288,17 @@ class SignUp extends GetView<SignupController> {
                                       style: GoogleFonts.inter(
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold,
-                                        color: Theme.of(context).colorScheme.primary,
+                                        color: Theme.of(
+                                          context,
+                                        ).colorScheme.outlineVariant,
                                         decoration: TextDecoration.underline,
-                                        decorationColor: Theme.of(context).colorScheme.primary,
+                                        decorationColor: Theme.of(
+                                          context,
+                                        ).colorScheme.outlineVariant,
                                       ),
                                     ),
                                   ),
+                                  SizedBox(height: 80),
                                 ],
                               ),
                             ],

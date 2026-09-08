@@ -1,12 +1,12 @@
 import 'dart:io';
 
-import 'package:managementme/modules/profile/profile_screen/models/user_model.dart';
+import 'package:managementme/core/models/user_model.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:image_picker/image_picker.dart';
 
-class ProfileRepo {
+class SettingsRepo {
   static final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   static final FirebaseAuth _auth = FirebaseAuth.instance;
   static final FirebaseStorage _storage = FirebaseStorage.instance;
@@ -14,15 +14,9 @@ class ProfileRepo {
   static DocumentReference<Map<String, dynamic>>? get _userInfoDoc {
     final user = _auth.currentUser;
     if (user == null) return null;
-    return _firestore
-        .collection('users')
-        .doc(user.uid)
-        .collection('info')
-        .doc(user.uid);
+    return _firestore.collection('users').doc(user.uid);
   }
 
-  /// Get real time stream of user profile from Firestore
-  /// Falls back to Firebase Auth data if Firestore doc doesnt exist yet
   static Stream<UserModel?> getUserStream() {
     final user = _auth.currentUser;
     if (user == null) return Stream.value(null);
@@ -32,16 +26,17 @@ class ProfileRepo {
 
     return docRef.snapshots().map((snapshot) {
       if (!snapshot.exists || snapshot.data() == null) {
-        // Auto seed from Firebase Auth profile if Firestore doc is missing
         _seedUserDoc(user);
         return UserModel(
-          uid: user.uid,
+          id: user.uid,
           name: user.displayName ?? '',
           email: user.email ?? '',
-          photoUrl: user.photoURL ?? '',
+          photoUrl: user.photoURL,
+          phone: user.phoneNumber ?? '',
+          role: UserType.customer,
         );
       }
-      return UserModel.fromJson(snapshot.data()!);
+      return UserModel.fromFirestore(snapshot);
     });
   }
 
@@ -56,7 +51,6 @@ class ProfileRepo {
     }, SetOptions(merge: true));
   }
 
-  /// Updates the user's display name in Firestore and Firebase Auth.
   static Future<void> updateName(String newName) async {
     final user = _auth.currentUser;
     if (user == null) throw Exception('User not logged in');
@@ -69,7 +63,6 @@ class ProfileRepo {
     ]);
   }
 
-  /// Uploads a profile image to Firebase Storage and updates photoUrl in Firestore
   static Future<void> updateProfileImage(XFile imageFile) async {
     final user = _auth.currentUser;
     if (user == null) throw Exception('User not logged in');
@@ -91,7 +84,6 @@ class ProfileRepo {
     ]);
   }
 
-  /// Removes the profile photo 
   static Future<void> removeProfileImage() async {
     final user = _auth.currentUser;
     if (user == null) throw Exception('User not logged in');
@@ -104,7 +96,6 @@ class ProfileRepo {
     ]);
   }
 
-  /// Signs the user out 
   static Future<void> logout() async {
     await _auth.signOut();
   }

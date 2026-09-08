@@ -1,31 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:managementme/core/constants/app_colors.dart';
-
 
 class AppThemes {
-  static const Color primaryColor = Color(0xFF3E4ADE);
-  static const Color darkPrimaryColor = Color(0xFF6B75FF);
+  static const Color primaryColor = Color(0xFF071333);
+  static const Color darkPrimaryColor = Color.fromARGB(255, 24, 66, 179);
+
+  static const Color secondaryColor = Color(0xFF0721A9);
+  static const Color darkSecondaryColor = Color.fromARGB(255, 9, 43, 212);
 
   static const Color lightScaffoldBg = Color(0xFFFAFAFA);
-  static const Color darkScaffoldBg = Color(0xFF181818);
+  static const Color darkScaffoldBg = Color.fromARGB(255, 20, 20, 20);
 
-  static const Color profileCardBg = Color(0xFFF8E9C8);
-  static const Color profileTextDark = Color(0xFF181818);
+  static const Color glassColor = Color(0xFF90A4AE);
+  static const Color glassBorderColor = Colors.white;
 
-  static const Color statTotalBg = Color(0xFFFFFFFF);
-  static const Color statHighPriorityBg = Color(0xFFFAADAD);
-  static const Color statCompletedBg = Color(0xFF8CD9FF);
-  static const Color statPendingBg = Color(0xFFFFCA8E);
-  static const Color statTextDark = Color(0xFF000000);
-
-  static const Color modalDivider = Color(0xFFEEEEEE);
-  static const Color modalDividerDark = Color(0xFF3A3A3A);
-
-  static const Color fieldLabel = Color(0xFF3A3A3A);
-  static const Color fieldLabelDark = Color(0xFFCCCCCC);
+  static const Color trackerActiveColor = Color(0xFF1976D2);
+  static const Color trackerInactiveColor = Color(0xFF64B5F6);
+  static const Color trackerLineInactiveColor = Color(0xFF90CAF9);
+  static const Color fromToTextColor = Color(0xFF64B5F6);
+  static const Color cardShadowColor = Color(0x0D000000);
 
   static final ThemeData lightTheme = ThemeData.light().copyWith(
-     floatingActionButtonTheme: const FloatingActionButtonThemeData(
+    floatingActionButtonTheme: const FloatingActionButtonThemeData(
       sizeConstraints: BoxConstraints.tightFor(width: 70.0, height: 70.0),
     ),
     brightness: Brightness.light,
@@ -36,25 +31,14 @@ class AppThemes {
       surfaceDim: const Color(0xFF9E9E9E),
       primary: primaryColor,
       onPrimary: Colors.white,
-      secondary: const Color(0xFF03DAC6),
-      onSecondary: Colors.black,
+      secondary: secondaryColor,
+      onSecondary: Colors.white,
       error: const Color(0xFFB00020),
       onError: Colors.white,
       outline: const Color(0xFFBDBDBD),
+      outlineVariant: const Color(0xFF1E88E5),
+      surfaceContainerHighest: lightScaffoldBg,
     ),
-    extensions: const <ThemeExtension<dynamic>>[
-      AppColors(
-        profileCardColor: profileCardBg,
-        profileTextColor: profileTextDark,
-        statTotalColor: statTotalBg,
-        statHighPriorityColor: statHighPriorityBg,
-        statCompletedColor: statCompletedBg,
-        statPendingColor: statPendingBg,
-        statTextColor: statTextDark,
-        modalDividerColor: modalDivider,
-        fieldLabelColor: fieldLabel,
-      ),
-    ],
   );
 
   static final ThemeData darkTheme = ThemeData.dark().copyWith(
@@ -63,30 +47,19 @@ class AppThemes {
     ),
     brightness: Brightness.dark,
     scaffoldBackgroundColor: darkScaffoldBg,
-    colorScheme: const ColorScheme.dark(
+    colorScheme: ColorScheme.dark(
       surface: Color(0xFF1E1E1E),
       onSurface: Color(0xFFEEEEEE),
       surfaceDim: Color(0xFF2C2C2C),
       primary: darkPrimaryColor,
       onPrimary: Colors.white,
-      secondary: Color(0xFF03DAC6),
-      onSecondary: Colors.black,
+      secondary: darkSecondaryColor,
+      onSecondary: Colors.white,
       error: Color(0xFFCF6679),
       onError: Colors.black,
       outline: Color(0xFF5A5A5A),
+      outlineVariant: Color(0xFF1E88E5),
+      surfaceContainerHighest: Colors.black87,
     ),
-    extensions: const <ThemeExtension<dynamic>>[
-      AppColors(
-        profileCardColor: profileCardBg,
-        profileTextColor: profileTextDark,
-        statTotalColor: statTotalBg,
-        statHighPriorityColor: statHighPriorityBg,
-        statCompletedColor: statCompletedBg,
-        statPendingColor: statPendingBg,
-        statTextColor: statTextDark,
-        modalDividerColor: modalDividerDark,
-        fieldLabelColor: fieldLabelDark,
-      ),
-    ],
   );
 }

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:managementme/core/constants/globals.dart';
+import 'package:get/get.dart';
 
-void toast(String msg) {
-  scaffoldMessengerKey.currentState?.showSnackBar(
-    SnackBar(content: Text(msg)),
+void toast(String title, String msg) {
+  Get.snackbar(
+    title,
+    msg,
+    snackPosition: SnackPosition.BOTTOM,
+    margin: const EdgeInsets.all(16),
   );
 }

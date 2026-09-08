@@ -5,8 +5,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:managementme/modules/home/home_screen/views/home_view.dart';
-import 'package:managementme/modules/profile/profile_screen/views/profile_view.dart';
 import 'package:managementme/modules/home/root/controllers/root_controller.dart';
+import 'package:managementme/modules/settings/settings_screen/views/settings_view.dart';
 
 class RootView extends GetView<RootController> {
   const RootView({super.key});
@@ -15,7 +15,7 @@ class RootView extends GetView<RootController> {
   Widget build(BuildContext context) {
     final List<Widget> pages = [
       const Home(),
-      const ProfileView(),
+      const SettingsView(),
     ];
 
     return Scaffold(

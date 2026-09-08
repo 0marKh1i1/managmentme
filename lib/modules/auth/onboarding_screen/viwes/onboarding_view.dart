@@ -7,82 +7,118 @@ class OnBoarding extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ColorScheme cs = Theme.of(context).colorScheme;
+    final heroImage = 'assets/images/hero.png';
+
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const Spacer(flex: 2),
-             
-              const SizedBox(height: 48),
-              Text(
-                'welcome_to_managementme'.tr,
-                textAlign: TextAlign.center,
-                style: GoogleFonts.beVietnamPro(
-                  fontSize: 32,
-                  fontWeight: FontWeight.bold,
-                  color: Theme.of(context).colorScheme.onSurface,
-                ),
-              ),
-              const SizedBox(height: 16),
-              Text(
-                'onboarding_subtitle'.tr,
-                textAlign: TextAlign.center,
-                style: GoogleFonts.beVietnamPro(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                  height: 1.5,
-                  color: Theme.of(context).colorScheme.onSurfaceVariant,
-                ),
-              ),
-              const Spacer(flex: 2),
-              MaterialButton(
-                onPressed: () {
-                  Get.toNamed("/signup");
-                },
-                height: 56,
-                elevation: 0,
-                color: Theme.of(context).colorScheme.primary,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                child: Text(
-                  "create_account_button".tr,
-                  style: GoogleFonts.beVietnamPro(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).colorScheme.onPrimary,
+      body: Column(
+        children: [
+          Expanded(
+            flex: 60,
+            child: Container(
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: Colors.grey.withValues(alpha: 0.15),
+                border: Border(
+                  bottom: BorderSide(
+                    color: cs.onSurface.withValues(alpha: 0.2),
+                    width: 2,
                   ),
                 ),
               ),
-              const SizedBox(height: 8),
-              MaterialButton(
-                onPressed: () {
-                  Get.toNamed("/login");
-                },
-                height: 56,
-                elevation: 0,
-                color: Theme.of(context).colorScheme.onSurface,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                child: Text(
-                  "log_in_button".tr,
-                  style: GoogleFonts.beVietnamPro(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).colorScheme.surface,
+              child: SafeArea(
+                bottom: false,
+                child: Center(
+                  child: Image.asset(
+                    heroImage,
+                    semanticLabel: 'onBoarding Image',
+                    width: 351,
+                    height: 297,
                   ),
                 ),
               ),
-              const SizedBox(height: 32),
-            ],
+            ),
           ),
-        ),
+          Expanded(
+            flex: 40,
+            child: SafeArea(
+              top: false,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    const Spacer(),
+                    Text(
+                      'onboarding_title'.tr,
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.inter(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                        height: 1.2,
+                        color: cs.onSurface,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      'onboarding_subtitle'.tr,
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.inter(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        height: 1.2,
+                        color: cs.onSurface.withValues(alpha: 0.6),
+                      ),
+                    ),
+                    const Spacer(flex: 2),
+                    MaterialButton(
+                      onPressed: () {
+                        Get.toNamed("/signup");
+                      },
+                      height: 56,
+                      elevation: 0,
+                      color: cs.primary,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      child: Text(
+                        "create_account_button".tr,
+                        style: GoogleFonts.beVietnamPro(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: cs.onSecondary,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    MaterialButton(
+                      onPressed: () {
+                        Get.toNamed("/login");
+                      },
+                      height: 56,
+                      elevation: 0,
+                      color: cs.onSurface,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      child: Text(
+                        "log_in_button".tr,
+                        style: GoogleFonts.beVietnamPro(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: cs.surface,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 32),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

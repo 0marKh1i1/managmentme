@@ -4,6 +4,6 @@ import 'package:managementme/modules/auth/signup_screen/controllers/signup_contr
 class SignupBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<SignupController>(() => SignupController() , fenix: true);
+    Get.lazyPut<SignupController>(() => SignupController(), fenix: true);
   }
 }

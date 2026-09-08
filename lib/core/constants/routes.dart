@@ -6,11 +6,11 @@ import 'package:managementme/modules/auth/signup_screen/bindings/signup_binding.
 import 'package:managementme/modules/auth/signup_screen/views/signup_view.dart';
 import 'package:managementme/modules/home/home_screen/bindings/home_binding.dart';
 import 'package:managementme/modules/home/home_screen/views/home_view.dart';
-import 'package:managementme/modules/profile/profile_screen/bindings/profile_binding.dart';
-import 'package:managementme/modules/profile/profile_screen/views/profile_view.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:managementme/modules/home/root/bindings/root_binding.dart';
 import 'package:managementme/modules/home/root/views/root_view.dart';
+import 'package:managementme/modules/settings/settings_screen/bindings/settings_binding.dart';
+import 'package:managementme/modules/settings/settings_screen/views/settings_view.dart';
 
 final List<GetPage> appRoutes = [
   GetPage(name: "/", page: () => const OnBoarding()),
@@ -18,6 +18,6 @@ final List<GetPage> appRoutes = [
   GetPage(name: "/login", page: () => const Login(), binding: LoginBinding()),
   GetPage(name: "/signup", page: () => const SignUp(), binding: SignupBinding()),
   GetPage(name: "/forgotPassword", page: () => const ForgotPassword()),
-  GetPage(name: "/profile", page: () => const ProfileView(), binding: ProfileBinding()),
+  GetPage(name: "/profile", page: () => const SettingsView(), binding: SettingsBinding()),
   GetPage(name: "/root", page: () => const RootView(), binding: RootBinding()),
 ];

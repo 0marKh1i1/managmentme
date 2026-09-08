@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:managementme/core/utils/contrast_color.dart';
 
-class ProfileTile extends StatelessWidget {
+class SettingsTile extends StatelessWidget {
   final IconData icon;
   final String label;
   final String subtitle;
@@ -10,7 +10,7 @@ class ProfileTile extends StatelessWidget {
   final bool isDestructive;
   final Color? accentColor;
 
-  const ProfileTile({
+  const SettingsTile({
     super.key,
     required this.icon,
     required this.label,
@@ -23,7 +23,9 @@ class ProfileTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final accent = isDestructive ? Colors.red : (accentColor ?? colorScheme.primary);
+    final accent = isDestructive
+        ? Colors.red
+        : (accentColor ?? colorScheme.primary);
     final contrastIconColor = ContrastColor.getContrastBlackWhite(accent);
 
     return Material(
@@ -65,7 +67,9 @@ class ProfileTile extends StatelessWidget {
                       style: GoogleFonts.beVietnamPro(
                         fontSize: 15,
                         fontWeight: FontWeight.w600,
-                        color: isDestructive ? Colors.red : colorScheme.onSurface,
+                        color: isDestructive
+                            ? Colors.red
+                            : colorScheme.onSurface,
                       ),
                     ),
                     Text(

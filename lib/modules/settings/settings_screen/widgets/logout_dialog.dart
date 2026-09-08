@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:managementme/modules/profile/profile_screen/controllers/profile_controller.dart';
+import 'package:managementme/modules/settings/settings_screen/controllers/settings_controller.dart';
 
-class LogoutDialog extends GetView<ProfileController> {
+class LogoutDialog extends GetView<SettingsController> {
   const LogoutDialog({super.key});
 
   @override
@@ -12,10 +12,7 @@ class LogoutDialog extends GetView<ProfileController> {
       title: Text('logout'.tr),
       content: Text('logout_confirmation'.tr),
       actions: [
-        TextButton(
-          onPressed: () => Get.back(),
-          child: Text('cancel'.tr),
-        ),
+        TextButton(onPressed: () => Get.back(), child: Text('cancel'.tr)),
         ElevatedButton(
           style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
           onPressed: controller.logout,

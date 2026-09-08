@@ -1,3 +1,4 @@
+import 'package:managementme/core/models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:managementme/modules/auth/signup_screen/repo/signup_repo.dart';
@@ -9,10 +10,12 @@ class SignupController extends GetxController {
   var hidePass = true.obs;
   var hideConfirmPass = true.obs;
   var isLoading = false.obs;
+  var selectedRole = UserType.customer.obs;
   String? passwordstr;
 
   final TextEditingController username = TextEditingController();
   final TextEditingController email = TextEditingController();
+  final TextEditingController phone = TextEditingController();
   final TextEditingController pass = TextEditingController();
   final TextEditingController confirmPass = TextEditingController();
 
@@ -20,6 +23,7 @@ class SignupController extends GetxController {
   void onClose() {
     username.dispose();
     email.dispose();
+    phone.dispose();
     pass.dispose();
     confirmPass.dispose();
     super.onClose();
@@ -32,10 +36,16 @@ class SignupController extends GetxController {
       if (formKey.currentState!.validate()) {
         isLoading.value = true;
         try {
-          await SignupRepo.createUser(email: email.text, pass: pass.text, username: username.text);
+          await SignupRepo.createUser(
+            email: email.text,
+            phone: phone.text,
+            pass: pass.text,
+            username: username.text,
+            role: selectedRole.value,
+          );
           Get.offAllNamed("/root");
         } on Exception catch (e) {
-          toast(e.toString().replaceAll("Exception: ", ""));
+          toast('Error', e.toString().replaceAll("Exception: ", ""));
         } finally {
           isLoading.value = false;
         }
@@ -46,6 +56,10 @@ class SignupController extends GetxController {
   void togglePass() {
     hidePass.value = !hidePass.value;
     hideConfirmPass.value = hidePass.value;
+  }
+
+  void setRole(UserType role) {
+    selectedRole.value = role;
   }
 
   void updatePasswordStr(String value) {

@@ -38,19 +38,33 @@ class Login extends GetView<LoginController> {
                                   size: 24,
                                 ),
                               ),
+                              const SizedBox(width: 24),
+                              Text(
+                                "log_in".tr,
+                                style: GoogleFonts.inter(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.normal,
+                                  color: Theme.of(
+                                    context,
+                                  ).colorScheme.onSurface,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
                             ],
                           ),
                           const SizedBox(height: 50),
                           SizedBox(
                             width: double.infinity,
                             child: Text.rich(
-                              textAlign: TextAlign.center, 
+                              textAlign: TextAlign.center,
                               TextSpan(
-                                text: 'login'.tr,
+                                text: 'login_head'.tr,
                                 style: GoogleFonts.inter(
                                   fontSize: 24,
                                   fontWeight: FontWeight.bold,
-                                  color: Theme.of(context).colorScheme.onSurface,
+                                  color: Theme.of(
+                                    context,
+                                  ).colorScheme.onSurface,
                                 ),
                                 children: <InlineSpan>[
                                   TextSpan(
@@ -58,9 +72,10 @@ class Login extends GetView<LoginController> {
                                     style: GoogleFonts.inter(
                                       fontSize: 18,
                                       fontWeight: FontWeight.w400,
-                                      color: Theme.of(
-                                        context,
-                                      ).colorScheme.onSurface.withValues(alpha: 0.8),
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSurface
+                                          .withValues(alpha: 0.8),
                                     ),
                                   ),
                                 ],
@@ -80,30 +95,33 @@ class Login extends GetView<LoginController> {
                             },
                           ),
                           const SizedBox(height: 20),
-                          Obx(() => CustomTextField(
-                            controller: controller.pass,
-                            hintText: 'password'.tr,
-                            prefixIcon: Icons.lock_outline,
-                            obscureText: controller.hidePass.value,
-                            suffixIcon: IconButton(
-                              icon: Icon(
-                                controller.hidePass.value
-                                    ? Icons.visibility_off
-                                    : Icons.visibility,
-                                color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
+                          Obx(
+                            () => CustomTextField(
+                              controller: controller.pass,
+                              hintText: 'password'.tr,
+                              prefixIcon: Icons.lock_outline,
+                              obscureText: controller.hidePass.value,
+                              suffixIcon: IconButton(
+                                icon: Icon(
+                                  controller.hidePass.value
+                                      ? Icons.visibility_off
+                                      : Icons.visibility,
+                                  color: Theme.of(context).colorScheme.onSurface
+                                      .withValues(alpha: 0.7),
+                                ),
+                                onPressed: controller.togglepass,
                               ),
-                              onPressed: controller.togglepass,
+                              validator: (value) {
+                                if (value == null || value.trim().isEmpty) {
+                                  return 'password_empty_error'.tr;
+                                }
+                                if (value.length < 6) {
+                                  return 'password_length_error'.tr;
+                                }
+                                return null;
+                              },
                             ),
-                            validator: (value) {
-                              if (value == null || value.trim().isEmpty) {
-                                return 'password_empty_error'.tr;
-                              }
-                              if (value.length < 6) {
-                                return 'password_length_error'.tr;
-                              }
-                              return null;
-                            },
-                          )),
+                          ),
                           const SizedBox(height: 8),
                           Container(
                             alignment: Alignment.centerRight,
@@ -118,51 +136,62 @@ class Login extends GetView<LoginController> {
                                   fontWeight: FontWeight.w300,
                                   color: Theme.of(
                                     context,
-                                  ).colorScheme.primary,
+                                  ).colorScheme.outlineVariant,
                                 ),
                               ),
                             ),
                           ),
                           const SizedBox(height: 30),
-                          
+
                           Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(100),
                               boxShadow: [
                                 BoxShadow(
-                                  color: Theme.of(context).shadowColor.withValues(alpha: 0.08),
+                                  color: Theme.of(
+                                    context,
+                                  ).shadowColor.withValues(alpha: 0.08),
                                   offset: const Offset(0, 4),
                                   blurRadius: 10,
                                 ),
                               ],
                             ),
-                            child: Obx(() => MaterialButton(
-                              onPressed: controller.isLoading.value ? null : (() async => (await controller.onLoginButton())),
-                              height: 52,
-                              minWidth: double.infinity,
-                              color: (Theme.of(context).colorScheme.primary), 
-                              disabledColor: Colors.grey,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16),
+                            child: Obx(
+                              () => MaterialButton(
+                                onPressed: controller.isLoading.value
+                                    ? null
+                                    : (() async =>
+                                          (await controller.onLoginButton())),
+                                height: 52,
+                                minWidth: double.infinity,
+                                color: (Theme.of(context).colorScheme.primary),
+                                disabledColor: Colors.grey,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(16),
+                                ),
+                                elevation: 0,
+                                child: controller.isLoading.value
+                                    ? SizedBox(
+                                        height: 24,
+                                        width: 24,
+                                        child: CircularProgressIndicator(
+                                          color: Theme.of(
+                                            context,
+                                          ).colorScheme.onPrimary,
+                                        ),
+                                      )
+                                    : Text(
+                                        "log_in_button".tr,
+                                        style: GoogleFonts.inter(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w400,
+                                          color: Theme.of(
+                                            context,
+                                          ).colorScheme.onPrimary,
+                                        ),
+                                      ),
                               ),
-                              elevation: 0,
-                              child: controller.isLoading.value
-                                  ? SizedBox(
-                                      height: 24,
-                                      width: 24,
-                                      child: CircularProgressIndicator(
-                                        color: Theme.of(context).colorScheme.onPrimary
-                                      ),
-                                    )
-                                  : Text(
-                                      "log_in_button".tr,
-                                      style: GoogleFonts.inter(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w400,
-                                        color: Theme.of(context).colorScheme.onPrimary,
-                                      ),
-                                    ),
-                            )),
+                            ),
                           ),
                           Spacer(),
 
@@ -177,7 +206,10 @@ class Login extends GetView<LoginController> {
                                     style: GoogleFonts.inter(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w400,
-                                      color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.8),
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSurface
+                                          .withValues(alpha: 0.8),
                                     ),
                                   ),
                                   const SizedBox(height: 2),
@@ -190,11 +222,13 @@ class Login extends GetView<LoginController> {
                                       style: GoogleFonts.inter(
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold,
-                                        color: Theme.of(context).colorScheme.primary,
+                                        color: Theme.of(
+                                          context,
+                                        ).colorScheme.outlineVariant,
                                         decoration: TextDecoration.underline,
                                         decorationColor: Theme.of(
                                           context,
-                                        ).colorScheme.primary,
+                                        ).colorScheme.outlineVariant,
                                       ),
                                     ),
                                   ),
@@ -202,7 +236,7 @@ class Login extends GetView<LoginController> {
                               ),
                             ],
                           ),
-                          SizedBox(height: 80,)
+                          SizedBox(height: 80),
                         ],
                       ),
                     ),

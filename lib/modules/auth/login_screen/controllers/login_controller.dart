@@ -1,8 +1,7 @@
+import 'package:managementme/modules/auth/login_screen/repo/login_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:managementme/Modules/auth/login_screen/repo/login_repo.dart';
 import 'package:managementme/core/widgets/toast.dart';
-
 
 class LoginController extends GetxController {
   final formKey = GlobalKey<FormState>();
@@ -30,7 +29,7 @@ class LoginController extends GetxController {
           await LoginRepo.login(email: email.text, pass: pass.text);
           Get.offAllNamed("/root");
         } on Exception catch (e) {
-          toast(e.toString().replaceAll("Exception: ", ""));
+          toast('Error', e.toString().replaceAll("Exception: ", ""));
         } finally {
           isLoading.value = false;
         }

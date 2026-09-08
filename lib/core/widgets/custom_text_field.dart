@@ -24,7 +24,7 @@ class CustomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    
+
     return TextFormField(
       controller: controller,
       obscureText: obscureText,
@@ -36,38 +36,28 @@ class CustomTextField extends StatelessWidget {
           fontWeight: FontWeight.w400,
           color: colorScheme.onSurface.withValues(alpha: 0.7),
         ),
-        prefixIcon: prefixIcon != null ? Icon(
-          prefixIcon,
-          color: colorScheme.onSurface.withValues(alpha: 0.8),
-        ) : null,
+        prefixIcon: prefixIcon != null
+            ? Icon(
+                prefixIcon,
+                color: colorScheme.onSurface.withValues(alpha: 0.8),
+              )
+            : null,
         suffixIcon: suffixIcon,
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(
-            color: colorScheme.outline,
-            width: 1,
-          ),
+          borderSide: BorderSide(color: colorScheme.outline, width: 1),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(
-            color: colorScheme.primary,
-            width: 2,
-          ),
+          borderSide: BorderSide(color: colorScheme.primary, width: 2),
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(
-            color: colorScheme.error,
-            width: 2,
-          ),
+          borderSide: BorderSide(color: colorScheme.error, width: 2),
         ),
         focusedErrorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(
-            color: colorScheme.error,
-            width: 2,
-          ),
+          borderSide: BorderSide(color: colorScheme.error, width: 2),
         ),
       ),
       validator: validator,

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:managementme/core/constants/app_colors.dart';
 import 'package:managementme/core/servicesAndControllers/theme_controller.dart';
 import 'package:managementme/core/utils/contrast_color.dart';
 
@@ -11,8 +10,7 @@ class ThemeSelectorTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
-    final customColors = Theme.of(context).extension<AppColors>()!;
-    final accent = customColors.statHighPriorityColor ?? cs.primary;
+    final accent = cs.primary;
     final contrastIconColor = ContrastColor.getContrastBlackWhite(accent);
 
     return Container(
@@ -78,19 +76,19 @@ class ThemeSelectorTile extends StatelessWidget {
                 ButtonSegment(
                   value: 1,
                   icon: Icon(Icons.light_mode_rounded, size: 17),
-                  label: Text('light'.tr, style: TextStyle(fontSize: 12),),
+                  label: Text('light'.tr, style: TextStyle(fontSize: 12)),
                   tooltip: 'light'.tr,
                 ),
                 ButtonSegment(
                   value: 0,
                   icon: Icon(Icons.brightness_auto_rounded, size: 17),
-                  label: Text('system'.tr, style: TextStyle(fontSize: 12),),
+                  label: Text('system'.tr, style: TextStyle(fontSize: 12)),
                   tooltip: 'system'.tr,
                 ),
                 ButtonSegment(
                   value: 2,
                   icon: Icon(Icons.dark_mode_rounded, size: 17),
-                  label: Text('dark'.tr, style: TextStyle(fontSize: 12),),
+                  label: Text('dark'.tr, style: TextStyle(fontSize: 12)),
                   tooltip: 'dark'.tr,
                 ),
               ],
@@ -99,15 +97,12 @@ class ThemeSelectorTile extends StatelessWidget {
                 await controller.setThemeModeInt(newSelection.first);
               },
               style: SegmentedButton.styleFrom(
-              
                 padding: EdgeInsets.zero,
                 minimumSize: const Size(0, 38),
                 selectedBackgroundColor: cs.primary,
                 selectedForegroundColor: cs.onPrimary,
                 foregroundColor: cs.onSurface.withValues(alpha: 0.6),
-                side: BorderSide(
-                  color: cs.outline.withValues(alpha: 0.3),
-                ),
+                side: BorderSide(color: cs.outline.withValues(alpha: 0.3)),
               ),
               showSelectedIcon: false,
             ),

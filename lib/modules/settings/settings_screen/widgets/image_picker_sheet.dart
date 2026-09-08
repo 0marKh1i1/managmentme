@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:managementme/modules/profile/profile_screen/controllers/profile_controller.dart';
+import 'package:managementme/modules/settings/settings_screen/controllers/settings_controller.dart';
 
-class ImagePickerBottomSheet extends GetView<ProfileController> {
+class ImagePickerBottomSheet extends GetView<SettingsController> {
   const ImagePickerBottomSheet({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
+    final cs = Theme.of(context).colorScheme;
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
       decoration: BoxDecoration(
-        color: colorScheme.surface,
+        color: cs.surface,
         borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
       ),
       child: Column(
@@ -26,7 +25,7 @@ class ImagePickerBottomSheet extends GetView<ProfileController> {
               width: 40,
               height: 4,
               decoration: BoxDecoration(
-                color: colorScheme.onSurface.withValues(alpha: 0.2),
+                color: cs.onSurface.withValues(alpha: 0.2),
                 borderRadius: BorderRadius.circular(2),
               ),
             ),
@@ -37,7 +36,7 @@ class ImagePickerBottomSheet extends GetView<ProfileController> {
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
-              color: colorScheme.onSurface,
+              color: cs.onSurface,
             ),
           ),
           const SizedBox(height: 16),
@@ -58,22 +57,24 @@ class ImagePickerBottomSheet extends GetView<ProfileController> {
               controller.pickImage(ImageSource.camera);
             },
           ),
-          GetBuilder<ProfileController>(builder: (controller) {
-            final photoUrl = controller.currentUser?.photoUrl ?? '';
-            if (photoUrl.isEmpty) return const SizedBox.shrink();
-            return Padding(
-              padding: const EdgeInsets.only(top: 12),
-              child: _SheetOptionTile(
-                icon: Icons.delete_outline_rounded,
-                label: 'remove'.tr,
-                isDestructive: true,
-                onTap: () {
-                  Get.back();
-                  controller.removeImage();
-                },
-              ),
-            );
-          }),
+          GetBuilder<SettingsController>(
+            builder: (controller) {
+              final photoUrl = controller.currentUser?.photoUrl ?? '';
+              if (photoUrl.isEmpty) return const SizedBox.shrink();
+              return Padding(
+                padding: const EdgeInsets.only(top: 12),
+                child: _SheetOptionTile(
+                  icon: Icons.delete_outline_rounded,
+                  label: 'remove'.tr,
+                  isDestructive: true,
+                  onTap: () {
+                    Get.back();
+                    controller.removeImage();
+                  },
+                ),
+              );
+            },
+          ),
           const SizedBox(height: 8),
         ],
       ),
@@ -96,8 +97,8 @@ class _SheetOptionTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-    final color = isDestructive ? Colors.red : colorScheme.primary;
+    final cs = Theme.of(context).colorScheme;
+    final color = isDestructive ? cs.error : cs.primary;
 
     return InkWell(
       onTap: onTap,

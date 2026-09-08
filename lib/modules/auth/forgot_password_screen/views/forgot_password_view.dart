@@ -33,11 +33,20 @@ class ForgotPassword extends StatelessWidget {
                                 children: [
                                   GestureDetector(
                                     onTap: () {
-                                      if (Get.global(null).currentState?.canPop() ?? false) {
+                                      if (Get.global(
+                                            null,
+                                          ).currentState?.canPop() ??
+                                          false) {
                                         Get.back();
                                       }
                                     },
-                                    child: Icon(Icons.arrow_back, color: Theme.of(context).colorScheme.primary, size: 24),
+                                    child: Icon(
+                                      Icons.arrow_back,
+                                      color: Theme.of(
+                                        context,
+                                      ).colorScheme.primary,
+                                      size: 24,
+                                    ),
                                   ),
                                   const SizedBox(width: 24),
                                   Text(
@@ -45,7 +54,9 @@ class ForgotPassword extends StatelessWidget {
                                     style: GoogleFonts.inter(
                                       fontSize: 18,
                                       fontWeight: FontWeight.normal,
-                                      color: Theme.of(context).colorScheme.onSurface,
+                                      color: Theme.of(
+                                        context,
+                                      ).colorScheme.onSurface,
                                     ),
                                     textAlign: TextAlign.left,
                                   ),
@@ -57,7 +68,8 @@ class ForgotPassword extends StatelessWidget {
                                 style: GoogleFonts.inter(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w400,
-                                  color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.8),
+                                  color: Theme.of(context).colorScheme.onSurface
+                                      .withValues(alpha: 0.8),
                                   height: 1.4,
                                 ),
                               ),
@@ -80,16 +92,20 @@ class ForgotPassword extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(16),
                                   boxShadow: [
                                     BoxShadow(
-                                      color: Theme.of(context).shadowColor.withValues(alpha: 0.08),
+                                      color: Theme.of(
+                                        context,
+                                      ).shadowColor.withValues(alpha: 0.08),
                                       offset: const Offset(0, 4),
                                       blurRadius: 10,
                                     ),
                                   ],
                                 ),
                                 child: MaterialButton(
-                                  onPressed: controller.isLoading ? null : () async {
-                                    await controller.submit();
-                                  },
+                                  onPressed: controller.isLoading
+                                      ? null
+                                      : () async {
+                                          await controller.submit();
+                                        },
                                   height: 52,
                                   minWidth: double.infinity,
                                   color: Theme.of(context).colorScheme.primary,
@@ -98,23 +114,33 @@ class ForgotPassword extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(16),
                                   ),
                                   elevation: 0,
-                                  child: controller.isLoading 
-                                    ? SizedBox(height: 24, width: 24, child: CircularProgressIndicator(color: Theme.of(context).colorScheme.onPrimary))
-                                    : Text(
-                                        "submit_button".tr,
-                                        style: GoogleFonts.inter(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w400,
-                                          color: Theme.of(context).colorScheme.onPrimary,
+                                  child: controller.isLoading
+                                      ? SizedBox(
+                                          height: 24,
+                                          width: 24,
+                                          child: CircularProgressIndicator(
+                                            color: Theme.of(
+                                              context,
+                                            ).colorScheme.onPrimary,
+                                          ),
+                                        )
+                                      : Text(
+                                          "submit_button".tr,
+                                          style: GoogleFonts.inter(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w400,
+                                            color: Theme.of(
+                                              context,
+                                            ).colorScheme.onPrimary,
+                                          ),
                                         ),
-                                      ),
                                 ),
                               ),
                               const SizedBox(height: 32),
                             ],
                           ),
                         );
-                      }
+                      },
                     ),
                   ),
                 ),
