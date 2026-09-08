@@ -78,15 +78,6 @@ Widget _buildBottomNav(BuildContext context) {
                   children: [
                     _buildNavItem(
                       0,
-                      'tasks'.tr,
-                      'assets/note_icons/note-1.svg',
-                      'assets/note_icons/note.svg',
-                      activeTextColor,
-                      activeIconColor,
-                      inactiveColor,
-                    ),
-                    _buildNavItem(
-                      1,
                       'home'.tr,
                       Icons.home_outlined,
                       Icons.home,
@@ -95,7 +86,7 @@ Widget _buildBottomNav(BuildContext context) {
                       inactiveColor,
                     ),
                     _buildNavItem(
-                      2,
+                      1,
                       'profile'.tr,
                       Icons.person_outline,
                       Icons.person,

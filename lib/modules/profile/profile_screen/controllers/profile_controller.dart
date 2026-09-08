@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:managementme/modules/home/home_screen/controllers/home_controller.dart';
 import 'package:managementme/modules/profile/profile_screen/models/user_model.dart';
 import 'package:managementme/modules/profile/profile_screen/repo/profile_repo.dart';
 import 'package:managementme/modules/profile/profile_screen/widgets/edit_name_dialog.dart';
@@ -38,7 +37,6 @@ class ProfileController extends GetxController {
     update();
   }
 
-  /// Shows a dialog to edit the user's display name.
   void showEditNameDialog() {
     nameController.text = currentUser?.name ?? '';
     Get.dialog(const EditNameDialog());
@@ -68,7 +66,6 @@ class ProfileController extends GetxController {
     }
   }
 
-  /// Shows a bottom sheet to pick a new profile image.
   void showImagePickerSheet() {
     Get.bottomSheet(const ImagePickerBottomSheet());
   }
@@ -113,7 +110,6 @@ class ProfileController extends GetxController {
     update();
   }
 
-  /// Shows a confirmation dialog then logs the user out.
   void showLogoutDialog() {
     Get.dialog(const LogoutDialog());
   }

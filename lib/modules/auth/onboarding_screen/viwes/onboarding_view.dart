@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -18,22 +17,7 @@ class OnBoarding extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const Spacer(flex: 2),
-              Container(
-                height: 300,
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                child: Center(
-                  child: SvgPicture.asset(
-                  'assets/note_icons/note.svg',
-                  semanticsLabel: 'Dart Logo',
-                  width: 150,
-                  height: 150,
-                  colorFilter: ColorFilter.mode(Theme.of(context).colorScheme.primary, BlendMode.srcIn),
-                ),
-                ),
-              ),
+             
               const SizedBox(height: 48),
               Text(
                 'welcome_to_managementme'.tr,

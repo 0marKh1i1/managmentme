@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "441179178759",
+    "project_id": "managementme-ca46",
+    "storage_bucket": "managementme-ca46.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:441179178759:android:becfd92ffedb7e4299a7a2",
+        "android_client_info": {
+          "package_name": "com.obaya.managementme"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCejqugTzukSOHrfhkCKA4PAMXUtp2aFvo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
