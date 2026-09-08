@@ -33,7 +33,7 @@ class SettingsRepo {
           email: user.email ?? '',
           photoUrl: user.photoURL,
           phone: user.phoneNumber ?? '',
-          role: UserType.customer,
+          role: UserType.employee,
         );
       }
       return UserModel.fromFirestore(snapshot);

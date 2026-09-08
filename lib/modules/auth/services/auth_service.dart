@@ -47,11 +47,8 @@ class AuthService extends GetxService {
             case UserType.admin:
               Get.offAllNamed('/admin/root');
               break;
-            case UserType.driver:
-              Get.offAllNamed('/driver/root');
-              break;
-            case UserType.customer:
-              Get.offAllNamed('/customer/root');
+            case UserType.employee:
+              Get.offAllNamed('/employee/root');
               break;
           }
         } else {
@@ -81,10 +78,8 @@ class AuthService extends GetxService {
           switch (currentUser.value!.role) {
             case UserType.admin:
               return '/admin/root';
-            case UserType.driver:
-              return '/driver/root';
-            case UserType.customer:
-              return '/customer/root';
+            case UserType.employee:
+              return '/employee/root';
           }
         } else {
           return '/';

@@ -25,15 +25,15 @@ class RoleToggleSwitch extends StatelessWidget {
           children: [
             Expanded(
               child: GestureDetector(
-                onTap: () => controller.setRole(UserType.customer),
+                onTap: () => controller.setRole(UserType.employee),
                 child: Container(
                   decoration: BoxDecoration(
-                    color: controller.selectedRole.value == UserType.customer
+                    color: controller.selectedRole.value == UserType.employee
                         ? cs.primary
                         : Colors.transparent,
                     borderRadius: BorderRadius.circular(10),
                     boxShadow:
-                        controller.selectedRole.value == UserType.customer
+                        controller.selectedRole.value == UserType.employee
                         ? [
                             BoxShadow(
                               color: Colors.black.withValues(alpha: 0.1),
@@ -45,11 +45,11 @@ class RoleToggleSwitch extends StatelessWidget {
                   ),
                   alignment: Alignment.center,
                   child: Text(
-                    'customer_role'.tr,
+                    'employee_role'.tr,
                     style: GoogleFonts.inter(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
-                      color: controller.selectedRole.value == UserType.customer
+                      color: controller.selectedRole.value == UserType.employee
                           ? cs.onPrimary
                           : cs.onSurfaceVariant,
                     ),
@@ -59,14 +59,14 @@ class RoleToggleSwitch extends StatelessWidget {
             ),
             Expanded(
               child: GestureDetector(
-                onTap: () => controller.setRole(UserType.driver),
+                onTap: () => controller.setRole(UserType.admin),
                 child: Container(
                   decoration: BoxDecoration(
-                    color: controller.selectedRole.value == UserType.driver
+                    color: controller.selectedRole.value == UserType.admin
                         ? cs.primary
                         : Colors.transparent,
                     borderRadius: BorderRadius.circular(10),
-                    boxShadow: controller.selectedRole.value == UserType.driver
+                    boxShadow: controller.selectedRole.value == UserType.admin
                         ? [
                             BoxShadow(
                               color: Colors.black.withValues(alpha: 0.1),
@@ -78,11 +78,11 @@ class RoleToggleSwitch extends StatelessWidget {
                   ),
                   alignment: Alignment.center,
                   child: Text(
-                    'driver_role'.tr,
+                    'admin_role'.tr,
                     style: GoogleFonts.inter(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
-                      color: controller.selectedRole.value == UserType.driver
+                      color: controller.selectedRole.value == UserType.admin
                           ? cs.onPrimary
                           : cs.onSurfaceVariant,
                     ),

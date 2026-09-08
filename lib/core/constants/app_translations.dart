@@ -103,6 +103,8 @@ class AppTranslations extends Translations {
     'phone_number': 'Phone Number',
     'login_head': 'Welcome back!',
     'submit_button': 'Submit',
+    'admin_role': 'Admin',
+    'employee_role': 'Employee',
   };
 
   static final Map<String, String> ar = {
@@ -211,5 +213,7 @@ class AppTranslations extends Translations {
     'phone_number_empty_error': 'لا يمكن أن يكون رقم الهاتف فارغاً',
     'phone_number': 'رقم الهاتف',
     'login_head': 'مرحباً بعودتك!',
+    'admin_role': 'المسؤول',
+    'employee_role': 'الموظف',
   };
 }

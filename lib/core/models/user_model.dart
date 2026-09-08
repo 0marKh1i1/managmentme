@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-enum UserType { driver, customer, admin }
+enum UserType { employee, admin }
 
 class UserModel {
   final String id;
@@ -30,7 +30,7 @@ class UserModel {
       phone: data['phone'] ?? '',
       role: UserType.values.firstWhere(
         (e) => e.name == data['role'],
-        orElse: () => UserType.customer,
+        orElse: () => UserType.employee,
       ),
       currentLocation: data['currentLocation'] != null
           ? Map<String, dynamic>.from(data['currentLocation'])

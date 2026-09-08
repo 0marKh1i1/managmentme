@@ -10,7 +10,7 @@ class SignupController extends GetxController {
   var hidePass = true.obs;
   var hideConfirmPass = true.obs;
   var isLoading = false.obs;
-  var selectedRole = UserType.customer.obs;
+  var selectedRole = UserType.employee.obs;
   String? passwordstr;
 
   final TextEditingController username = TextEditingController();
