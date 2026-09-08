@@ -1,0 +1,20 @@
+flutter_native_splash:
+  android: true
+  ios: true
+  web: false
+
+  # --- Standard Light Mode (All OS Versions) ---
+  color: "#FFFFFF" 
+  image: "assets/icon/icon-splash.png"
+
+  # --- Standard Dark Mode (Older OS Versions) ---
+  color_dark: "#121212"
+  image_dark: "assets/icon/icon-splash-dark.png"
+
+  # --- Android 12+ Configuration (Combined) ---
+  android_12:
+    color: "#FFFFFF" 
+    image: "assets/icon/icon-splash.png"
+    # Dark mode settings for Android 12 go right here:
+    color_dark: "#121212"
+    image_dark: "assets/icon/icon-splash-dark.png"
