@@ -11,7 +11,6 @@ import 'dart:async';
 
 class SettingsController extends GetxController {
   UserModel? currentUser;
-  int totalTasks = 0;
   bool isUploadingImage = false;
   bool isUpdatingName = false;
 

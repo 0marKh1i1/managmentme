@@ -20,6 +20,7 @@ class AppThemes {
   static const Color cardShadowColor = Color(0x0D000000);
 
   static const Color homeHeaderColor = Color(0xFF000000);
+  static const Color homeHeaderTextColor = Color(0xFFFFFFFF);
 
   static final ThemeData lightTheme = ThemeData.light().copyWith(
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
