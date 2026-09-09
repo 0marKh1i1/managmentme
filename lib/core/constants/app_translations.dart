@@ -92,6 +92,7 @@ class AppTranslations extends Translations {
     'submit_button': 'Submit',
     'admin_role': 'Admin',
     'employee_role': 'Employee',
+    'employee_dashboard': 'Employee Dashboard',
   };
 
   static final Map<String, String> ar = {
@@ -188,6 +189,6 @@ class AppTranslations extends Translations {
     'login_head': 'مرحباً بعودتك!',
     'admin_role': 'المسؤول',
     'employee_role': 'الموظف',
-    
+    'employee_dashboard': 'لوحة تحكم الموظف',
   };
 }

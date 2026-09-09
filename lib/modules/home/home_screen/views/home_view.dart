@@ -21,11 +21,8 @@ class Home extends GetView<HomeController> {
     final isUploading = profileController.isUploadingImage;
 
     return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      body: Scaffold(
-        body: Padding(
-          padding: EdgeInsets.only(bottom: bottomSafeHeight),
-          child: SingleChildScrollView(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        body: SingleChildScrollView(
             child: Column(
               children: [
                 Container(
@@ -136,11 +133,33 @@ class Home extends GetView<HomeController> {
                     ],
                   ),
                 ),
+                SizedBox(height: 20),
+                Container(
+                  height: 750,
+                  width: double.infinity,
+                  margin: const EdgeInsets.symmetric(horizontal: 16),
+                  padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                  decoration: BoxDecoration(
+                    color: cs.primary,
+                    borderRadius: BorderRadius.circular(24),
+                  ),
+                    child: Column(
+                      children: [
+                        Text(
+                            'employee_dashboard'.tr,
+                            style: TextStyle(
+                              color: cs.onPrimary,
+                              fontSize: 24,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                      ],
+                    ),
+                  ),
+                SizedBox(height: bottomSafeHeight),
               ],
             ),
-          ),
         ),
-      ),
     );
   }
   Widget _headerItem(String label, String svgPath, VoidCallback onTap) {
@@ -162,6 +181,29 @@ class Home extends GetView<HomeController> {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildStatItem(String label, String value, Color color) {
+    return Column(
+      children: [
+        Text(
+          value,
+          style: TextStyle(
+            color: color,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        SizedBox(height: 4),
+        Text(
+          label,
+          style: TextStyle(
+            color: Colors.grey[600],
+            fontSize: 14,
+          ),
+        ),
+      ],
     );
   }
 }

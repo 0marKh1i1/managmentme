@@ -1,22 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AppThemes {
-  static const Color primaryColor = Color(0xFF071333);
-  static const Color darkPrimaryColor = Color.fromARGB(255, 24, 66, 179);
+  static const Color primaryColor = Color(0xFFBDD6D8);
+  static const Color darkPrimaryColor = Color(0xFF799C9E);
 
   static const Color secondaryColor = Color(0xFF0721A9);
   static const Color darkSecondaryColor = Color.fromARGB(255, 9, 43, 212);
 
-  static const Color lightScaffoldBg = Color(0xFFFAFAFA);
-  static const Color darkScaffoldBg = Color.fromARGB(255, 20, 20, 20);
+  static const Color lightScaffoldBg = Color(0xFFF1F1F1);
+  static const Color darkScaffoldBg = Color(0xFF2B2B2B);
 
   static const Color glassColor = Color(0xFF90A4AE);
   static const Color glassBorderColor = Colors.white;
 
-  static const Color trackerActiveColor = Color(0xFF1976D2);
-  static const Color trackerInactiveColor = Color(0xFF64B5F6);
-  static const Color trackerLineInactiveColor = Color(0xFF90CAF9);
-  static const Color fromToTextColor = Color(0xFF64B5F6);
   static const Color cardShadowColor = Color(0x0D000000);
 
   static const Color homeHeaderColor = Color(0xFF000000);
@@ -26,6 +23,11 @@ class AppThemes {
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
       sizeConstraints: BoxConstraints.tightFor(width: 70.0, height: 70.0),
     ),
+    textTheme: GoogleFonts.interTextTheme(ThemeData.light().textTheme),
+    primaryTextTheme: GoogleFonts.interTextTheme(
+      ThemeData.light().primaryTextTheme,
+    ),
+
     brightness: Brightness.light,
     scaffoldBackgroundColor: lightScaffoldBg,
     colorScheme: ColorScheme.light(
@@ -33,7 +35,7 @@ class AppThemes {
       onSurface: Colors.black,
       surfaceDim: const Color(0xFF9E9E9E),
       primary: primaryColor,
-      onPrimary: Colors.white,
+      onPrimary: Colors.black,
       secondary: secondaryColor,
       onSecondary: Colors.white,
       error: const Color(0xFFB00020),
@@ -48,6 +50,11 @@ class AppThemes {
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
       sizeConstraints: BoxConstraints.tightFor(width: 70.0, height: 70.0),
     ),
+    textTheme: GoogleFonts.interTextTheme(ThemeData.dark().textTheme),
+    primaryTextTheme: GoogleFonts.interTextTheme(
+      ThemeData.dark().primaryTextTheme,
+    ),
+
     brightness: Brightness.dark,
     scaffoldBackgroundColor: darkScaffoldBg,
     colorScheme: ColorScheme.dark(
