@@ -19,6 +19,8 @@ class AppThemes {
   static const Color fromToTextColor = Color(0xFF64B5F6);
   static const Color cardShadowColor = Color(0x0D000000);
 
+  static const Color homeHeaderColor = Color(0xFF000000);
+
   static final ThemeData lightTheme = ThemeData.light().copyWith(
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
       sizeConstraints: BoxConstraints.tightFor(width: 70.0, height: 70.0),
