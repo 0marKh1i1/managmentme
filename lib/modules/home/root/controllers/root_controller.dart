@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class RootController extends GetxController {
-  final selectedIndex = 1.obs;
+  final selectedIndex = 0.obs;
   late PageController pageController;
   
   final scrollPhysics = Rx<ScrollPhysics>(const ScrollPhysics()); 

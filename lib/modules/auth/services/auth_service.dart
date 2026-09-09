@@ -45,10 +45,14 @@ class AuthService extends GetxService {
           debugPrint('Current User: ${currentUser.value!.role}');
           switch (currentUser.value!.role) {
             case UserType.admin:
-              Get.offAllNamed('/admin/root');
+              if (Get.currentRoute != '/root') {
+                Get.offAllNamed('/root');
+              }
               break;
             case UserType.employee:
-              Get.offAllNamed('/employee/root');
+              if (Get.currentRoute != '/root') {
+                Get.offAllNamed('/root');
+              }
               break;
           }
         } else {
@@ -59,16 +63,17 @@ class AuthService extends GetxService {
       }
     }
   }
+
   Future<String> getInitialScreen() async {
     debugPrint('get inital screen');
-    
-      User? user = getUser();
+
+    User? user = getUser();
 
     if (user == null) {
       return '/';
     } else {
       try {
-           final doc = await FirebaseFirestore.instance
+        final doc = await FirebaseFirestore.instance
             .collection('users')
             .doc(user.uid)
             .get();
@@ -77,9 +82,9 @@ class AuthService extends GetxService {
           debugPrint('Current User: ${currentUser.value!.role}');
           switch (currentUser.value!.role) {
             case UserType.admin:
-              return '/admin/root';
+              return '/root';
             case UserType.employee:
-              return '/employee/root';
+              return '/root';
           }
         } else {
           return '/';
