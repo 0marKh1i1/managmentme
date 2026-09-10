@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/get_instance.dart';
+import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:managementme/core/constants/app_themes.dart';
@@ -153,24 +154,57 @@ class Home extends GetView<HomeController> {
                       color: cs.primary,
                       borderRadius: BorderRadius.circular(24),
                     ),
-                    child: Column(
-                      spacing: 16,
-                      children: [
-                        Text(
-                          'employee_dashboard'.tr,
-                          style: TextStyle(
-                            color: cs.onPrimary,
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        _buildStatItem(context, 'total_employees'.tr, '1'),
-                        _buildStatItem(context, 'present_employees'.tr, '2'),
-                        _buildStatItem(context, 'absent_employees'.tr, '3'),
-                        _buildStatItem(context, 'late_employees'.tr, '4'),
-                        _buildStatItem(context, 'checked_out_employees'.tr, '5'),
-                        _buildStatItem(context, 'employees_outside_work_area'.tr, '10000000'),
-                      ],
+                    child: GetBuilder<HomeController>(
+                      builder: (controller) {
+                        if (controller.isLoading) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                        return Column(
+                          spacing: 16,
+                          children: [
+                            Text(
+                              'employee_dashboard'.tr,
+                              style: TextStyle(
+                                color: cs.onPrimary,
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            _buildStatItem(
+                              context,
+                              'total_employees'.tr,
+                              controller.employees.length,
+                            ),
+                            _buildStatItem(
+                              context,
+                              'present_employees'.tr,
+                              controller.presentEmployees,
+                            ),
+                            _buildStatItem(
+                              context,
+                              'absent_employees'.tr,
+                              controller.absentEmployees,
+                            ),
+                            _buildStatItem(
+                              context,
+                              'late_employees'.tr,
+                              controller.lateEmployeesCount,
+                            ),
+                            _buildStatItem(
+                              context,
+                              'checked_out_employees'.tr,
+                              controller.getCheckedOutEmployees(),
+                            ),
+                            _buildStatItem(
+                              context,
+                              'employees_outside_work_area'.tr,
+                              controller.getOutsideWorkAreaEmployees(),
+                            ),
+                          ],
+                        );
+                      },
                     ),
                   ),
                   SizedBox(height: bottomSafeHeight),
@@ -201,7 +235,7 @@ class Home extends GetView<HomeController> {
     );
   }
 
-  Widget _buildStatItem(BuildContext ctxt, String label, String value) {
+  Widget _buildStatItem(BuildContext ctxt, String label, int value) {
     return Container(
       decoration: BoxDecoration(
         color: Theme.of(ctxt).scaffoldBackgroundColor,
@@ -227,7 +261,7 @@ class Home extends GetView<HomeController> {
             right: 28,
             bottom: 8,
             child: Text(
-              value,
+              '$value',
               style: TextStyle(
                 color: Theme.of(ctxt).colorScheme.onSurface,
                 fontSize: 40,

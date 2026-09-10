@@ -31,6 +31,7 @@ class SettingsRepo {
           id: user.uid,
           name: user.displayName ?? '',
           email: user.email ?? '',
+          branchId: '',
           photoUrl: user.photoURL,
           phone: user.phoneNumber ?? '',
           role: UserType.employee,
