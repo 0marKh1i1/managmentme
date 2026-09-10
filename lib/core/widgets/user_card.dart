@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:managementme/core/constants/app_themes.dart';
 import 'package:managementme/core/models/user_model.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:managementme/modules/admin/home/employees_screen/controllers/employees_controller.dart';
 
 class UserCard extends StatelessWidget {
   final UserModel user;
@@ -48,23 +50,42 @@ class UserCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 4),
-                Text(
-                  user.email.isNotEmpty ? user.email : 'No email provided',
-                  style: GoogleFonts.inter(
-                    fontSize: 12,
-                    color: colorScheme.onSurface.withValues(alpha: 0.6),
-                  ),
-                ),
                 const SizedBox(height: 4),
                 Text(
                   user.phone.isNotEmpty ? user.phone : 'No phone provided',
                   style: GoogleFonts.inter(
-                    fontSize: 12,
+                    fontSize: 10,
+                    color: colorScheme.onSurface.withValues(alpha: 0.6),
+                  ),
+                ),
+                Text(
+                  user.email.isNotEmpty ? user.email : 'No email provided',
+                  style: GoogleFonts.inter(
+                    fontSize: 10,
                     color: colorScheme.onSurface.withValues(alpha: 0.6),
                   ),
                 ),
               ],
             ),
+          ),
+          Column(
+            children: [
+              Container(
+                padding: EdgeInsets.symmetric(vertical: 5,horizontal: 16),
+                decoration: BoxDecoration(
+                  color: user.isCheckedIn ? AppThemes.checkedInColor : AppThemes.notCheckedInColor,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Text(user.isCheckedIn ? "checked_in".tr : "not_checked_in".tr),
+              ),
+              SizedBox(height: 10,),
+              GetBuilder<EmployeesController>(
+                builder: (controller) {
+                  var branchName = controller.getBranch(user.branchId) != null ? controller.getBranch(user.branchId)!.name : "unkown".tr;
+                  return Text(branchName + "branch".tr);
+                }
+              ),
+            ],
           ),
         ],
       ),

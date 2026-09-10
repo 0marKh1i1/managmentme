@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:managementme/modules/home/home_screen/views/home_view.dart';
-import 'package:managementme/modules/home/root/controllers/root_controller.dart';
+import 'package:managementme/modules/admin/home/home_screen/views/home_view.dart';
+import 'package:managementme/modules/admin/home/root/controllers/root_controller.dart';
 import 'package:managementme/modules/settings/settings_screen/views/settings_view.dart';
 
 class RootView extends GetView<RootController> {

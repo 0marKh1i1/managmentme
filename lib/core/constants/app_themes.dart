@@ -19,6 +19,10 @@ class AppThemes {
   static const Color homeHeaderColor = Color(0xFF000000);
   static const Color homeHeaderTextColor = Color(0xFFFFFFFF);
 
+  static const Color checkedInColor = Color(0xFF42BA46);
+  static const Color notCheckedInColor = Color(0xFFBA4242);
+
+
   static final ThemeData lightTheme = ThemeData.light().copyWith(
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
       sizeConstraints: BoxConstraints.tightFor(width: 70.0, height: 70.0),

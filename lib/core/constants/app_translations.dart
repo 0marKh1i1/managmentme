@@ -106,6 +106,14 @@ class AppTranslations extends Translations {
     'branches': 'Branches',
     'employees': 'Employees',
     'attendance': 'Attendance',
+
+    
+    /* *employees screen */
+    'employees_list': 'Employees List',
+    'branch': ' Branch',
+    'unkown': 'Unkown',
+    "not_checked_in": "Not Checked In",
+    "checked_in": "Checked In",
   };
 
   static final Map<String, String> ar = {
@@ -216,5 +224,12 @@ class AppTranslations extends Translations {
     'branches': 'الفروع',
     'employees': 'الموظفين',
     'attendance': 'الحضور',
+
+    /* *employees screen */
+    'employees_list': 'قائمة الموظفين',
+    'branch': '  فرع',
+    'unkown': 'غير معروف',
+    "not_checked_in": "ليس مسجل الدخول",
+    "checked_in": "مسجل الدخول",
   };
 }
