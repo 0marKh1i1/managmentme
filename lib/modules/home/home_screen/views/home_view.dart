@@ -6,6 +6,7 @@ import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:managementme/core/constants/app_themes.dart';
 import 'package:managementme/modules/home/home_screen/controllers/home_controller.dart';
+import 'package:managementme/modules/home/root/controllers/root_controller.dart';
 import 'package:managementme/modules/settings/settings_screen/controllers/settings_controller.dart';
 
 class Home extends GetView<HomeController> {
@@ -21,157 +22,173 @@ class Home extends GetView<HomeController> {
     final isUploading = profileController.isUploadingImage;
 
     return Scaffold(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        body: SingleChildScrollView(
-            child: Column(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      body: Column(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              color: AppThemes.homeHeaderColor,
+              border: Border(
+                bottom: BorderSide(
+                  color: AppThemes.homeHeaderTextColor.withAlpha(150),
+                  width: 2,
+                ),
+              ),
+            ),
+            padding: EdgeInsets.only(top: topSafeHeight),
+            height: 225,
+            child: Stack(
               children: [
-                Container(
-                  decoration: BoxDecoration(
-                    color: AppThemes.homeHeaderColor,
-                    border: Border(
-                      bottom: BorderSide(
-                        color: AppThemes.homeHeaderTextColor.withAlpha(150),
-                        width: 2,
-                      ),
-                    ),
+                Positioned(
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  child: Image.asset(
+                    'assets/images/home/buildings.png',
+                    height: 100,
+                    fit: BoxFit.cover,
                   ),
-                  padding: EdgeInsets.only(top: topSafeHeight),
-                  height: 225,
-                  child: Stack(
-                    children: [
-                      Positioned(
-                        bottom: 0,
-                        left: 0,
-                        right: 0,
-                        child: Image.asset(
-                          'assets/images/home/buildings.png',
-                          height: 100,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      Column(
+                ),
+                Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 24),
+                      child: Row(
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 24),
-                            child: Row(
-                              children: [
-                                Text(
-                                  'home_page'.tr,
-                                  style: TextStyle(
-                                    color: AppThemes.homeHeaderTextColor,
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                Spacer(),
-                                Container(
-                                  height: 50,
-                                  width: 50,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    border: Border.all(
-                                      color: AppThemes.homeHeaderTextColor,
-                                      width: 2,
-                                    ),
-                                  ),
-                                  child: ClipOval(
-                                    child: isUploading
-                                        ? Container(
-                                            color: AppThemes.homeHeaderTextColor
-                                                .withValues(alpha: 0.2),
-                                            child: CircularProgressIndicator(
-                                              color:
-                                                  AppThemes.homeHeaderTextColor,
-                                            ),
-                                          )
-                                        : photoUrl.isNotEmpty
-                                        ? Image.network(
-                                            photoUrl,
-                                            fit: BoxFit.cover,
-                                            errorBuilder: (ctx, e, st) =>
-                                                Image.asset(
-                                                  'assets/images/profile.png',
-                                                  fit: BoxFit.contain,
-                                                ),
-                                          )
-                                        : Image.asset(
-                                            'assets/images/profile.png',
-                                            fit: BoxFit.contain,
-                                          ),
-                                  ),
-                                ),
-                              ],
+                          Text(
+                            'home_page'.tr,
+                            style: TextStyle(
+                              color: AppThemes.homeHeaderTextColor,
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                           Spacer(),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(24, 0, 24, 12),
-                            child: Row(
-                              children: [
-                                _headerItem(
-                                  'branches'.tr,
-                                  'assets/images/home/branches.svg',
-                                  () {},
+                          InkWell(
+                            onTap: () {
+                              Get.find<RootController>().changePage(1);
+                            },
+                            child: Container(
+                              height: 50,
+                              width: 50,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  color: AppThemes.homeHeaderTextColor,
+                                  width: 2,
                                 ),
-                                Spacer(),
-                                _headerItem(
-                                  'employees'.tr,
-                                  'assets/images/home/employees.svg',
-                                      () {},
-                                ),
-                                Spacer(),
-                                _headerItem(
-                                  'attendance'.tr,
-                                  'assets/images/home/attendance.svg',
-                                      () {},
-                                ),
-                              ],
+                              ),
+                              child: ClipOval(
+                                child: isUploading
+                                    ? Container(
+                                        color: AppThemes.homeHeaderTextColor
+                                            .withValues(alpha: 0.2),
+                                        child: CircularProgressIndicator(
+                                          color: AppThemes.homeHeaderTextColor,
+                                        ),
+                                      )
+                                    : photoUrl.isNotEmpty
+                                    ? Image.network(
+                                        photoUrl,
+                                        fit: BoxFit.cover,
+                                        errorBuilder: (ctx, e, st) =>
+                                            Image.asset(
+                                              'assets/images/profile.png',
+                                              fit: BoxFit.contain,
+                                            ),
+                                      )
+                                    : Image.asset(
+                                        'assets/images/profile.png',
+                                        fit: BoxFit.contain,
+                                      ),
+                              ),
                             ),
                           ),
                         ],
                       ),
-                    ],
-                  ),
+                    ),
+                    Spacer(),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(24, 0, 24, 12),
+                      child: Row(
+                        children: [
+                          _headerItem(
+                            'branches'.tr,
+                            'assets/images/home/branches.svg',
+                            () {},
+                          ),
+                          Spacer(),
+                          _headerItem(
+                            'employees'.tr,
+                            'assets/images/home/employees.svg',
+                            () {},
+                          ),
+                          Spacer(),
+                          _headerItem(
+                            'attendance'.tr,
+                            'assets/images/home/attendance.svg',
+                            () {},
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
-                SizedBox(height: 20),
-                Container(
-                  height: 750,
-                  width: double.infinity,
-                  margin: const EdgeInsets.symmetric(horizontal: 16),
-                  padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-                  decoration: BoxDecoration(
-                    color: cs.primary,
-                    borderRadius: BorderRadius.circular(24),
-                  ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  SizedBox(height: 20),
+                  Container(
+                    width: double.infinity,
+                    margin: const EdgeInsets.symmetric(horizontal: 16),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 16,
+                    ),
+                    decoration: BoxDecoration(
+                      color: cs.primary,
+                      borderRadius: BorderRadius.circular(24),
+                    ),
                     child: Column(
+                      spacing: 16,
                       children: [
                         Text(
-                            'employee_dashboard'.tr,
-                            style: TextStyle(
-                              color: cs.onPrimary,
-                              fontSize: 24,
-                              fontWeight: FontWeight.w700,
-                            ),
+                          'employee_dashboard'.tr,
+                          style: TextStyle(
+                            color: cs.onPrimary,
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
                           ),
+                        ),
+                        _buildStatItem(context, 'total_employees'.tr, '1'),
+                        _buildStatItem(context, 'present_employees'.tr, '2'),
+                        _buildStatItem(context, 'absent_employees'.tr, '3'),
+                        _buildStatItem(context, 'late_employees'.tr, '4'),
+                        _buildStatItem(context, 'checked_out_employees'.tr, '5'),
+                        _buildStatItem(context, 'employees_outside_work_area'.tr, '10000000'),
                       ],
                     ),
                   ),
-                SizedBox(height: bottomSafeHeight),
-              ],
+                  SizedBox(height: bottomSafeHeight),
+                ],
+              ),
             ),
-        ),
+          ),
+        ],
+      ),
     );
   }
+
   Widget _headerItem(String label, String svgPath, VoidCallback onTap) {
     return GestureDetector(
       onTap: onTap,
       child: Column(
         children: [
-          SvgPicture.asset(
-            svgPath,
-            width: 60,
-            height: 60,
-          ),
+          SvgPicture.asset(svgPath, width: 60, height: 60),
           Text(
             label,
             style: TextStyle(
@@ -184,26 +201,42 @@ class Home extends GetView<HomeController> {
     );
   }
 
-  Widget _buildStatItem(String label, String value, Color color) {
-    return Column(
-      children: [
-        Text(
-          value,
-          style: TextStyle(
-            color: color,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
+  Widget _buildStatItem(BuildContext ctxt, String label, String value) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Theme.of(ctxt).scaffoldBackgroundColor,
+        borderRadius: BorderRadius.circular(16),
+      ),
+      width: double.infinity,
+      height: 95,
+      child: Stack(
+        children: [
+          Positioned(
+            top: 16,
+            left: 16,
+            child: Text(
+              label,
+              style: TextStyle(
+                color: Theme.of(ctxt).colorScheme.onSurface,
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
           ),
-        ),
-        SizedBox(height: 4),
-        Text(
-          label,
-          style: TextStyle(
-            color: Colors.grey[600],
-            fontSize: 14,
+          Positioned(
+            right: 28,
+            bottom: 8,
+            child: Text(
+              value,
+              style: TextStyle(
+                color: Theme.of(ctxt).colorScheme.onSurface,
+                fontSize: 40,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

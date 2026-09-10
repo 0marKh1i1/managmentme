@@ -92,7 +92,20 @@ class AppTranslations extends Translations {
     'submit_button': 'Submit',
     'admin_role': 'Admin',
     'employee_role': 'Employee',
+    
+    /** Employee Dashboard */
     'employee_dashboard': 'Employee Dashboard',
+    'total_employees': 'Total Employees',
+    'present_employees': 'Present Employees',
+    'absent_employees': 'Absent Employees',
+    'late_employees': 'Late Employees',
+    'checked_out_employees': 'Checked Out Employees',
+    'employees_outside_work_area': 'Employees Outside Work Area',
+
+    /* *homepage header */
+    'branches': 'Branches',
+    'employees': 'Employees',
+    'attendance': 'Attendance',
   };
 
   static final Map<String, String> ar = {
@@ -189,6 +202,19 @@ class AppTranslations extends Translations {
     'login_head': 'مرحباً بعودتك!',
     'admin_role': 'المسؤول',
     'employee_role': 'الموظف',
+
+      /** Employee Dashboard */
     'employee_dashboard': 'لوحة تحكم الموظف',
+    'total_employees': 'اجمالي الموظفين',
+    'present_employees': 'الموظفين الحاضرين',
+    'absent_employees': 'الموظفين الغائبين',
+    'late_employees': 'الموظفين المتأخرين',
+    'checked_out_employees': 'الموظفين الخارجيين',
+    'employees_outside_work_area': 'الموظفين خارج منطقة العمل',
+
+    /* *homepage header */
+    'branches': 'الفروع',
+    'employees': 'الموظفين',
+    'attendance': 'الحضور',
   };
 }
