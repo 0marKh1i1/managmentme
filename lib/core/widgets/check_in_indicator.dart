@@ -5,21 +5,22 @@ import 'package:managementme/core/models/user_model.dart';
 
 class CheckInIndicator extends StatelessWidget {
   
-  final UserModel user;
+  final UserModel? user;
   
   const CheckInIndicator(this.user, {super.key});
 
   @override
   Widget build(BuildContext context) {
+    final bool isIn = user != null ? user!.isCheckedIn : false; 
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 16),
       decoration: BoxDecoration(
-        color: user.isCheckedIn
+        color: isIn
             ? AppThemes.checkedInColor
             : AppThemes.notCheckedInColor,
         borderRadius: BorderRadius.circular(10),
       ),
-      child: Text(user.isCheckedIn ? "checked_in".tr : "not_checked_in".tr),
+      child: Text(isIn ? "checked_in".tr : "not_checked_in".tr),
     );
   }
 }

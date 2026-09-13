@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:managementme/core/widgets/check_in_indicator.dart';
 import 'package:managementme/modules/admin/home/employees_screen/controllers/employees_editor_controller.dart';
 
 class EmployeesEditorView extends StatelessWidget {
@@ -51,16 +52,17 @@ class EmployeesEditorView extends StatelessWidget {
                             borderRadius: BorderRadius.circular(12),
                             color: cs.surfaceDim,
                           ),
-                          child: Icon(Icons.close, color: cs.onSurface, size: 26),
+                          child: Icon(
+                            Icons.close,
+                            color: cs.onSurface,
+                            size: 26,
+                          ),
                         ),
                       ),
                     ],
                   ),
-                  SizedBox(height: 8,),
-                  Divider(
-                    color: cs.surfaceDim,
-                    thickness: 2,
-                  ),
+                  SizedBox(height: 8),
+                  Divider(color: cs.surfaceDim, thickness: 2),
                 ],
               ),
 
@@ -100,6 +102,7 @@ class EmployeesEditorView extends StatelessWidget {
                   labelText: 'employee_branch'.tr,
                 ),
               ),
+              CheckInIndicator(controller.employee),
 
               const SizedBox(height: 8),
               ElevatedButton(
