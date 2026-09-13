@@ -6,6 +6,7 @@ import 'package:managementme/modules/admin/home/home_screen/repo/home_repo.dart'
 class EmployeesController extends GetxController {
   bool isLoading = true;
   Map<String,BranchModel> branches = {};
+  List<BranchModel> branchesList = [];
 
   @override
   void onInit() {
@@ -30,5 +31,6 @@ class EmployeesController extends GetxController {
 
   Future<void> _fetchBranches() async {
     branches = await HomeRepo.getBranchs();
+    branchesList = branches.values.toList();
   }
 }

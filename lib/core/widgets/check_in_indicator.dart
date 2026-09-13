@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:managementme/core/constants/app_themes.dart';
-import 'package:managementme/core/models/user_model.dart';
 
 class CheckInIndicator extends StatelessWidget {
-  final UserModel? user;
   final double size;
+  final bool isCheckedIn;
 
-  const CheckInIndicator(this.user, {super.key, this.size = 0});
+  const CheckInIndicator(this.isCheckedIn , {super.key, this.size = 0});
 
   @override
   Widget build(BuildContext context) {
-    final bool isIn = user != null ? user!.isCheckedIn : false;
+    final bool isIn = isCheckedIn;
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 16),
       decoration: BoxDecoration(

@@ -22,7 +22,7 @@ class HomeController extends GetxController {
       isLoading = true;
       update();
 
-      await _fetchEmployees();
+      await fetchEmployees();
       
       await Future.wait([
         _fetchLateEmployees(),
@@ -37,8 +37,9 @@ class HomeController extends GetxController {
     }
   }
 
-  Future<void> _fetchEmployees() async {
+  Future<void> fetchEmployees() async {
     employees = await HomeRepo.getEmployees();
+    update();
   }
 
   int _fetchtPresentEmployees() {

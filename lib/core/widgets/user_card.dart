@@ -71,7 +71,7 @@ class UserCard extends StatelessWidget {
           ),
           Column(
             children: [
-              CheckInIndicator(user),
+              CheckInIndicator(user.isCheckedIn),
               SizedBox(height: 10,),
               GetBuilder<EmployeesController>(
                 builder: (controller) {

@@ -1,40 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:managementme/core/models/branch_model.dart';
 import 'package:managementme/core/models/user_model.dart';
 import 'package:managementme/core/widgets/check_in_indicator.dart';
 import 'package:managementme/core/widgets/custom_text_field.dart';
 import 'package:managementme/core/widgets/role_toggle_switch.dart';
+import 'package:managementme/modules/admin/home/employees_screen/controllers/employees_controller.dart';
 import 'package:managementme/modules/admin/home/employees_screen/controllers/employees_editor_controller.dart';
 
 void showEmployeesEditorView(BuildContext context, {UserModel? user}) {
-  final String controllerTag = UniqueKey().toString();
-
-  final controller = Get.put(EmployeesEditorController(), tag: controllerTag)
-    ..initWith(user);
-
   showModalBottomSheet(
     context: context,
     isScrollControlled: true,
     useRootNavigator: true,
     backgroundColor: Colors.transparent,
     barrierColor: Colors.black.withValues(alpha: 0.55),
-    builder: (_) => EmployeesEditorView(controller: controller),
-  ).whenComplete(
-    () =>
-        Get.delete<EmployeesEditorController>(tag: controllerTag, force: true),
+    builder: (_) => EmployeesEditorView(user: user),
   );
 }
 
 class EmployeesEditorView extends StatelessWidget {
-  final EmployeesEditorController controller;
-  const EmployeesEditorView({super.key, required this.controller});
+  final UserModel? user;
+  const EmployeesEditorView({super.key, this.user});
 
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
 
     return GetBuilder<EmployeesEditorController>(
-      init: controller,
+      init: EmployeesEditorController()..initWith(user),
       builder: (controller) {
         return DraggableScrollableSheet(
           initialChildSize: 0.5,
@@ -153,16 +147,16 @@ class EmployeesEditorView extends StatelessWidget {
                                       ),
                               ),
                               CustomTextField(
-                                controller: controller.nameController,
-                                labletText: 'employee_name'.tr,
-                                hintText: 'enter_employee_name'.tr,
-                                isEnabled: false,
-                              ),
-                              CustomTextField(
                                 controller: controller.emailController,
                                 labletText: 'employee_email'.tr,
                                 hintText: 'enter_employee_email'.tr,
                                 isEnabled: false,
+                              ),
+                              CustomTextField(
+                                controller: controller.nameController,
+                                labletText: 'employee_name'.tr,
+                                hintText: 'enter_employee_name'.tr,
+                                isEnabled: controller.isEnabled,
                               ),
                               CustomTextField(
                                 controller: controller.phoneController,
@@ -170,11 +164,44 @@ class EmployeesEditorView extends StatelessWidget {
                                 hintText: 'enter_employee_phone'.tr,
                                 isEnabled: controller.isEnabled,
                               ),
-                              CustomTextField(
-                                controller: controller.branchController,
-                                labletText: 'employee_branch'.tr,
-                                hintText: 'enter_employee_branch'.tr,
-                                isEnabled: controller.isEnabled,
+                              DropdownMenu<BranchModel>(
+                                initialSelection: controller.branch,
+                                enabled: controller.isEnabled,
+                                label: Text('enter_employee_branch'.tr),
+                                inputDecorationTheme: InputDecorationTheme(
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(
+                                      16.0,
+                                    ),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(16.0),
+                                    borderSide: const BorderSide(
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(16.0),
+                                    borderSide: const BorderSide(
+                                      color: Colors.blue,
+                                      width: 2.0,
+                                    ),
+                                  ),
+                                ),
+                                onSelected: (BranchModel? value) {
+                                  controller.setBranch(value);
+                                },
+                                dropdownMenuEntries:
+                                    Get.find<EmployeesController>().branchesList
+                                        .map<DropdownMenuEntry<BranchModel>>((
+                                          BranchModel value,
+                                        ) {
+                                          return DropdownMenuEntry<BranchModel>(
+                                            value: value,
+                                            label: value.name,
+                                          );
+                                        })
+                                        .toList(),
                               ),
                               IgnorePointer(
                                 ignoring: controller.isLoacked,
@@ -185,9 +212,12 @@ class EmployeesEditorView extends StatelessWidget {
                               ),
                               IgnorePointer(
                                 ignoring: controller.isLoacked,
-                                child: CheckInIndicator(
-                                  controller.employee,
-                                  size: 24,
+                                child: InkWell(
+                                  onTap: (() => controller.toggleIsCheckIn()),
+                                  child: CheckInIndicator(
+                                    controller.isCheckIn,
+                                    size: 24,
+                                  ),
                                 ),
                               ),
                               Divider(color: cs.surfaceDim, thickness: 2),
@@ -207,7 +237,9 @@ class EmployeesEditorView extends StatelessWidget {
                                     vertical: 6,
                                   ),
                                   child: controller.isSaving
-                                      ? CircularProgressIndicator(color: cs.onPrimary)
+                                      ? CircularProgressIndicator(
+                                          color: cs.onPrimary,
+                                        )
                                       : Text(
                                           "save".tr,
                                           style: TextStyle(fontSize: 24),

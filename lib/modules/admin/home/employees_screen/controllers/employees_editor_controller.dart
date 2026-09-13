@@ -3,54 +3,47 @@ import 'package:get/get.dart';
 import 'package:managementme/core/models/branch_model.dart';
 import 'package:managementme/core/models/user_model.dart';
 import 'package:managementme/modules/admin/home/employees_screen/repo/employees_repo.dart';
+import 'package:managementme/modules/admin/home/home_screen/controllers/home_controller.dart';
 import 'package:managementme/modules/admin/home/home_screen/repo/home_repo.dart';
 
 class EmployeesEditorController extends GetxController {
   bool _isLocked = true;
   bool get isLoacked => _isLocked;
   bool get isEnabled => !_isLocked;
+  
+  bool _isCheckIn = true;
+  bool get isCheckIn => _isCheckIn;
+  bool get isCheckOut => !_isCheckIn;
 
   bool isSaving = false;
-  bool isCheckedIn = false;
 
   UserModel? employee;
-  late TextEditingController nameController;
-  late TextEditingController emailController;
-  late TextEditingController phoneController;
-  late TextEditingController branchController;
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
 
   BranchModel? branch;
+  BranchModel? selectedBranch;
   UserType selectedRole = UserType.employee;
 
-  @override
-  void onInit() {
-    super.onInit();
-    employee = Get.arguments as UserModel?;
 
-    nameController = TextEditingController(text: employee?.name ?? '');
-    emailController = TextEditingController(text: employee?.email ?? '');
-    phoneController = TextEditingController(text: employee?.phone ?? '');
-    branchController = TextEditingController(text: '');
-  }
-
-  void initWith(UserModel? user) {
+ void initWith(UserModel? user) {
     employee = user;
     if (user != null) {
       nameController.text = user.name;
       emailController.text = user.email;
       phoneController.text = user.phone;
-      branchController.text = "unkown".tr;
       selectedRole = user.role;
+      _isCheckIn = user.isCheckedIn;
       _fetchBranchName(user.branchId);
       _isLocked = true;
     } else {
       nameController.clear();
       emailController.clear();
       phoneController.clear();
-      branchController.clear();
+      _isCheckIn = false;
       _isLocked = false;
     }
-    update();
   }
 
   @override
@@ -58,7 +51,6 @@ class EmployeesEditorController extends GetxController {
     nameController.dispose();
     emailController.dispose();
     phoneController.dispose();
-    branchController.dispose();
     super.onClose();
   }
 
@@ -72,7 +64,8 @@ class EmployeesEditorController extends GetxController {
       name: nameController.text,
       phone: phoneController.text,
       role: selectedRole,
-      isCheckedIn: isCheckedIn
+      isCheckedIn: isCheckIn,
+      branchId: selectedBranch != null ? selectedBranch!.id : '',
     );
 
     isSaving = true;
@@ -82,7 +75,12 @@ class EmployeesEditorController extends GetxController {
 
     if (isClosed) return;
 
+    Get.find<HomeController>().fetchEmployees();
     Get.back();
+  }
+
+  void setBranch(BranchModel? value){
+    selectedBranch = value;
   }
 
   Future<void> _fetchBranchName(String branchId) async {
@@ -91,7 +89,7 @@ class EmployeesEditorController extends GetxController {
 
       if (isClosed) return;
       if (branch != null) {
-        branchController.text = branch!.name;
+        selectedBranch = branch;
         update();
       }
     } catch (e) {
@@ -107,6 +105,16 @@ class EmployeesEditorController extends GetxController {
   bool toggleLock() {
     setIsLoacked(!_isLocked);
     return isLoacked;
+  }
+  
+  void setIsCheckIn(bool b) {
+    _isCheckIn = b;
+    update();
+  }
+
+  bool toggleIsCheckIn() {
+    setIsCheckIn(!_isCheckIn);
+    return isCheckIn;
   }
 
   void setRole(UserType role) {
