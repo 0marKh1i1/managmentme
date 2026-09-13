@@ -245,7 +245,7 @@ class Home extends GetView<HomeController> {
   Widget _buildStatItem(BuildContext ctxt, String label, int value) {
     return Container(
       decoration: BoxDecoration(
-        color: Theme.of(ctxt).colorScheme.primary,
+        color: Theme.of(ctxt).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
       ),
       width: double.infinity,
@@ -272,7 +272,7 @@ class Home extends GetView<HomeController> {
                   ),
                   SizedBox(
                     height: 32,
-                    child:  Icon(Icons.chevron_right, size: 32,),
+                    child:  Icon(Icons.chevron_right, size: 32,color: Theme.of(ctxt).colorScheme.primary,),
                   ),
                 ],
               ),

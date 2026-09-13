@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:managementme/core/constants/app_themes.dart';
 import 'package:managementme/core/models/user_model.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:managementme/core/widgets/check_in_indicator.dart';
 import 'package:managementme/modules/admin/home/employees_screen/controllers/employees_controller.dart';
 
 class UserCard extends StatelessWidget {
@@ -70,14 +71,7 @@ class UserCard extends StatelessWidget {
           ),
           Column(
             children: [
-              Container(
-                padding: EdgeInsets.symmetric(vertical: 5,horizontal: 16),
-                decoration: BoxDecoration(
-                  color: user.isCheckedIn ? AppThemes.checkedInColor : AppThemes.notCheckedInColor,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Text(user.isCheckedIn ? "checked_in".tr : "not_checked_in".tr),
-              ),
+              CheckInIndicator(user),
               SizedBox(height: 10,),
               GetBuilder<EmployeesController>(
                 builder: (controller) {

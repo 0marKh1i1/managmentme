@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:managementme/core/models/branch_model.dart';
 import 'package:managementme/core/models/user_model.dart';
 
