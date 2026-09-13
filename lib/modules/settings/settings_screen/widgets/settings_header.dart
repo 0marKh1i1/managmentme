@@ -30,7 +30,7 @@ class SettingsHeader extends GetView<SettingsController> {
                 builder: (controller) => Text(
                   controller.currentUser?.name.isNotEmpty == true
                       ? controller.currentUser!.name
-                      : 'â€”',
+                      : 'unkown'.tr,
                   style: GoogleFonts.beVietnamPro(
                     color: cs.onSurface.withValues(alpha: 0.8),
                     fontSize: 24,

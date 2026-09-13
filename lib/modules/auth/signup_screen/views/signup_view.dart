@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:managementme/modules/auth/signup_screen/controllers/signup_controller.dart';
 import 'package:managementme/core/widgets/custom_text_field.dart';
-import 'package:managementme/modules/auth/signup_screen/views/widgets/role_toggle_switch.dart';
+import 'package:managementme/core/widgets/role_toggle_switch.dart';
 
 class SignUp extends GetView<SignupController> {
   const SignUp({super.key});
@@ -169,7 +169,12 @@ class SignUp extends GetView<SignupController> {
                           ),
                           const SizedBox(height: 24),
 
-                          RoleToggleSwitch(controller: controller),
+                          Obx(
+                            () => RoleToggleSwitch(
+                              selectedRole: controller.selectedRole.value,
+                              setRole: controller.setRole,
+                            ),
+                          ),
 
                           const SizedBox(height: 40),
                           Text.rich(

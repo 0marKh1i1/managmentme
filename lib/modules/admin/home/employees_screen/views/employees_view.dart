@@ -97,7 +97,7 @@ class EmployeesView extends StatelessWidget {
                           itemCount: controller.employees.length,
                           itemBuilder: (context, index) {
                             final employee = controller.employees[index];
-                            return _buildEmployeeCard(employee);
+                            return _buildEmployeeCard(context,employee);
                           },
                         ),
                         SizedBox(height: bottomSafeHeight),
@@ -113,7 +113,12 @@ class EmployeesView extends StatelessWidget {
     );
   }
 
-  Widget _buildEmployeeCard(UserModel employee) {
-    return UserCard(user: employee);
+  Widget _buildEmployeeCard(BuildContext context ,UserModel employee) {
+    return InkWell(
+        onTap: () {
+          showEmployeesEditorView(context ,user: employee);
+        },
+        child: UserCard(user: employee)
+      );
   }
 }

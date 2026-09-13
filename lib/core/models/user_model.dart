@@ -31,6 +31,36 @@ class UserModel {
     this.checkInLocation,
     this.checkOutLocation,
   });
+  
+  UserModel copyWith({
+    String? id,
+    String? name,
+    String? email,
+    String? phone,
+    UserType? role,
+    String? branchId,
+    String? photoUrl,
+    bool? isCheckedIn,
+    DateTime? checkInTime,
+    DateTime? checkOutTime,
+    GeoPoint? checkInLocation,
+    GeoPoint? checkOutLocation,
+  }) {
+    return UserModel(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      email: email ?? this.email,
+      phone: phone ?? this.phone,
+      role: role ?? this.role,
+      branchId: branchId ?? this.branchId,
+      photoUrl: photoUrl ?? this.photoUrl,
+      isCheckedIn: isCheckedIn ?? this.isCheckedIn,
+      checkInTime: checkInTime ?? this.checkInTime,
+      checkOutTime: checkOutTime ?? this.checkOutTime,
+      checkInLocation: checkInLocation ?? this.checkInLocation,
+      checkOutLocation: checkOutLocation ?? this.checkOutLocation,
+    );
+  }
 
   factory UserModel.fromFirestore(DocumentSnapshot doc) {
     Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
