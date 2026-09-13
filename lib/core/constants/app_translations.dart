@@ -2,10 +2,7 @@ import 'package:get/get.dart';
 
 class AppTranslations extends Translations {
   @override
-  Map<String, Map<String, String>> get keys => {
-        'en_US': en,
-        'ar_SA': ar,
-      };
+  Map<String, Map<String, String>> get keys => {'en_US': en, 'ar_SA': ar};
 
   static final Map<String, String> en = {
     'account': 'Account',
@@ -44,7 +41,8 @@ class AppTranslations extends Translations {
     'failed_to_update_name': 'Failed to update name',
     'failed_to_update_photo': 'Failed to update photo',
     'forgot_password': 'Forgot Password',
-    'forgot_password_instruction': 'Please enter your account\'s email address\nand we will send you a link to reset your password.',
+    'forgot_password_instruction':
+        'Please enter your account\'s email address\nand we will send you a link to reset your password.',
     'forgot_password_prompt': 'Forgot Password?',
     'gallery': 'Gallery',
     'in_progress': 'In Progress',
@@ -61,7 +59,8 @@ class AppTranslations extends Translations {
     'name_empty_error': 'Name cannot be empty',
     'name_updated_successfully': 'Name updated successfully',
     'no_account_prompt': 'Don\'t have an account?',
-    'onboarding_subtitle': 'Make Smart Decisions! Set clear timelines for projects and celebrate your achievements!',
+    'onboarding_subtitle':
+        'Make Smart Decisions! Set clear timelines for projects and celebrate your achievements!',
     'password': 'Password',
     'password_empty_error': 'Password cannot be empty',
     'password_length_error': 'Password must be at least 6 characters',
@@ -92,7 +91,7 @@ class AppTranslations extends Translations {
     'submit_button': 'Submit',
     'admin_role': 'Admin',
     'employee_role': 'Employee',
-    
+
     /** Employee Dashboard */
     'employee_dashboard': 'Employee Dashboard',
     'total_employees': 'Total Employees',
@@ -107,13 +106,23 @@ class AppTranslations extends Translations {
     'employees': 'Employees',
     'attendance': 'Attendance',
 
-    
     /* *employees screen */
     'employees_list': 'Employees List',
     'branch': ' Branch',
     'unkown': 'Unkown',
     "not_checked_in": "Not Checked In",
     "checked_in": "Checked In",
+
+    /* *employees editor */
+    'edit_employee': 'Edit Employee',
+    'employee_name': 'Employee Name',
+    'enter_employee_name': 'Enter employee name',
+    'employee_email': 'Employee Email',
+    'enter_employee_email': 'Enter employee email',
+    'employee_phone': 'Employee Phone',
+    'enter_employee_phone': 'Enter employee phone',
+    'employee_branch': 'Employee Branch',
+    'enter_employee_branch': 'Enter employee branch',
   };
 
   static final Map<String, String> ar = {
@@ -151,7 +160,8 @@ class AppTranslations extends Translations {
     'failed_to_update_name': 'فشل في تحديث الاسم',
     'failed_to_update_photo': 'فشل في تحديث الصورة',
     'forgot_password': 'نسيت كلمة المرور',
-    'forgot_password_instruction': 'يرجى إدخال عنوان البريد الإلكتروني لحسابك\nوسنرسل لك رابطاً لإعادة تعيين كلمة المرور.',
+    'forgot_password_instruction':
+        'يرجى إدخال عنوان البريد الإلكتروني لحسابك\nوسنرسل لك رابطاً لإعادة تعيين كلمة المرور.',
     'forgot_password_prompt': 'نسيت كلمة المرور؟',
     'gallery': 'المعرض',
     'high_priority': 'عالية',
@@ -171,7 +181,8 @@ class AppTranslations extends Translations {
     'name_empty_error': 'لا يمكن أن يكون الاسم فارغاً',
     'name_updated_successfully': 'تم تحديث الاسم بنجاح',
     'no_account_prompt': 'ليس لديك حساب؟',
-    'onboarding_subtitle': 'اتخذ قرارات ذكية! حدد جداول زمنية واضحة للمشاريع واحتفل بإنجازاتك!',
+    'onboarding_subtitle':
+        'اتخذ قرارات ذكية! حدد جداول زمنية واضحة للمشاريع واحتفل بإنجازاتك!',
     'password': 'كلمة المرور',
     'password_empty_error': 'لا يمكن أن تكون كلمة المرور فارغة',
     'password_length_error': 'يجب أن تتكون كلمة المرور من 6 أحرف على الأقل',
@@ -211,7 +222,7 @@ class AppTranslations extends Translations {
     'admin_role': 'المسؤول',
     'employee_role': 'الموظف',
 
-      /** Employee Dashboard */
+    /** Employee Dashboard */
     'employee_dashboard': 'لوحة تحكم الموظف',
     'total_employees': 'اجمالي الموظفين',
     'present_employees': 'الموظفين الحاضرين',
@@ -231,5 +242,16 @@ class AppTranslations extends Translations {
     'unkown': 'غير معروف',
     "not_checked_in": "ليس مسجل الدخول",
     "checked_in": "مسجل الدخول",
+
+    /* *employees editor */
+    'edit_employee': 'تعديل بيانات الموظف',
+    'employee_name': 'اسم الموظف',
+    'enter_employee_name': 'أدخل اسم الموظف',
+    'employee_email': 'البريد الإلكتروني',
+    'enter_employee_email': 'أدخل البريد الإلكتروني للموظف',
+    'employee_phone': 'رقم الهاتف',
+    'enter_employee_phone': 'أدخل رقم هاتف الموظف',
+    'employee_branch': 'الفرع',
+    'enter_employee_branch': 'أدخل فرع الموظف',
   };
 }

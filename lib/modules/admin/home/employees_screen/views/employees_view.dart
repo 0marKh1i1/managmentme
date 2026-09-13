@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:managementme/core/models/user_model.dart';
 import 'package:managementme/core/widgets/user_card.dart';
-import 'package:managementme/modules/admin/home/employees_screen/controllers/employees_editor_controller.dart';
 import 'package:managementme/modules/admin/home/employees_screen/views/employees_editor_view.dart';
 import 'package:managementme/modules/admin/home/home_screen/controllers/home_controller.dart';
 
@@ -19,12 +18,7 @@ class EmployeesView extends StatelessWidget {
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Get.put(EmployeesEditorController());
-          Get.bottomSheet(
-            const EmployeesEditorView(),
-            isScrollControlled: true,
-            useRootNavigator: true,
-          );
+          showEmployeesEditorView(context);
         },
         child: const Icon(Icons.add, size: 40),
       ),

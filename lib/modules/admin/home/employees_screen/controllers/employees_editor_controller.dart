@@ -3,8 +3,11 @@ import 'package:get/get.dart';
 import 'package:managementme/core/models/user_model.dart';
 
 class EmployeesEditorController extends GetxController {
-  UserModel? employee;
+  bool _isLocked = true;
+  bool get isLoacked => _isLocked;
+  bool get isEnabled => !_isLocked;
 
+  UserModel? employee;
   late TextEditingController nameController;
   late TextEditingController emailController;
   late TextEditingController phoneController;
@@ -19,6 +22,12 @@ class EmployeesEditorController extends GetxController {
     emailController = TextEditingController(text: employee?.email ?? '');
     phoneController = TextEditingController(text: employee?.phone ?? '');
     branchController = TextEditingController(text: '');
+
+    if (employee == null) {
+      _isLocked = false;
+    } else {
+      _isLocked = true;
+    }
   }
 
   @override
@@ -33,5 +42,15 @@ class EmployeesEditorController extends GetxController {
   void saveChanges() {
     // todo
     Get.back();
+  }
+
+  void setIsLoacked(bool b) {
+    _isLocked = b;
+    update();
+  }
+
+  bool toggleLock() {
+    setIsLoacked(!_isLocked);
+    return isLoacked;
   }
 }
