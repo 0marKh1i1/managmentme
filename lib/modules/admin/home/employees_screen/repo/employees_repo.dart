@@ -25,6 +25,7 @@ class EmployeesRepo {
     required String pass,
     required String username,
     required UserType role,
+    required bool isEnabled,
     BranchModel? branch,
   }) async {
     FirebaseApp secondaryApp = await Firebase.initializeApp(
@@ -50,6 +51,7 @@ class EmployeesRepo {
               phone: phone,
               role: role,
               branchId: branch == null ? "" : branch.id,
+              isEnabled: isEnabled,
             ).toMap(),
           );
 

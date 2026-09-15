@@ -88,7 +88,7 @@ class OnBoarding extends StatelessWidget {
                         style: GoogleFonts.beVietnamPro(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
-                          color: cs.onSecondary,
+                          color: cs.onPrimary,
                         ),
                       ),
                     ),

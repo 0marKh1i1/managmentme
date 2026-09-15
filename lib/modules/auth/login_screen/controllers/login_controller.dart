@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:managementme/modules/auth/login_screen/repo/login_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -20,19 +21,18 @@ class LoginController extends GetxController {
   }
 
   Future<void> onLoginButton() async {
-    if (isLoading.value) {
-      return;
-    } else {
-      if (formKey.currentState!.validate()) {
-        isLoading.value = true;
-        try {
-          await LoginRepo.login(email: email.text, pass: pass.text);
-          Get.offAllNamed("/root");
-        } on Exception catch (e) {
-          toast('Error', e.toString().replaceAll("Exception: ", ""));
-        } finally {
-          isLoading.value = false;
-        }
+    if (isLoading.value) return;
+
+    if (formKey.currentState!.validate()) {
+      isLoading.value = true;
+      try {
+        await LoginRepo.login(email: email.text, pass: pass.text);
+      } on FirebaseAuthException catch (e) {
+        toast('Error', e.message ?? e.toString());
+      } catch (e) {
+        toast('Error', e.toString());
+      } finally {
+        isLoading.value = false;
       }
     }
   }

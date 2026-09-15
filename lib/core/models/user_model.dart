@@ -11,6 +11,7 @@ class UserModel {
   final String branchId;
   final String? photoUrl;
   final bool isCheckedIn;
+  final bool isEnabled;
   final DateTime? checkInTime;
   final DateTime? checkOutTime;
   final GeoPoint? checkInLocation;
@@ -25,6 +26,7 @@ class UserModel {
     required this.role,
     required this.branchId,
     this.isCheckedIn = false,
+    this.isEnabled = true,
     this.photoUrl,
     this.checkInTime,
     this.checkOutTime,
@@ -41,6 +43,7 @@ class UserModel {
     String? branchId,
     String? photoUrl,
     bool? isCheckedIn,
+    bool? isEnabled,
     DateTime? checkInTime,
     DateTime? checkOutTime,
     GeoPoint? checkInLocation,
@@ -55,6 +58,7 @@ class UserModel {
       branchId: branchId ?? this.branchId,
       photoUrl: photoUrl ?? this.photoUrl,
       isCheckedIn: isCheckedIn ?? this.isCheckedIn,
+      isEnabled: isEnabled ?? this.isEnabled,
       checkInTime: checkInTime ?? this.checkInTime,
       checkOutTime: checkOutTime ?? this.checkOutTime,
       checkInLocation: checkInLocation ?? this.checkInLocation,
@@ -71,6 +75,7 @@ class UserModel {
       phone: data['phone'] ?? '',
       branchId: data['branchId'] ?? '',
       isCheckedIn: data['isCheckedIn'] ?? false,
+      isEnabled: data['isEnabled'] ?? true,
       photoUrl: data['photoUrl'],
       role: UserType.values.firstWhere(
         (e) => e.name == data['role'],
@@ -99,6 +104,7 @@ class UserModel {
       'role': role.name,
       'branchId': branchId,
       'isCheckedIn': isCheckedIn,
+      'isEnabled': isEnabled,
       if (photoUrl != null) 'photoUrl': photoUrl,
       if (checkInTime != null) 'checkInTime': Timestamp.fromDate(checkInTime!),
       if (checkOutTime != null) 'checkOutTime': Timestamp.fromDate(checkOutTime!),

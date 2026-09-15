@@ -41,6 +41,7 @@ class EmployeesEditorController extends GetxController {
       phoneController.text = user.phone;
       selectedRole = user.role;
       _isCheckIn = user.isCheckedIn;
+      _isEmployeeEnabled = user.isEnabled;
       _fetchBranchName(user.branchId);
       _isLocked = true;
     } else {
@@ -49,6 +50,7 @@ class EmployeesEditorController extends GetxController {
       phoneController.clear();
       passwordController.clear();
       _isCheckIn = false;
+      _isEmployeeEnabled = true;
       _isLocked = false;
       isNew = true;
     }
@@ -80,6 +82,7 @@ class EmployeesEditorController extends GetxController {
           pass: passwordController.text,
           username: nameController.text,
           role: selectedRole,
+          isEnabled: _isEmployeeEnabled
         );
       } else {
         updatedEmployee = employee!.copyWith(
@@ -89,6 +92,7 @@ class EmployeesEditorController extends GetxController {
           role: selectedRole,
           isCheckedIn: isCheckIn,
           branchId: selectedBranch != null ? selectedBranch!.id : '',
+          isEnabled: _isEmployeeEnabled,
         );
         await EmployeesRepo.updateUser(updatedEmployee);
       }
@@ -137,8 +141,8 @@ class EmployeesEditorController extends GetxController {
   }
 
   bool toggleEmployeeEnabled() {
-    setIsEmployeeEnabled(!_isLocked);
-    return isLoacked;
+    setIsEmployeeEnabled(!_isEmployeeEnabled);
+    return isEmployeeEnabled;
   }
 
   void setIsCheckIn(bool b) {
