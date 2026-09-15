@@ -45,7 +45,6 @@ class HomeController extends GetxController {
   int _fetchtPresentEmployees() {
     presentEmployees = employees.where((e) => e.isCheckedIn).length;
     return presentEmployees;
-    // todo add actual logic to determine if an employee is present like if the location is within the work area and if they are checked in
   }
 
   int _fetchAbsentEmployees() {

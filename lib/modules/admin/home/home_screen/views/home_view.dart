@@ -116,7 +116,7 @@ class Home extends GetView<HomeController> {
                           _headerItem(
                             'branches'.tr,
                             'assets/images/home/branches.svg',
-                            () {},
+                           () {Get.toNamed('/admin/branches');},
                           ),
                           Spacer(),
                           _headerItem(

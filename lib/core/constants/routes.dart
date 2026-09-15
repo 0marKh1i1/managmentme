@@ -1,5 +1,7 @@
 import 'package:managementme/Modules/auth/login_screen/bindings/login_binding.dart';
 import 'package:managementme/Modules/auth/login_screen/views/login_view.dart';
+import 'package:managementme/modules/admin/home/branches_screen/bindings/branches_bindings.dart';
+import 'package:managementme/modules/admin/home/branches_screen/views/branches_view.dart';
 import 'package:managementme/modules/admin/home/employees_screen/bindings/employees_binding.dart';
 import 'package:managementme/modules/admin/home/employees_screen/views/employees_view.dart';
 import 'package:managementme/modules/auth/forgot_password_screen/views/forgot_password_view.dart';
@@ -17,4 +19,5 @@ final List<GetPage> appRoutes = [
   GetPage(name: "/forgotPassword", page: () => const ForgotPassword()),
   GetPage(name: "/root", page: () => const RootView(), binding: RootBinding()),
   GetPage(name: '/admin/employees', page: () => const EmployeesView() , binding: EmployeesBinding()),
+  GetPage(name: '/admin/branches', page: () => const BranchesView() , binding: BranchesBindings()),
 ];
