@@ -37,7 +37,7 @@ class AppThemes {
     colorScheme: ColorScheme.light(
       surface: Colors.white,
       onSurface: Colors.black,
-      surfaceDim: const Color(0xFF9E9E9E),
+      surfaceDim: const Color.fromARGB(255, 241, 241, 241),
       primary: primaryColor,
       onPrimary: Colors.black,
       secondary: secondaryColor,
@@ -46,7 +46,7 @@ class AppThemes {
       onError: Colors.white,
       outline: const Color(0xFFBDBDBD),
       outlineVariant: const Color(0xFF1E88E5),
-      surfaceContainerHighest: lightScaffoldBg,
+      surfaceContainerHighest: Colors.white,
     ),
   );
 

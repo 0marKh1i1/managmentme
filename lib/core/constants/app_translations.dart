@@ -123,6 +123,17 @@ class AppTranslations extends Translations {
     'enter_employee_phone': 'Enter employee phone',
     'employee_branch': 'Employee Branch',
     'enter_employee_branch': 'Enter employee branch',
+    'employee_password': 'Password',
+    'enter_employee_password': 'Enter employee password',
+    'required_field': 'This field is required',
+    'invalid_email': 'Invalid email address',
+    'password_too_short': 'Password must be at least 8 characters',
+    'invalid_phone': 'Invalid phone number',
+    'please_select_branch': 'Please select a branch before saving',
+    'employee_type': 'Employee Role',
+    'employee_check_in_state': 'Check-in Status',
+    'enable_employee': 'Enable Employee',
+    'employee_enabled_state': 'Allow employee to access and use the app',
   };
 
   static final Map<String, String> ar = {
@@ -253,5 +264,16 @@ class AppTranslations extends Translations {
     'enter_employee_phone': 'أدخل رقم هاتف الموظف',
     'employee_branch': 'الفرع',
     'enter_employee_branch': 'أدخل فرع الموظف',
+    'employee_password': 'كلمة المرور',
+    'enter_employee_password': 'أدخل كلمة مرور الموظف',
+    'required_field': 'هذا الحقل مطلوب',
+    'invalid_email': 'عنوان البريد الإلكتروني غير صالح',
+    'password_too_short': 'يجب أن تتكون كلمة المرور من 8 أحرف على الأقل',
+    'invalid_phone': 'رقم الهاتف غير صالح',
+    'please_select_branch': 'الرجاء اختيار الفرع قبل الحفظ',
+    'employee_type': 'نوع الموظف / الدور',
+    'employee_check_in_state': 'حالة تسجيل الحضور',
+    'enable_employee': 'تفعيل الموظف',
+    'employee_enabled_state': 'السماح للموظف بالوصول إلى النظام واستخدامه',
   };
 }

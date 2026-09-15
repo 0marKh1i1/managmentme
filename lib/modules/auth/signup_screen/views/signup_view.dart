@@ -115,7 +115,10 @@ class SignUp extends GetView<SignupController> {
                             prefixIcon: Icons.phone_outlined,
                             validator: (value) {
                               if (value == null || value.trim().isEmpty) {
-                                return 'phone_empty_error'.tr;
+                                return 'required_field'.tr;
+                              }
+                              if (!GetUtils.isPhoneNumber(value.trim())) {
+                                return 'invalid_phone'.tr;
                               }
                               return null;
                             },

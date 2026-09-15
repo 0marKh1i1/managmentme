@@ -127,126 +127,283 @@ class EmployeesEditorView extends StatelessWidget {
                                 MediaQuery.paddingOf(context).bottom +
                                 24,
                           ),
-                          child: Column(
-                            spacing: 16,
-                            children: [
-                              CircleAvatar(
-                                radius: 50,
-                                backgroundImage:
-                                    (controller.employee != null &&
-                                        controller.employee!.photoUrl != null &&
-                                        controller
-                                            .employee!
-                                            .photoUrl!
-                                            .isNotEmpty)
-                                    ? NetworkImage(
-                                        controller.employee!.photoUrl!,
-                                      )
-                                    : const AssetImage(
-                                        'assets/images/profile.png',
-                                      ),
-                              ),
-                              CustomTextField(
-                                controller: controller.emailController,
-                                labletText: 'employee_email'.tr,
-                                hintText: 'enter_employee_email'.tr,
-                                isEnabled: false,
-                              ),
-                              CustomTextField(
-                                controller: controller.nameController,
-                                labletText: 'employee_name'.tr,
-                                hintText: 'enter_employee_name'.tr,
-                                isEnabled: controller.isEnabled,
-                              ),
-                              CustomTextField(
-                                controller: controller.phoneController,
-                                labletText: 'employee_phone'.tr,
-                                hintText: 'enter_employee_phone'.tr,
-                                isEnabled: controller.isEnabled,
-                              ),
-                              DropdownMenu<BranchModel>(
-                                initialSelection: controller.branch,
-                                enabled: controller.isEnabled,
-                                label: Text('enter_employee_branch'.tr),
-                                inputDecorationTheme: InputDecorationTheme(
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(
-                                      16.0,
-                                    ),
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(16.0),
-                                    borderSide: const BorderSide(
-                                      color: Colors.grey,
-                                    ),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(16.0),
-                                    borderSide: const BorderSide(
-                                      color: Colors.blue,
-                                      width: 2.0,
-                                    ),
-                                  ),
-                                ),
-                                onSelected: (BranchModel? value) {
-                                  controller.setBranch(value);
-                                },
-                                dropdownMenuEntries:
-                                    Get.find<EmployeesController>().branchesList
-                                        .map<DropdownMenuEntry<BranchModel>>((
-                                          BranchModel value,
-                                        ) {
-                                          return DropdownMenuEntry<BranchModel>(
-                                            value: value,
-                                            label: value.name,
-                                          );
-                                        })
-                                        .toList(),
-                              ),
-                              IgnorePointer(
-                                ignoring: controller.isLoacked,
-                                child: RoleToggleSwitch(
-                                  selectedRole: controller.selectedRole,
-                                  setRole: controller.setRole,
-                                ),
-                              ),
-                              IgnorePointer(
-                                ignoring: controller.isLoacked,
-                                child: InkWell(
-                                  onTap: (() => controller.toggleIsCheckIn()),
-                                  child: CheckInIndicator(
-                                    controller.isCheckIn,
-                                    size: 24,
-                                  ),
-                                ),
-                              ),
-                              Divider(color: cs.surfaceDim, thickness: 2),
-
-                              MaterialButton(
-                                splashColor: Colors.transparent,
-                                onPressed: (controller.isEnabled
-                                    ? () => controller.saveChanges()
-                                    : null),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: cs.primary,
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: 40,
-                                    vertical: 6,
-                                  ),
-                                  child: controller.isSaving
-                                      ? CircularProgressIndicator(
-                                          color: cs.onPrimary,
+                          child: Form(
+                            key: controller.formKey,
+                            child: Column(
+                              spacing: 16,
+                              children: [
+                                CircleAvatar(
+                                  radius: 50,
+                                  backgroundImage:
+                                      (controller.employee != null &&
+                                          controller.employee!.photoUrl !=
+                                              null &&
+                                          controller
+                                              .employee!
+                                              .photoUrl!
+                                              .isNotEmpty)
+                                      ? NetworkImage(
+                                          controller.employee!.photoUrl!,
                                         )
-                                      : Text(
-                                          "save".tr,
-                                          style: TextStyle(fontSize: 24),
+                                      : const AssetImage(
+                                          'assets/images/profile.png',
                                         ),
                                 ),
-                              ),
-                            ],
+                                CustomTextField(
+                                  controller: controller.emailController,
+                                  labletText: 'employee_email'.tr,
+                                  hintText: 'enter_employee_email'.tr,
+                                  isEnabled:
+                                      (controller.isNew &&
+                                      controller.isEnabled),
+                                  validator: (value) {
+                                    if ((controller.isNew &&
+                                            controller.isEnabled) &&
+                                        (value == null ||
+                                            value.trim().isEmpty)) {
+                                      return 'required_field'.tr;
+                                    }
+                                    if (!GetUtils.isEmail(
+                                      value?.trim() ?? "",
+                                    )) {
+                                      return 'invalid_email'.tr;
+                                    }
+                                    return null;
+                                  },
+                                ),
+                                if (controller.isNew) ...{
+                                  CustomTextField(
+                                    controller: controller.passwordController,
+                                    labletText: 'employee_password'.tr,
+                                    hintText: 'enter_employee_password'.tr,
+                                    isEnabled: controller.isEnabled,
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'required_field'.tr;
+                                      }
+                                      if (value.length < 8) {
+                                        return 'password_too_short'.tr;
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                },
+                                CustomTextField(
+                                  controller: controller.nameController,
+                                  labletText: 'employee_name'.tr,
+                                  hintText: 'enter_employee_name'.tr,
+                                  isEnabled: controller.isEnabled,
+                                  validator: (value) {
+                                    if (value == null || value.trim().isEmpty) {
+                                      return 'required_field'.tr;
+                                    }
+                                    return null;
+                                  },
+                                ),
+                                CustomTextField(
+                                  controller: controller.phoneController,
+                                  labletText: 'employee_phone'.tr,
+                                  hintText: 'enter_employee_phone'.tr,
+                                  isEnabled: controller.isEnabled,
+                                  validator: (value) {
+                                    if (value == null || value.trim().isEmpty) {
+                                      return 'required_field'.tr;
+                                    }
+                                    if (!GetUtils.isPhoneNumber(value.trim())) {
+                                      return 'invalid_phone'.tr;
+                                    }
+                                    return null;
+                                  },
+                                ),
+
+                                Container(
+                                  padding: EdgeInsets.all(16),
+                                  width: double.maxFinite,
+                                  decoration: BoxDecoration(
+                                    color: cs.surfaceDim,
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  child: Column(
+                                    spacing: 10,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          SizedBox(width: 16),
+                                          Text(
+                                            'employee_branch'.tr,
+                                            style: TextStyle(fontSize: 18),
+                                          ),
+                                        ],
+                                      ),
+                                      DropdownMenu<BranchModel>(
+                                        initialSelection: controller.branch,
+                                        enabled: controller.isEnabled,
+                                        label: Text('enter_employee_branch'.tr),
+                                        inputDecorationTheme:
+                                            InputDecorationTheme(
+                                              border: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(16.0),
+                                              ),
+                                              enabledBorder: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(16.0),
+                                                borderSide: const BorderSide(
+                                                  color: Colors.grey,
+                                                ),
+                                              ),
+                                              focusedBorder: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(16.0),
+                                                borderSide: const BorderSide(
+                                                  color: Colors.blue,
+                                                  width: 2.0,
+                                                ),
+                                              ),
+                                            ),
+                                        onSelected: (BranchModel? value) {
+                                          controller.setBranch(value);
+                                        },
+                                        dropdownMenuEntries:
+                                            Get.find<EmployeesController>()
+                                                .branchesList
+                                                .map<
+                                                  DropdownMenuEntry<BranchModel>
+                                                >((BranchModel value) {
+                                                  return DropdownMenuEntry<
+                                                    BranchModel
+                                                  >(
+                                                    value: value,
+                                                    label: value.name,
+                                                  );
+                                                })
+                                                .toList(),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+
+                                Container(
+                                  padding: EdgeInsets.symmetric(
+                                    vertical: 16,
+                                    horizontal: 8,
+                                  ),
+                                  width: double.maxFinite,
+                                  decoration: BoxDecoration(
+                                    color: cs.surfaceDim,
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  child: Column(
+                                    spacing: 10,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          SizedBox(width: 16),
+                                          Text(
+                                            'employee_type'.tr,
+                                            style: TextStyle(fontSize: 18),
+                                          ),
+                                        ],
+                                      ),
+                                      IgnorePointer(
+                                        ignoring: controller.isLoacked,
+                                        child: RoleToggleSwitch(
+                                          selectedRole: controller.selectedRole,
+                                          setRole: controller.setRole,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+
+                                Container(
+                                  padding: EdgeInsets.all(16),
+                                  width: double.maxFinite,
+                                  decoration: BoxDecoration(
+                                    color: cs.surfaceDim,
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  child: Column(
+                                    spacing: 10,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          SizedBox(width: 16),
+                                          Text(
+                                            'employee_check_in_state'.tr,
+                                            style: TextStyle(fontSize: 18),
+                                          ),
+                                        ],
+                                      ),
+                                      Center(
+                                        child: IgnorePointer(
+                                          ignoring: controller.isLoacked,
+                                          child: InkWell(
+                                            onTap: (() =>
+                                                controller.toggleIsCheckIn()),
+                                            child: CheckInIndicator(
+                                              controller.isCheckIn,
+                                              size: 24,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+
+                                Container(
+                                  decoration: BoxDecoration(
+                                    color: cs.surfaceDim,
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  child: SwitchListTile.adaptive(
+                                    inactiveThumbColor: cs.onSurface,
+                                    title: Text('enable_employee'.tr),
+                                    subtitle: Text(
+                                      'employee_enabled_state'.tr,
+                                      style: TextStyle(fontSize: 10),
+                                    ),
+                                    value: controller.isEmployeeEnabled,
+                                    onChanged: (bool newValue) {
+                                      controller.setIsEmployeeEnabled(newValue);
+                                    },
+                                  ),
+                                ),
+                                Divider(color: cs.surfaceDim, thickness: 2),
+
+                                MaterialButton(
+                                  splashColor: Colors.transparent,
+                                  onPressed: (controller.isEnabled
+                                      ? () => controller.saveChanges()
+                                      : null),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: cs.primary,
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 40,
+                                      vertical: 6,
+                                    ),
+                                    child: controller.isSaving
+                                        ? CircularProgressIndicator(
+                                            color: cs.onPrimary,
+                                          )
+                                        : Text(
+                                            "save".tr,
+                                            style: TextStyle(fontSize: 24),
+                                          ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
