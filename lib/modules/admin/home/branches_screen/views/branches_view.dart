@@ -123,10 +123,10 @@ class BranchesView extends StatelessWidget {
     return InkWell(
       onTap: () {showBranchesEditorView(context , branch: branch);},
       child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8.0),
-        padding: const EdgeInsets.all(16.0),
+        margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+        padding: const EdgeInsets.symmetric(vertical: 16.0 , horizontal: 24),
         decoration: BoxDecoration(
-          color: cs.surface,
+          color: cs.surfaceDim,
           borderRadius: BorderRadius.circular(16),
           boxShadow: const [
             BoxShadow(

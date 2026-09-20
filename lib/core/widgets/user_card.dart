@@ -19,7 +19,7 @@ class UserCard extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8.0),
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
-        color: colorScheme.surface,
+        color: colorScheme.surfaceDim,
         borderRadius: BorderRadius.circular(16),
         boxShadow: const [
           BoxShadow(
