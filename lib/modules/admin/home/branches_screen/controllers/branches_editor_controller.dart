@@ -32,6 +32,22 @@ class BranchesEditorController extends GetxController {
   bool isPickingLocation = false;
 
   TimeOfDay selectedTime = const TimeOfDay(hour: 9, minute: 0);
+  Duration selectedWorkingHours = const Duration(hours: 8);
+
+
+  Duration get _checkInDuration =>
+      Duration(hours: selectedTime.hour, minutes: selectedTime.minute);
+
+  String _fmt(Duration d) {
+    final total = d.inMinutes % (24 * 60);
+    final h = (total ~/ 60).toString().padLeft(2, '0');
+    final m = (total % 60).toString().padLeft(2, '0');
+    return '$h:$m';
+  }
+
+  String get workingHoursText => _fmt(selectedWorkingHours);
+  String get firstCheckOutText => _fmt(_checkInDuration + selectedWorkingHours);
+
 
   @override
   void onInit() {
@@ -55,6 +71,7 @@ class BranchesEditorController extends GetxController {
         hour: branch.lastCheckInTime.inHours,
         minute: branch.lastCheckInTime.inMinutes % 60,
       );
+      selectedWorkingHours = branch.workingHours;
       isNew = false;
     } else {
       nameController.clear();
@@ -65,6 +82,7 @@ class BranchesEditorController extends GetxController {
         zoom: 14,
       );
       selectedTime = const TimeOfDay(hour: 9, minute: 0);
+      selectedWorkingHours = const Duration(hours: 8);
       isNew = true;
     }
 
@@ -162,6 +180,7 @@ class BranchesEditorController extends GetxController {
     return isLoacked;
   }
 
+
   Future<void> pickTime(BuildContext context) async {
     final TimeOfDay? newTime = await showTimePicker(
       context: context,
@@ -170,6 +189,29 @@ class BranchesEditorController extends GetxController {
 
     if (newTime != null) {
       selectedTime = newTime;
+      update();
+    }
+  }
+
+  Future<void> pickWorkingHours(BuildContext context) async {
+    final TimeOfDay? picked = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay(
+        hour: selectedWorkingHours.inHours,
+        minute: selectedWorkingHours.inMinutes % 60,
+      ),
+      helpText: 'working_hours'.tr,
+      builder: (context, child) => MediaQuery(
+        data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
+        child: child!,
+      ),
+    );
+
+    if (picked != null) {
+      selectedWorkingHours = Duration(
+        hours: picked.hour,
+        minutes: picked.minute,
+      );
       update();
     }
   }
@@ -187,6 +229,10 @@ class BranchesEditorController extends GetxController {
       toast('error'.tr, 'select_location'.tr);
       return;
     }
+    if (selectedWorkingHours == Duration.zero) {
+      toast('error'.tr, 'working_hours_required'.tr);
+      return;
+    }
 
     final radius = double.parse(fenceRadiusController.text);
     final name = nameController.text.trim();
@@ -194,10 +240,7 @@ class BranchesEditorController extends GetxController {
       selectedLocation!.latitude,
       selectedLocation!.longitude,
     );
-    final checkInTime = Duration(
-      hours: selectedTime.hour,
-      minutes: selectedTime.minute,
-    );
+    final checkInTime = _checkInDuration;
 
     isSaving = true;
     update();
@@ -211,6 +254,7 @@ class BranchesEditorController extends GetxController {
             location: location,
             fenceRadius: radius,
             lastCheckInTime: checkInTime,
+            workingHours: selectedWorkingHours,
           ),
         );
       } else {
@@ -220,6 +264,7 @@ class BranchesEditorController extends GetxController {
             location: location,
             fenceRadius: radius,
             lastCheckInTime: checkInTime,
+            workingHours: selectedWorkingHours,
           ),
         );
       }

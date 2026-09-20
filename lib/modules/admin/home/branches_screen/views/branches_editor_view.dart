@@ -204,6 +204,66 @@ class BranchesEditorView extends StatelessWidget {
                                     ),
                                   ),
                                 ),
+
+                                InkWell(
+                                  onTap: controller.isEnabled
+                                      ? () => controller.pickWorkingHours(
+                                          context,
+                                        )
+                                      : null,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: cs.surfaceDim,
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    width: double.infinity,
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 16,
+                                      horizontal: 16,
+                                    ),
+                                    child: Opacity(
+                                      opacity: controller.isEnabled ? 1 : 0.5,
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'working_hours'.tr,
+                                            style: const TextStyle(
+                                              fontSize: 22,
+                                            ),
+                                          ),
+                                          Row(
+                                            spacing: 8,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
+                                            children: [
+                                              Text(
+                                                controller.workingHoursText,
+                                                style: const TextStyle(
+                                                  fontSize: 32,
+                                                ),
+                                              ),
+                                              const Icon(
+                                                Icons.hourglass_bottom,
+                                                size: 32,
+                                              ),
+                                            ],
+                                          ),
+                                          Text(
+                                            '${'first_check_out_time'.tr}: ${controller.firstCheckOutText}',
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              color: cs.onSurfaceVariant,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+
                                 ClipRRect(
                                   borderRadius: BorderRadius.circular(12),
                                   child: SizedBox(
@@ -217,9 +277,8 @@ class BranchesEditorView extends StatelessWidget {
                                           initialCameraPosition:
                                               controller.initialPosition,
                                           onCameraMove: controller.onCameraMove,
-                                            markers: controller.markers,
+                                          markers: controller.markers,
                                           circles: controller.circles,
-
                                           gestureRecognizers: {
                                             Factory<
                                               OneSequenceGestureRecognizer
@@ -293,6 +352,7 @@ class BranchesEditorView extends StatelessWidget {
                                       ),
                                     ],
                                   ),
+
                                 Container(
                                   decoration: BoxDecoration(
                                     color: cs.surfaceDim,

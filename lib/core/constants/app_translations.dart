@@ -146,6 +146,8 @@ class AppTranslations extends Translations {
     'confirm_location': 'Confirm Location',
     'branch_fence_radius': 'Fence Radius',
     'enter_branch_fence_radius': 'Enter fence radius',
+    'working_hours': 'Working Hours',
+    'first_check_out_time': 'First Check-out Time',
     
   };
 
@@ -300,5 +302,7 @@ class AppTranslations extends Translations {
     'confirm_location': 'تأكيد الموقع',
     'branch_fence_radius': 'النطاق الجغرافي للفرع',
     'enter_branch_fence_radius': 'أدخل النطاق الجغرافي',
+    'working_hours': 'ساعات العمل',
+    'first_check_out_time': 'أول موعد لتسجيل الانصراف',
   };
 }
