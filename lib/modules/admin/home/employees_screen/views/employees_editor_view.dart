@@ -371,9 +371,13 @@ class EmployeesEditorView extends StatelessWidget {
                                       style: TextStyle(fontSize: 10),
                                     ),
                                     value: controller.isEmployeeEnabled,
-                                    onChanged: controller.isEnabled ? (bool newValue) {
-                                      controller.setIsEmployeeEnabled(newValue);
-                                    } : null,
+                                    onChanged: controller.isEnabled
+                                        ? (bool newValue) {
+                                            controller.setIsEmployeeEnabled(
+                                              newValue,
+                                            );
+                                          }
+                                        : null,
                                   ),
                                 ),
                                 Divider(color: cs.surfaceDim, thickness: 2),

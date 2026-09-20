@@ -3,7 +3,8 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:managementme/core/constants/app_themes.dart';
 import 'package:managementme/core/models/branch_model.dart';
-import 'package:managementme/modules/admin/home/branches_screen/controllers/branches_cotroller.dart';
+import 'package:managementme/modules/admin/home/branches_screen/controllers/branches_controller.dart';
+import 'package:managementme/modules/admin/home/branches_screen/views/branches_editor_view.dart';
 
 class BranchesView extends StatelessWidget {
   const BranchesView({super.key});
@@ -17,7 +18,7 @@ class BranchesView extends StatelessWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {showBranchesEditorView(context);},
         child: const Icon(Icons.add, size: 40),
       ),
       body: Column(
@@ -84,7 +85,7 @@ class BranchesView extends StatelessWidget {
                 ),
                 color: cs.surface,
               ),
-              child: GetBuilder<BranchesCotroller>(
+              child: GetBuilder<BranchesController>(
                 builder: (controller) {
                   if (controller.isLoading) {
                     return SizedBox(
@@ -120,7 +121,7 @@ class BranchesView extends StatelessWidget {
   Widget _buildEmployeeCard(BuildContext context, BranchModel branch) {
     final cs = Theme.of(context).colorScheme;
     return InkWell(
-      onTap: () {},
+      onTap: () {showBranchesEditorView(context , branch: branch);},
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8.0),
         padding: const EdgeInsets.all(16.0),

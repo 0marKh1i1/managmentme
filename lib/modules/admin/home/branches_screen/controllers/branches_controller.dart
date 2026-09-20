@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:managementme/core/models/branch_model.dart';
 import 'package:managementme/modules/admin/home/home_screen/repo/home_repo.dart';
 
-class BranchesCotroller extends GetxController {
+class BranchesController extends GetxController {
   List<BranchModel> branchesList = [];
   bool isLoading = true;
 
