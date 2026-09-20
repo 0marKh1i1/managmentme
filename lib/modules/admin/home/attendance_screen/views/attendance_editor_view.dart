@@ -72,7 +72,7 @@ class AttendanceEditorView extends StatelessWidget {
                             Row(
                               children: [
                                 Text(
-                                  attendance == null
+                                  controller.isNew
                                       ? "add_attendance".tr
                                       : "edit_attendance".tr,
                                   style: const TextStyle(fontSize: 24),
@@ -160,7 +160,7 @@ class AttendanceEditorView extends StatelessWidget {
                                           child: Text(user.name),
                                         );
                                       }).toList(),
-                                      onChanged: controller.isEnabled
+                                      onChanged: (controller.isEnabled && controller.isNew)
                                           ? (UserModel? newValue) {
                                               if (newValue != null) {
                                                 controller.selectUser(newValue);
@@ -207,7 +207,7 @@ class AttendanceEditorView extends StatelessWidget {
                                 ),
 
                                 InkWell(
-                                  onTap: controller.isEnabled
+                                  onTap: (controller.isEnabled && controller.isNew)
                                       ? () => controller.pickDate(context)
                                       : null,
                                   child: Container(
@@ -327,7 +327,7 @@ class AttendanceEditorView extends StatelessWidget {
                                           AttendanceStatus
                                         >(
                                           value: status,
-                                          child: Text(status.name),
+                                          child: Text(status.name.tr),
                                         );
                                       }).toList(),
                                       onChanged: controller.isEnabled
