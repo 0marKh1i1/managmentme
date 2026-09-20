@@ -7,9 +7,10 @@ class BranchesController extends GetxController {
   List<BranchModel> branchesList = [];
   bool isLoading = true;
 
-  Future<void> _fetchBranches() async {
+  Future<void> fetchBranches() async {
     final branches = await HomeRepo.getBranchs();
     branchesList = branches.values.toList();
+    update();
   }
 
   @override
@@ -23,7 +24,7 @@ class BranchesController extends GetxController {
       isLoading = true;
       update();
 
-      await _fetchBranches();
+      await fetchBranches();
     } catch (e) {
       debugPrint("Error initializing data: $e");
     } finally {
@@ -31,4 +32,5 @@ class BranchesController extends GetxController {
       update();
     }
   }
+  
 }

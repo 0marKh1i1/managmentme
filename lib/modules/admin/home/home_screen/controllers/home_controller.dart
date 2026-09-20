@@ -80,8 +80,7 @@ class HomeController extends GetxController {
         ).then((branch) => branch.lastCheckInTime).catchError((e) {
           debugPrint("branch time check in Error: $e");
           return Duration(minutes: 0);
-        }) ??
-        Duration(minutes: 0);
+        });
 
     DateTime lastCheckIn = todayDateOnly.add(lastCheckInTimeOnly);
 

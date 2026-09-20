@@ -1,9 +1,12 @@
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:managementme/core/models/branch_model.dart';
 import 'package:managementme/core/widgets/custom_text_field.dart';
-import 'package:managementme/core/widgets/toast.dart';
 import 'package:managementme/modules/admin/home/branches_screen/controllers/branches_editor_controller.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 void showBranchesEditorView(BuildContext context, {BranchModel? branch}) {
   showModalBottomSheet(
@@ -129,47 +132,228 @@ class BranchesEditorView extends StatelessWidget {
                             child: Column(
                               spacing: 16,
                               children: [
-                                CustomTextField(
-                                  controller: controller.nameController,
-                                  labletText: 'branch_name'.tr,
-                                  hintText: 'enter_branch_name'.tr,
-                                  isEnabled: (controller.isEnabled),
-                                  validator: (value) {
-                                    if ((controller.isNew && controller.isEnabled) && (value == null || value.trim().isEmpty)) {
-                                      return 'required_field'.tr;
-                                    }
-                                    return null;
-                                  },
+                                Container(
+                                  decoration: BoxDecoration(
+                                    color: cs.surfaceDim,
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  padding: EdgeInsets.symmetric(
+                                    vertical: 16,
+                                    horizontal: 8,
+                                  ),
+                                  child: CustomTextField(
+                                    controller: controller.nameController,
+                                    labletText: 'branch_name'.tr,
+                                    hintText: 'enter_branch_name'.tr,
+                                    isEnabled: (controller.isEnabled),
+                                    validator: (value) {
+                                      if ((controller.isNew &&
+                                              controller.isEnabled) &&
+                                          (value == null ||
+                                              value.trim().isEmpty)) {
+                                        return 'required_field'.tr;
+                                      }
+                                      return null;
+                                    },
+                                  ),
                                 ),
-                                CustomTextField(
-                                  controller: controller.lastCheckInController,
-                                  labletText: 'branch_last_check_in_time'.tr,
-                                  hintText: 'enter_last_check_in_time'.tr,
-                                  isEnabled: (controller.isEnabled),
-                                  validator: (value) {
-                                    if ((controller.isNew && controller.isEnabled) && (value == null || value.trim().isEmpty)) {
-                                      return 'required_field'.tr;
-                                    }
-                                    return null;
-                                  },
+
+                                InkWell(
+                                  onTap: controller.isEnabled
+                                      ? () {
+                                          controller.pickTime(context);
+                                        }
+                                      : null,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: cs.surfaceDim,
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    width: double.infinity,
+                                    padding: EdgeInsets.symmetric(
+                                      vertical: 16,
+                                      horizontal: 16,
+                                    ),
+                                    child: Opacity(
+                                      opacity: controller.isEnabled ? 1 : 0.5,
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Text(
+                                                'last_check_in_time'.tr,
+                                                style: TextStyle(fontSize: 22),
+                                              ),
+                                            ],
+                                          ),
+                                          Row(
+                                            spacing: 8,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
+                                            children: [
+                                              Text(
+                                                style: TextStyle(fontSize: 32),
+                                                "${controller.selectedTime.hour.toString().padLeft(2, '0')}:${controller.selectedTime.minute.toString().padLeft(2, '0')}",
+                                              ),
+                                              Icon(Icons.timelapse, size: 32),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
                                 ),
-                                CustomTextField(
-                                  controller: controller.fenceRadiusController,
-                                  labletText: 'branch_fence_radius'.tr,
-                                  hintText: 'enter_branch_fence_radius'.tr,
-                                  isEnabled: (controller.isEnabled),
-                                  validator: (value) {
-                                    if ((controller.isNew && controller.isEnabled) && (value == null || value.trim().isEmpty)) {
-                                      return 'required_field'.tr;
-                                    }
-                                    return null;
-                                  },
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(12),
+                                  child: SizedBox(
+                                    height: 200,
+                                    width: double.infinity,
+                                    child: Stack(
+                                      children: [
+                                        GoogleMap(
+                                          onMapCreated: (c) =>
+                                              controller.mapController = c,
+                                          initialCameraPosition:
+                                              controller.initialPosition,
+                                          onCameraMove: controller.onCameraMove,
+                                          onCameraIdle: controller.onCameraIdle,
+                                          markers: controller.markers,
+                                          circles: controller.circles,
+
+                                          gestureRecognizers: {
+                                            Factory<
+                                              OneSequenceGestureRecognizer
+                                            >(() => EagerGestureRecognizer()),
+                                          },
+                                        ),
+                                        if (controller.isPickingLocation)
+                                          const IgnorePointer(
+                                            child: Center(
+                                              child: Padding(
+                                                padding: EdgeInsets.only(
+                                                  bottom: 40,
+                                                ),
+                                                child: Icon(
+                                                  Icons.location_pin,
+                                                  size: 40,
+                                                  color: Colors.blue,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.all(4),
+                                              child: IconButton(
+                                                onPressed: () => controller
+                                                    .animateToLocation(),
+                                                icon: Icon(
+                                                  Icons.gps_fixed,
+                                                  size: 32,
+                                                  color: Colors.blue,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ),
-                               MaterialButton(
-                                child: Text("dasdsaj"),
-                                onPressed: (){
-                                toast("title","");
-                               })
+                                if (!controller.isPickingLocation)
+                                  SizedBox(
+                                    width: double.infinity,
+                                    child: OutlinedButton.icon(
+                                      onPressed: controller.isEnabled
+                                          ? controller.startPickingLocation
+                                          : null,
+                                      icon: const Icon(Icons.edit_location_alt),
+                                      label: Text('change_location'.tr),
+                                    ),
+                                  )
+                                else
+                                  Row(
+                                    spacing: 12,
+                                    children: [
+                                      Expanded(
+                                        child: OutlinedButton(
+                                          onPressed:
+                                              controller.cancelPickingLocation,
+                                          child: Text('cancel'.tr),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: FilledButton(
+                                          onPressed: controller.confirmLocation,
+                                          child: Text('confirm_location'.tr),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    color: cs.surfaceDim,
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  padding: EdgeInsets.symmetric(
+                                    vertical: 16,
+                                    horizontal: 8,
+                                  ),
+                                  child: CustomTextField(
+                                    controller:
+                                        controller.fenceRadiusController,
+                                    labletText: 'branch_fence_radius'.tr,
+                                    hintText: 'enter_branch_fence_radius'.tr,
+                                    type: TextInputType.numberWithOptions(
+                                      decimal: true,
+                                    ),
+                                    formatter: <TextInputFormatter>[
+                                      FilteringTextInputFormatter.allow(
+                                        RegExp(r'^\d*\.?\d*'),
+                                      ),
+                                    ],
+                                    isEnabled: (controller.isEnabled),
+                                    validator: (value) {
+                                      if ((controller.isNew &&
+                                              controller.isEnabled) &&
+                                          (value == null ||
+                                              value.trim().isEmpty)) {
+                                        return 'required_field'.tr;
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                ),
+                                Divider(color: cs.surfaceDim, thickness: 2),
+
+                                MaterialButton(
+                                  splashColor: Colors.transparent,
+                                  onPressed: (controller.isEnabled
+                                      ? () => controller.saveChanges()
+                                      : null),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: cs.primary,
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 40,
+                                      vertical: 6,
+                                    ),
+                                    child: controller.isSaving
+                                        ? CircularProgressIndicator(
+                                            color: cs.onPrimary,
+                                          )
+                                        : Text(
+                                            "save".tr,
+                                            style: TextStyle(fontSize: 24),
+                                          ),
+                                  ),
+                                ),
                               ],
                             ),
                           ),

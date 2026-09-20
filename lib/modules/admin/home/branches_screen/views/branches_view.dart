@@ -47,7 +47,7 @@ class BranchesView extends StatelessWidget {
                 ),
                 Spacer(),
                 Text(
-                  "employees_list".tr,
+                  "branches_list".tr,
                   style: TextStyle(
                     fontSize: 18,
                     color: cs.onSurface,

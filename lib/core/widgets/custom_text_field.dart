@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CustomTextField extends StatelessWidget {
@@ -11,6 +12,8 @@ class CustomTextField extends StatelessWidget {
   final String? Function(String?)? validator;
   final void Function(String)? onChanged;
   final bool isEnabled;
+  final TextInputType? type;
+  final List<TextInputFormatter>? formatter;
 
   const CustomTextField({
     super.key,
@@ -23,6 +26,8 @@ class CustomTextField extends StatelessWidget {
     this.validator,
     this.onChanged,
     this.isEnabled = true,
+    this.type,
+    this.formatter,
   });
 
   @override
@@ -45,6 +50,8 @@ class CustomTextField extends StatelessWidget {
             obscureText: obscureText,
             onChanged: onChanged,
             enabled: isEnabled,
+            keyboardType: type,
+            inputFormatters: formatter,
             decoration: InputDecoration(
               hintText: hintText,
               hintStyle: GoogleFonts.roboto(
