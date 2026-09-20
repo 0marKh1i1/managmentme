@@ -217,8 +217,7 @@ class BranchesEditorView extends StatelessWidget {
                                           initialCameraPosition:
                                               controller.initialPosition,
                                           onCameraMove: controller.onCameraMove,
-                                          onCameraIdle: controller.onCameraIdle,
-                                          markers: controller.markers,
+                                            markers: controller.markers,
                                           circles: controller.circles,
 
                                           gestureRecognizers: {

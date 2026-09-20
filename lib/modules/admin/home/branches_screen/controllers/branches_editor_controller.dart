@@ -17,13 +17,13 @@ class BranchesEditorController extends GetxController {
   bool isNew = false;
   bool isSaving = false;
 
-  late BranchModel? branch;
+  BranchModel? branch;
 
   final TextEditingController nameController = TextEditingController();
   final TextEditingController fenceRadiusController = TextEditingController();
 
   GoogleMapController? mapController;
-  var initialPosition = CameraPosition(
+  CameraPosition initialPosition = const CameraPosition(
     target: LatLng(31.9539, 35.9106),
     zoom: 14,
   );
@@ -31,10 +31,18 @@ class BranchesEditorController extends GetxController {
   LatLng? _cameraCenter;
   bool isPickingLocation = false;
 
-  TimeOfDay selectedTime = TimeOfDay(hour: 9 , minute: 0);
+  TimeOfDay selectedTime = const TimeOfDay(hour: 9, minute: 0);
+
+  @override
+  void onInit() {
+    super.onInit();
+    fenceRadiusController.addListener(update);
+  }
 
   void initWith(BranchModel? branch) {
     this.branch = branch;
+    isPickingLocation = false;
+
     if (branch != null) {
       nameController.text = branch.name;
       fenceRadiusController.text = branch.fenceRadius.toString();
@@ -56,9 +64,11 @@ class BranchesEditorController extends GetxController {
         target: LatLng(31.9539, 35.9106),
         zoom: 14,
       );
+      selectedTime = const TimeOfDay(hour: 9, minute: 0);
       isNew = true;
     }
-    fenceRadiusController.addListener(update);
+
+    _cameraCenter = initialPosition.target;
     mapController?.animateCamera(
       CameraUpdate.newCameraPosition(initialPosition),
     );
@@ -70,8 +80,10 @@ class BranchesEditorController extends GetxController {
     fenceRadiusController.removeListener(update);
     nameController.dispose();
     fenceRadiusController.dispose();
+    mapController = null;
     super.onClose();
   }
+
 
   Set<Marker> get markers => (selectedLocation == null || isPickingLocation)
       ? {}
@@ -85,21 +97,19 @@ class BranchesEditorController extends GetxController {
           ),
         };
 
-  void onCameraMove(CameraPosition position) {
-    _cameraCenter = position.target;
-  }
-
   Set<Circle> get circles {
-    final center = isPickingLocation ? _cameraCenter : selectedLocation;
     final radius = double.tryParse(fenceRadiusController.text);
-    if (center == null || radius == null || radius <= 0 || isPickingLocation) {
+    if (selectedLocation == null ||
+        radius == null ||
+        radius <= 0 ||
+        isPickingLocation) {
       return {};
     }
 
     return {
       Circle(
         circleId: const CircleId('fence'),
-        center: center,
+        center: selectedLocation!,
         radius: radius,
         fillColor: Colors.blue.withValues(alpha: 0.15),
         strokeColor: Colors.blue,
@@ -108,8 +118,8 @@ class BranchesEditorController extends GetxController {
     };
   }
 
-  void onCameraIdle() {
-    if (!isPickingLocation) update();
+  void onCameraMove(CameraPosition position) {
+    _cameraCenter = position.target;
   }
 
   void animateToLocation() {
@@ -120,21 +130,26 @@ class BranchesEditorController extends GetxController {
 
   void startPickingLocation() {
     isPickingLocation = true;
+    if (selectedLocation != null) {
+      _cameraCenter = selectedLocation;
+    }
     animateToLocation();
     update();
   }
 
   void confirmLocation() {
-    selectedLocation = _cameraCenter;
+    selectedLocation = _cameraCenter ?? selectedLocation;
     isPickingLocation = false;
     update();
   }
 
   void cancelPickingLocation() {
+    if (!isPickingLocation) return;
     isPickingLocation = false;
     update();
     animateToLocation();
   }
+
 
   void setIsLoacked(bool b) {
     _isLocked = b;
@@ -159,12 +174,31 @@ class BranchesEditorController extends GetxController {
     }
   }
 
-  void saveChanges() async {
-    if (!formKey.currentState!.validate()) {
+
+  Future<void> saveChanges() async {
+    if (isSaving) return;
+
+    if (isPickingLocation) {
+      toast('error'.tr, 'confirm_or_cancel_location'.tr);
+      return;
+    }
+    if (!formKey.currentState!.validate()) return;
+    if (selectedLocation == null) {
+      toast('error'.tr, 'select_location'.tr);
       return;
     }
 
-    BranchModel updatedBranch;
+    final radius = double.parse(fenceRadiusController.text);
+    final name = nameController.text.trim();
+    final location = GeoPoint(
+      selectedLocation!.latitude,
+      selectedLocation!.longitude,
+    );
+    final checkInTime = Duration(
+      hours: selectedTime.hour,
+      minutes: selectedTime.minute,
+    );
+
     isSaving = true;
     update();
 
@@ -173,25 +207,21 @@ class BranchesEditorController extends GetxController {
         await BranchesRepo.createBranch(
           BranchModel(
             id: "",
-            name: nameController.text,
-            location: GeoPoint(
-              selectedLocation!.latitude,
-              selectedLocation!.longitude,
-            ),
-            fenceRadius: double.tryParse(fenceRadiusController.text)!,
-            lastCheckInTime:  Duration(hours: selectedTime.hour, minutes: selectedTime.minute),
+            name: name,
+            location: location,
+            fenceRadius: radius,
+            lastCheckInTime: checkInTime,
           ),
         );
       } else {
-        updatedBranch = branch!.copyWith(
-          name: nameController.text,
-          location: GeoPoint(
-            selectedLocation!.latitude,
-            selectedLocation!.longitude,
+        await BranchesRepo.updatBranch(
+          branch!.copyWith(
+            name: name,
+            location: location,
+            fenceRadius: radius,
+            lastCheckInTime: checkInTime,
           ),
-          fenceRadius: double.tryParse(fenceRadiusController.text)!,
         );
-        await BranchesRepo.updatBranch(updatedBranch);
       }
       if (isClosed) return;
       Get.find<BranchesController>().fetchBranches();
@@ -200,7 +230,7 @@ class BranchesEditorController extends GetxController {
       debugPrint(e.toString());
       toast('error'.tr, e.toString());
       isSaving = false;
-      update();
+      if (!isClosed) update();
     }
   }
 }

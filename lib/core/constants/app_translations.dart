@@ -134,6 +134,19 @@ class AppTranslations extends Translations {
     'employee_check_in_state': 'Check-in Status',
     'enable_employee': 'Enable Employee',
     'employee_enabled_state': 'Allow employee to access and use the app',
+
+    /* *branch editor */
+    'confirm_or_cancel_location': 'Please confirm or cancel the location selection',
+    'select_location': 'Please select a location',
+    'edit_branch': 'Edit Branch',
+    'branch_name': 'Branch Name',
+    'enter_branch_name': 'Enter branch name',
+    'last_check_in_time': 'Last Check-in Time',
+    'change_location': 'Change Location',
+    'confirm_location': 'Confirm Location',
+    'branch_fence_radius': 'Fence Radius',
+    'enter_branch_fence_radius': 'Enter fence radius',
+    
   };
 
   static final Map<String, String> ar = {
@@ -275,5 +288,17 @@ class AppTranslations extends Translations {
     'employee_check_in_state': 'حالة تسجيل الحضور',
     'enable_employee': 'تفعيل الموظف',
     'employee_enabled_state': 'السماح للموظف بالوصول إلى النظام واستخدامه',
+    
+    /* *branch editor */
+    'confirm_or_cancel_location': 'يرجى تأكيد أو إلغاء تحديد الموقع',
+    'select_location': 'يرجى تحديد الموقع',
+    'edit_branch': 'تعديل الفرع',
+    'branch_name': 'اسم الفرع',
+    'enter_branch_name': 'أدخل اسم الفرع',
+    'last_check_in_time': 'آخر موعد لتسجيل الحضور',
+    'change_location': 'تغيير الموقع',
+    'confirm_location': 'تأكيد الموقع',
+    'branch_fence_radius': 'النطاق الجغرافي للفرع',
+    'enter_branch_fence_radius': 'أدخل النطاق الجغرافي',
   };
 }
