@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:managementme/core/models/branch_model.dart';
+import 'package:managementme/core/widgets/custom_text_field.dart';
+import 'package:managementme/core/widgets/toast.dart';
 import 'package:managementme/modules/admin/home/branches_screen/controllers/branches_editor_controller.dart';
 
 void showBranchesEditorView(BuildContext context, {BranchModel? branch}) {
@@ -10,7 +12,7 @@ void showBranchesEditorView(BuildContext context, {BranchModel? branch}) {
     useRootNavigator: true,
     backgroundColor: Colors.transparent,
     barrierColor: Colors.black.withValues(alpha: 0.55),
-    builder: (_) => BranchesEditorView(branch: branch,),
+    builder: (_) => BranchesEditorView(branch: branch),
   );
 }
 
@@ -127,8 +129,49 @@ class BranchesEditorView extends StatelessWidget {
                             child: Column(
                               spacing: 16,
                               children: [
-                                Text("hi"),
-                              ] ),
+                                CustomTextField(
+                                  controller: controller.nameController,
+                                  labletText: 'branch_name'.tr,
+                                  hintText: 'enter_branch_name'.tr,
+                                  isEnabled: (controller.isEnabled),
+                                  validator: (value) {
+                                    if ((controller.isNew && controller.isEnabled) && (value == null || value.trim().isEmpty)) {
+                                      return 'required_field'.tr;
+                                    }
+                                    return null;
+                                  },
+                                ),
+                                CustomTextField(
+                                  controller: controller.lastCheckInController,
+                                  labletText: 'branch_last_check_in_time'.tr,
+                                  hintText: 'enter_last_check_in_time'.tr,
+                                  isEnabled: (controller.isEnabled),
+                                  validator: (value) {
+                                    if ((controller.isNew && controller.isEnabled) && (value == null || value.trim().isEmpty)) {
+                                      return 'required_field'.tr;
+                                    }
+                                    return null;
+                                  },
+                                ),
+                                CustomTextField(
+                                  controller: controller.fenceRadiusController,
+                                  labletText: 'branch_fence_radius'.tr,
+                                  hintText: 'enter_branch_fence_radius'.tr,
+                                  isEnabled: (controller.isEnabled),
+                                  validator: (value) {
+                                    if ((controller.isNew && controller.isEnabled) && (value == null || value.trim().isEmpty)) {
+                                      return 'required_field'.tr;
+                                    }
+                                    return null;
+                                  },
+                                ),
+                               MaterialButton(
+                                child: Text("dasdsaj"),
+                                onPressed: (){
+                                toast("title","");
+                               })
+                              ],
+                            ),
                           ),
                         ),
                       ),

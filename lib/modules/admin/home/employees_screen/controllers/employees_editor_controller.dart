@@ -82,6 +82,8 @@ class EmployeesEditorController extends GetxController {
           pass: passwordController.text,
           username: nameController.text,
           role: selectedRole,
+          branch: selectedBranch ,
+          isCheckedIn: isCheckIn,
           isEnabled: _isEmployeeEnabled
         );
       } else {
@@ -101,7 +103,7 @@ class EmployeesEditorController extends GetxController {
       Get.back();
     } catch (e) {
       debugPrint(e.toString());
-      toast('error'.tr, e.toString());
+      toast('error'.tr, e.toString()); // 🔑 Context parameter removed
       isSaving = false;
       update();
     }
