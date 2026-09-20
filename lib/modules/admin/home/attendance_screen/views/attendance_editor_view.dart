@@ -160,7 +160,9 @@ class AttendanceEditorView extends StatelessWidget {
                                           child: Text(user.name),
                                         );
                                       }).toList(),
-                                      onChanged: (controller.isEnabled && controller.isNew)
+                                      onChanged:
+                                          (controller.isEnabled &&
+                                              controller.isNew)
                                           ? (UserModel? newValue) {
                                               if (newValue != null) {
                                                 controller.selectUser(newValue);
@@ -207,7 +209,8 @@ class AttendanceEditorView extends StatelessWidget {
                                 ),
 
                                 InkWell(
-                                  onTap: (controller.isEnabled && controller.isNew)
+                                  onTap:
+                                      (controller.isEnabled && controller.isNew)
                                       ? () => controller.pickDate(context)
                                       : null,
                                   child: Container(
@@ -216,24 +219,29 @@ class AttendanceEditorView extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(12),
                                     ),
                                     padding: const EdgeInsets.all(16),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          'date'.tr,
-                                          style: const TextStyle(fontSize: 16),
-                                        ),
-                                        Text(
-                                          DateFormat(
-                                            'yyyy/MM/dd',
-                                          ).format(controller.selectedDate),
-                                          style: const TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold,
+                                    child: Opacity(
+                                      opacity: controller.isEnabled ? 1 : 0.5,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            'date'.tr,
+                                            style: const TextStyle(
+                                              fontSize: 16,
+                                            ),
                                           ),
-                                        ),
-                                      ],
+                                          Text(
+                                            DateFormat(
+                                              'yyyy/MM/dd',
+                                            ).format(controller.selectedDate),
+                                            style: const TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -249,25 +257,30 @@ class AttendanceEditorView extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(12),
                                     ),
                                     padding: const EdgeInsets.all(16),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          'check_in_time'.tr,
-                                          style: const TextStyle(fontSize: 16),
-                                        ),
-                                        Text(
-                                          controller.checkInTime?.format(
-                                                context,
-                                              ) ??
-                                              '--:--',
-                                          style: const TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold,
+                                    child: Opacity(
+                                      opacity: controller.isEnabled ? 1 : 0.5,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            'check_in_time'.tr,
+                                            style: const TextStyle(
+                                              fontSize: 16,
+                                            ),
                                           ),
-                                        ),
-                                      ],
+                                          Text(
+                                            controller.checkInTime?.format(
+                                                  context,
+                                                ) ??
+                                                '--:--',
+                                            style: const TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -283,25 +296,30 @@ class AttendanceEditorView extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(12),
                                     ),
                                     padding: const EdgeInsets.all(16),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          'check_out_time'.tr,
-                                          style: const TextStyle(fontSize: 16),
-                                        ),
-                                        Text(
-                                          controller.checkOutTime?.format(
-                                                context,
-                                              ) ??
-                                              '--:--',
-                                          style: const TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold,
+                                    child: Opacity(
+                                      opacity: controller.isEnabled ? 1 : 0.5,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            'check_out_time'.tr,
+                                            style: const TextStyle(
+                                              fontSize: 16,
+                                            ),
                                           ),
-                                        ),
-                                      ],
+                                          Text(
+                                            controller.checkOutTime?.format(
+                                                  context,
+                                                ) ??
+                                                '--:--',
+                                            style: const TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),

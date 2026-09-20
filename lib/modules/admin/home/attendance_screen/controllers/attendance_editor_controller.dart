@@ -46,6 +46,7 @@ class AttendanceEditorController extends GetxController {
       selectedStatus = attendance.status;
       notesController.text = attendance.notes ?? '';
       isNew = false;
+      setIsLocked(true);
     } else {
       selectedUser = null;
       selectedBranch = null;
@@ -55,6 +56,7 @@ class AttendanceEditorController extends GetxController {
       selectedStatus = AttendanceStatus.present;
       notesController.clear();
       isNew = true;
+      setIsLocked(false);
     }
 
     update();
