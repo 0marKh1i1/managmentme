@@ -149,71 +149,115 @@ class EmployeesEditorView extends StatelessWidget {
                                           'assets/images/profile.png',
                                         ),
                                 ),
-                                CustomTextField(
-                                  controller: controller.emailController,
-                                  labletText: 'employee_email'.tr,
-                                  hintText: 'enter_employee_email'.tr,
-                                  isEnabled:
-                                      (controller.isNew &&
-                                      controller.isEnabled),
-                                  validator: (value) {
-                                    if ((controller.isNew &&
-                                            controller.isEnabled) &&
-                                        (value == null ||
-                                            value.trim().isEmpty)) {
-                                      return 'required_field'.tr;
-                                    }
-                                    if (!GetUtils.isEmail(
-                                      value?.trim() ?? "",
-                                    )) {
-                                      return 'invalid_email'.tr;
-                                    }
-                                    return null;
-                                  },
-                                ),
-                                if (controller.isNew) ...{
-                                  CustomTextField(
-                                    controller: controller.passwordController,
-                                    labletText: 'employee_password'.tr,
-                                    hintText: 'enter_employee_password'.tr,
-                                    isEnabled: controller.isEnabled,
+                                Container(
+                                  decoration: BoxDecoration(
+                                    color: cs.surfaceDim,
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  padding: EdgeInsets.symmetric(
+                                    vertical: 16,
+                                    horizontal: 8,
+                                  ),
+                                  child: CustomTextField(
+                                    controller: controller.emailController,
+                                    labletText: 'employee_email'.tr,
+                                    hintText: 'enter_employee_email'.tr,
+                                    isEnabled:
+                                        (controller.isNew &&
+                                        controller.isEnabled),
                                     validator: (value) {
-                                      if (value == null || value.isEmpty) {
+                                      if ((controller.isNew &&
+                                              controller.isEnabled) &&
+                                          (value == null ||
+                                              value.trim().isEmpty)) {
                                         return 'required_field'.tr;
                                       }
-                                      if (value.length < 8) {
-                                        return 'password_too_short'.tr;
+                                      if (!GetUtils.isEmail(
+                                        value?.trim() ?? "",
+                                      )) {
+                                        return 'invalid_email'.tr;
                                       }
                                       return null;
                                     },
                                   ),
-                                },
-                                CustomTextField(
-                                  controller: controller.nameController,
-                                  labletText: 'employee_name'.tr,
-                                  hintText: 'enter_employee_name'.tr,
-                                  isEnabled: controller.isEnabled,
-                                  validator: (value) {
-                                    if (value == null || value.trim().isEmpty) {
-                                      return 'required_field'.tr;
-                                    }
-                                    return null;
-                                  },
                                 ),
-                                CustomTextField(
-                                  controller: controller.phoneController,
-                                  labletText: 'employee_phone'.tr,
-                                  hintText: 'enter_employee_phone'.tr,
-                                  isEnabled: controller.isEnabled,
-                                  validator: (value) {
-                                    if (value == null || value.trim().isEmpty) {
-                                      return 'required_field'.tr;
-                                    }
-                                    if (!GetUtils.isPhoneNumber(value.trim())) {
-                                      return 'invalid_phone'.tr;
-                                    }
-                                    return null;
-                                  },
+                                if (controller.isNew) ...{
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: cs.surfaceDim,
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    padding: EdgeInsets.symmetric(
+                                      vertical: 16,
+                                      horizontal: 8,
+                                    ),
+                                    child: CustomTextField(
+                                      controller: controller.passwordController,
+                                      labletText: 'employee_password'.tr,
+                                      hintText: 'enter_employee_password'.tr,
+                                      isEnabled: controller.isEnabled,
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'required_field'.tr;
+                                        }
+                                        if (value.length < 8) {
+                                          return 'password_too_short'.tr;
+                                        }
+                                        return null;
+                                      },
+                                    ),
+                                  ),
+                                },
+                                Container(
+                                  decoration: BoxDecoration(
+                                    color: cs.surfaceDim,
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  padding: EdgeInsets.symmetric(
+                                    vertical: 16,
+                                    horizontal: 8,
+                                  ),
+                                  child: CustomTextField(
+                                    controller: controller.nameController,
+                                    labletText: 'employee_name'.tr,
+                                    hintText: 'enter_employee_name'.tr,
+                                    isEnabled: controller.isEnabled,
+                                    validator: (value) {
+                                      if (value == null ||
+                                          value.trim().isEmpty) {
+                                        return 'required_field'.tr;
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                ),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    color: cs.surfaceDim,
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  padding: EdgeInsets.symmetric(
+                                    vertical: 16,
+                                    horizontal: 8,
+                                  ),
+                                  child: CustomTextField(
+                                    controller: controller.phoneController,
+                                    labletText: 'employee_phone'.tr,
+                                    hintText: 'enter_employee_phone'.tr,
+                                    isEnabled: controller.isEnabled,
+                                    validator: (value) {
+                                      if (value == null ||
+                                          value.trim().isEmpty) {
+                                        return 'required_field'.tr;
+                                      }
+                                      if (!GetUtils.isPhoneNumber(
+                                        value.trim(),
+                                      )) {
+                                        return 'invalid_phone'.tr;
+                                      }
+                                      return null;
+                                    },
+                                  ),
                                 ),
 
                                 Container(
@@ -311,9 +355,15 @@ class EmployeesEditorView extends StatelessWidget {
                                       ),
                                       IgnorePointer(
                                         ignoring: controller.isLoacked,
-                                        child: RoleToggleSwitch(
-                                          selectedRole: controller.selectedRole,
-                                          setRole: controller.setRole,
+                                        child: Opacity(
+                                          opacity: controller.isEnabled
+                                              ? 1
+                                              : 0.5,
+                                          child: RoleToggleSwitch(
+                                            selectedRole:
+                                                controller.selectedRole,
+                                            setRole: controller.setRole,
+                                          ),
                                         ),
                                       ),
                                     ],
@@ -347,9 +397,14 @@ class EmployeesEditorView extends StatelessWidget {
                                           child: InkWell(
                                             onTap: (() =>
                                                 controller.toggleIsCheckIn()),
-                                            child: CheckInIndicator(
-                                              controller.isCheckIn,
-                                              size: 24,
+                                            child: Opacity(
+                                              opacity: controller.isEnabled
+                                                  ? 1
+                                                  : 0.5,
+                                              child: CheckInIndicator(
+                                                controller.isCheckIn,
+                                                size: 24,
+                                              ),
                                             ),
                                           ),
                                         ),

@@ -128,7 +128,7 @@ class Home extends GetView<HomeController> {
                           _headerItem(
                             'attendance'.tr,
                             'assets/images/home/attendance.svg',
-                            () {},
+                            () {Get.toNamed('/admin/attendance');},
                           ),
                         ],
                       ),
