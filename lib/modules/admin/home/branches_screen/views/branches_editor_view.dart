@@ -196,7 +196,7 @@ class BranchesEditorView extends StatelessWidget {
                                                 style: TextStyle(fontSize: 32),
                                                 "${controller.selectedTime.hour.toString().padLeft(2, '0')}:${controller.selectedTime.minute.toString().padLeft(2, '0')}",
                                               ),
-                                              Icon(Icons.timelapse, size: 32),
+                                              Icon(Icons.access_time, size: 32),
                                             ],
                                           ),
                                         ],
@@ -234,6 +234,13 @@ class BranchesEditorView extends StatelessWidget {
                                               fontSize: 22,
                                             ),
                                           ),
+                                          Text(
+                                            '${'first_check_out_time'.tr}: ${controller.firstCheckOutText}',
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              color: cs.onSurfaceVariant,
+                                            ),
+                                          ),
                                           Row(
                                             spacing: 8,
                                             mainAxisAlignment:
@@ -250,13 +257,6 @@ class BranchesEditorView extends StatelessWidget {
                                                 size: 32,
                                               ),
                                             ],
-                                          ),
-                                          Text(
-                                            '${'first_check_out_time'.tr}: ${controller.firstCheckOutText}',
-                                            style: TextStyle(
-                                              fontSize: 14,
-                                              color: cs.onSurfaceVariant,
-                                            ),
                                           ),
                                         ],
                                       ),

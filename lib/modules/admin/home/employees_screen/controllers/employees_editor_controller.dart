@@ -3,9 +3,9 @@ import 'package:get/get.dart';
 import 'package:managementme/core/models/branch_model.dart';
 import 'package:managementme/core/models/user_model.dart';
 import 'package:managementme/core/widgets/toast.dart';
+import 'package:managementme/modules/admin/home/employees_screen/controllers/employees_controller.dart';
 import 'package:managementme/modules/admin/home/employees_screen/repo/employees_repo.dart';
 import 'package:managementme/modules/admin/home/home_screen/controllers/home_controller.dart';
-import 'package:managementme/modules/admin/home/home_screen/repo/home_repo.dart';
 
 class EmployeesEditorController extends GetxController {
   bool _isLocked = true;
@@ -67,7 +67,7 @@ class EmployeesEditorController extends GetxController {
 
   void saveChanges() async {
     if (!formKey.currentState!.validate()) {
-      return; 
+      return;
     }
 
     UserModel updatedEmployee;
@@ -82,9 +82,9 @@ class EmployeesEditorController extends GetxController {
           pass: passwordController.text,
           username: nameController.text,
           role: selectedRole,
-          branch: selectedBranch ,
+          branch: selectedBranch,
           isCheckedIn: isCheckIn,
-          isEnabled: _isEmployeeEnabled
+          isEnabled: _isEmployeeEnabled,
         );
       } else {
         updatedEmployee = employee!.copyWith(
@@ -103,7 +103,7 @@ class EmployeesEditorController extends GetxController {
       Get.back();
     } catch (e) {
       debugPrint(e.toString());
-      toast('error'.tr, e.toString()); // 🔑 Context parameter removed
+      toast('error'.tr, e.toString());
       isSaving = false;
       update();
     }
@@ -113,14 +113,13 @@ class EmployeesEditorController extends GetxController {
     selectedBranch = value;
   }
 
-  Future<void> _fetchBranchName(String branchId) async {
+  void _fetchBranchName(String branchId) {
     try {
-      branch = await HomeRepo.getBranch(branchId);
+      branch = Get.find<EmployeesController>().getBranch(branchId);
 
       if (isClosed) return;
       if (branch != null) {
         selectedBranch = branch;
-        update();
       }
     } catch (e) {
       debugPrint("branch check Error: $e");
@@ -136,7 +135,7 @@ class EmployeesEditorController extends GetxController {
     setIsLoacked(!_isLocked);
     return isLoacked;
   }
-  
+
   void setIsEmployeeEnabled(bool b) {
     _isEmployeeEnabled = b;
     update();
