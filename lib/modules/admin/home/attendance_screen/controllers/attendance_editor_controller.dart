@@ -53,7 +53,7 @@ class AttendanceEditorController extends GetxController {
       selectedBranch = null;
       selectedDate = DateTime.now();
       checkInTime = TimeOfDay.now();
-      checkOutTime = null;
+      checkOutTime = TimeOfDay.now();
       selectedStatus = AttendanceStatus.present;
       notesController.clear();
       isNew = true;
@@ -62,6 +62,25 @@ class AttendanceEditorController extends GetxController {
 
     update();
   }
+
+  String get totalTimeText {
+  if (checkInTime == null || checkOutTime == null) return '--:--';
+
+  final inMinutes = checkInTime!.hour * 60 + checkInTime!.minute;
+  var outMinutes = checkOutTime!.hour * 60 + checkOutTime!.minute;
+
+  if (outMinutes < inMinutes) {
+    outMinutes += 24 * 60;
+  }
+
+  return _fmt(outMinutes - inMinutes);
+}
+
+String _fmt(int totalMinutes) {
+  final hours = totalMinutes ~/ 60;
+  final minutes = totalMinutes % 60;
+  return '${hours}h ${minutes}m';
+}
 
   void setIsLocked(bool b) {
     _isLocked = b;

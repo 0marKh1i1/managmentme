@@ -220,7 +220,11 @@ class AttendanceEditorView extends StatelessWidget {
                                     ),
                                     padding: const EdgeInsets.all(16),
                                     child: Opacity(
-                                      opacity: (controller.isEnabled && controller.isNew)  ? 1 : 0.5,
+                                      opacity:
+                                          (controller.isEnabled &&
+                                              controller.isNew)
+                                          ? 1
+                                          : 0.5,
                                       child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
@@ -323,7 +327,37 @@ class AttendanceEditorView extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-
+                                Container(
+                                  decoration: BoxDecoration(
+                                    color: cs.surfaceDim,
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  padding: const EdgeInsets.all(16),
+                                  child: Opacity(
+                                    opacity:
+                                        (controller.checkInTime != null &&
+                                            controller.checkOutTime != null)
+                                        ? 1
+                                        : 0.5,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          'working_hours'.tr,
+                                          style: const TextStyle(fontSize: 16),
+                                        ),
+                                        Text(
+                                          controller.totalTimeText,
+                                          style: const TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
                                 Container(
                                   decoration: BoxDecoration(
                                     color: cs.surfaceDim,
