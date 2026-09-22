@@ -7,7 +7,7 @@ import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:get/route_manager.dart';
 import 'package:managementme/core/constants/app_themes.dart';
 import 'package:managementme/modules/admin/home/home_screen/controllers/home_controller.dart';
-import 'package:managementme/modules/admin/home/root/controllers/root_controller.dart';
+import 'package:managementme/modules/root/controllers/root_controller.dart';
 import 'package:managementme/modules/settings/settings_screen/controllers/settings_controller.dart';
 
 class Home extends GetView<HomeController> {
