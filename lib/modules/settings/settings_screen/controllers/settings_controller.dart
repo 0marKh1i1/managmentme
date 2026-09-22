@@ -1,5 +1,7 @@
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:managementme/core/models/branch_model.dart';
 import 'package:managementme/core/models/user_model.dart';
 import 'package:managementme/modules/settings/settings_screen/repo/settings_repo.dart';
 import 'package:managementme/modules/settings/settings_screen/widgets/edit_name_dialog.dart';
@@ -13,6 +15,8 @@ class SettingsController extends GetxController {
   UserModel? currentUser;
   bool isUploadingImage = false;
   bool isUpdatingName = false;
+  BranchModel? branch;
+  String get branchName => (branch?.name ?? 'unkown'.tr) + 'branch'.tr;
 
   final ImagePicker _imagePicker = ImagePicker();
 
@@ -28,6 +32,9 @@ class SettingsController extends GetxController {
     _userSub?.cancel();
     _userSub = SettingsRepo.getUserStream().listen((user) {
       currentUser = user;
+      if (currentUser != null) {
+        _fetchBranch(currentUser?.branchId ?? "");
+      }
       update();
     });
   }
@@ -43,6 +50,13 @@ class SettingsController extends GetxController {
         onSave: (newName) => saveName(newName),
       ),
     );
+  }
+
+  Future<void> _fetchBranch(String branchID) async {
+    if (branchID.isEmpty) return;
+    branch = await SettingsRepo.getBranch(branchID);
+    debugPrint('$branchName this is the branch **************************************************');
+    update();
   }
 
   Future<void> saveName(String newName) async {

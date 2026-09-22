@@ -49,6 +49,17 @@ class SettingsHeader extends GetView<SettingsController> {
                   ),
                 ),
               ),
+              const SizedBox(height: 4),
+              GetBuilder<SettingsController>(
+                builder: (controller) => Text(
+                  controller.branchName,
+                  style: GoogleFonts.beVietnamPro(
+                    color: cs.onSurface.withValues(alpha: 0.8),
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+              ),
               const SizedBox(height: 8),
             ],
           ),
