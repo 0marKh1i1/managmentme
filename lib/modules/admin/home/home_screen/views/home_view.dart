@@ -253,8 +253,8 @@ class Home extends GetView<HomeController> {
       child: Stack(
         children: [
           Positioned(
-            top: 8,
-            left: 16,
+            top: 16,
+            left: 24,
             child: InkWell(
               onTap: (){
 
@@ -269,10 +269,6 @@ class Home extends GetView<HomeController> {
                       fontSize: 16,
                       fontWeight: FontWeight.w700,
                     ),
-                  ),
-                  SizedBox(
-                    height: 32,
-                    child:  Icon(Icons.chevron_right, size: 32,color: Theme.of(ctxt).colorScheme.primary,),
                   ),
                 ],
               ),
