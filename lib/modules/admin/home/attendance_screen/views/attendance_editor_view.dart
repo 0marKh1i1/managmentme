@@ -220,7 +220,7 @@ class AttendanceEditorView extends StatelessWidget {
                                     ),
                                     padding: const EdgeInsets.all(16),
                                     child: Opacity(
-                                      opacity: controller.isEnabled ? 1 : 0.5,
+                                      opacity: (controller.isEnabled && controller.isNew)  ? 1 : 0.5,
                                       child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,

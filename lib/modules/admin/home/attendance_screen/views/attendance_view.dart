@@ -138,10 +138,10 @@ class AttendanceView extends StatelessWidget {
     
     final dateStr = DateFormat('yyyy/MM/dd').format(attendance.date);
     final checkInStr = attendance.checkInTime != null 
-        ? DateFormat('HH:mm').format(attendance.checkInTime!) 
+        ? DateFormat('hh:mm a').format(attendance.checkInTime!) 
         : '--:--';
     final checkOutStr = attendance.checkOutTime != null 
-        ? DateFormat('HH:mm').format(attendance.checkOutTime!) 
+        ? DateFormat('hh:mm a').format(attendance.checkOutTime!) 
         : '--:--';
         
     return InkWell(

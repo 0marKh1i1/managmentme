@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:managementme/core/models/attendance_model.dart';
 import 'package:managementme/core/models/branch_model.dart';
 import 'package:managementme/core/models/user_model.dart';
@@ -144,7 +145,7 @@ class AttendanceEditorController extends GetxController {
     update();
 
     try {
-      final dateOnlyStr = "${selectedDate.year}-${selectedDate.month.toString().padLeft(2, '0')}-${selectedDate.day.toString().padLeft(2, '0')}";
+      final dateOnlyStr = DateFormat('yyyy-MM-dd').format(selectedDate);
       final docId = "${selectedUser!.id}_$dateOnlyStr";
 
       DateTime? finalCheckIn;

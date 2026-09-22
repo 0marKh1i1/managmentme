@@ -3,6 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:managementme/core/models/branch_model.dart';
 import 'package:managementme/core/widgets/custom_text_field.dart';
 import 'package:managementme/modules/admin/home/branches_screen/controllers/branches_editor_controller.dart';
@@ -194,7 +195,7 @@ class BranchesEditorView extends StatelessWidget {
                                             children: [
                                               Text(
                                                 style: TextStyle(fontSize: 32),
-                                                "${controller.selectedTime.hour.toString().padLeft(2, '0')}:${controller.selectedTime.minute.toString().padLeft(2, '0')}",
+                                                controller.selectedTime.format(context),
                                               ),
                                               Icon(Icons.access_time, size: 32),
                                             ],

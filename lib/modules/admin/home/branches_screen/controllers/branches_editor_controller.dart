@@ -39,10 +39,7 @@ class BranchesEditorController extends GetxController {
       Duration(hours: selectedTime.hour, minutes: selectedTime.minute);
 
   String _fmt(Duration d) {
-    final total = d.inMinutes % (24 * 60);
-    final h = (total ~/ 60).toString().padLeft(2, '0');
-    final m = (total % 60).toString().padLeft(2, '0');
-    return '$h:$m';
+    return TimeOfDay.fromDateTime(DateTime(0).add(d)).format(Get.context!);
   }
 
   String get workingHoursText => _fmt(selectedWorkingHours);
