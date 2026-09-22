@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:managementme/core/models/branch_model.dart';
 import 'package:managementme/core/widgets/toast.dart';
 import 'package:managementme/modules/admin/home/branches_screen/controllers/branches_controller.dart';
@@ -41,8 +42,11 @@ class BranchesEditorController extends GetxController {
   String _fmt(Duration d) {
     return TimeOfDay.fromDateTime(DateTime(0).add(d)).format(Get.context!);
   }
+  String _fmtHours(Duration d) {
+    return  DateFormat('HH:mm').format(DateTime(0).add(d));
+  }
 
-  String get workingHoursText => _fmt(selectedWorkingHours);
+  String get workingHoursText => _fmtHours(selectedWorkingHours);
   String get firstCheckOutText => _fmt(_checkInDuration + selectedWorkingHours);
 
 

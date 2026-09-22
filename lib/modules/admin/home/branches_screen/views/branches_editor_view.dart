@@ -3,7 +3,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:managementme/core/models/branch_model.dart';
 import 'package:managementme/core/widgets/custom_text_field.dart';
 import 'package:managementme/modules/admin/home/branches_screen/controllers/branches_editor_controller.dart';
