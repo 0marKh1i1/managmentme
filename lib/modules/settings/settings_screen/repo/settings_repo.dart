@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:managementme/core/models/branch_model.dart';
 import 'package:managementme/core/models/user_model.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -96,11 +95,6 @@ class SettingsRepo {
       docRef.update({'photoUrl': ''}),
       user.updatePhotoURL(null),
     ]);
-  }
-
-  static Future<BranchModel> getBranch(String branchID) async {
-    final doc = await _firestore.collection('branches').doc(branchID).get();
-    return BranchModel.fromFirestore(doc);
   }
 
   static Future<void> logout() async {

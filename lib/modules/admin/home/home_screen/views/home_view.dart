@@ -21,121 +21,133 @@ class Home extends GetView<HomeController> {
     final profileController = Get.find<SettingsController>();
     final photoUrl = profileController.currentUser?.photoUrl ?? '';
     final isUploading = profileController.isUploadingImage;
+    final double borderRadius = 40;
 
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Column(
         children: [
-          Container(
-            decoration: BoxDecoration(
-              color: AppThemes.homeHeaderColor,
-              border: Border(
-                bottom: BorderSide(
-                  color: AppThemes.homeHeaderTextColor.withAlpha(150),
-                  width: 2,
+          ClipRRect(
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(borderRadius),
+              bottomRight: Radius.circular(borderRadius),
+            ),
+            child: Container(
+              decoration: BoxDecoration(
+                color: AppThemes.homeHeaderColor,
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(borderRadius),
+                  bottomRight: Radius.circular(borderRadius),
                 ),
               ),
-            ),
-            padding: EdgeInsets.only(top: topSafeHeight),
-            height: 225,
-            child: Stack(
-              children: [
-                Positioned(
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  child: Image.asset(
-                    'assets/images/home/buildings.png',
-                    height: 100,
-                    fit: BoxFit.cover,
+              padding: EdgeInsets.only(top: topSafeHeight),
+              height: 230,
+              child: Stack(
+                children: [
+                  Positioned(
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    child: Image.asset(
+                      'assets/images/home/buildings.png',
+                      height: 100,
+                      fit: BoxFit.cover,
+                    ),
                   ),
-                ),
-                Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 24),
-                      child: Row(
-                        children: [
-                          Text(
-                            'home_page'.tr,
-                            style: TextStyle(
-                              color: AppThemes.homeHeaderTextColor,
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
+                  Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 24),
+                        child: Row(
+                          children: [
+                            Text(
+                              'home_page'.tr,
+                              style: TextStyle(
+                                color: AppThemes.homeHeaderTextColor,
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                          Spacer(),
-                          InkWell(
-                            onTap: () {
-                              Get.find<RootController>().changePage(1);
-                            },
-                            child: Container(
-                              height: 50,
-                              width: 50,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  color: AppThemes.homeHeaderTextColor,
-                                  width: 2,
+                            Spacer(),
+                            InkWell(
+                              onTap: () {
+                                Get.find<RootController>().changePage(1);
+                              },
+                              child: Container(
+                                height: 50,
+                                width: 50,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                    color: AppThemes.homeHeaderTextColor,
+                                    width: 2,
+                                  ),
+                                ),
+                                child: ClipOval(
+                                  child: isUploading
+                                      ? Container(
+                                          color: AppThemes.homeHeaderTextColor
+                                              .withValues(alpha: 0.2),
+                                          child: CircularProgressIndicator(
+                                            color:
+                                                AppThemes.homeHeaderTextColor,
+                                          ),
+                                        )
+                                      : photoUrl.isNotEmpty
+                                      ? Image.network(
+                                          photoUrl,
+                                          fit: BoxFit.cover,
+                                          errorBuilder: (ctx, e, st) =>
+                                              Image.asset(
+                                                'assets/images/profile.png',
+                                                fit: BoxFit.contain,
+                                              ),
+                                        )
+                                      : Image.asset(
+                                          'assets/images/profile.png',
+                                          fit: BoxFit.contain,
+                                        ),
                                 ),
                               ),
-                              child: ClipOval(
-                                child: isUploading
-                                    ? Container(
-                                        color: AppThemes.homeHeaderTextColor
-                                            .withValues(alpha: 0.2),
-                                        child: CircularProgressIndicator(
-                                          color: AppThemes.homeHeaderTextColor,
-                                        ),
-                                      )
-                                    : photoUrl.isNotEmpty
-                                    ? Image.network(
-                                        photoUrl,
-                                        fit: BoxFit.cover,
-                                        errorBuilder: (ctx, e, st) =>
-                                            Image.asset(
-                                              'assets/images/profile.png',
-                                              fit: BoxFit.contain,
-                                            ),
-                                      )
-                                    : Image.asset(
-                                        'assets/images/profile.png',
-                                        fit: BoxFit.contain,
-                                      ),
-                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    Spacer(),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(24, 0, 24, 12),
-                      child: Row(
-                        children: [
-                          _headerItem(
-                            'branches'.tr,
-                            'assets/images/home/branches.svg',
-                           () {Get.toNamed('/admin/branches');},
-                          ),
-                          Spacer(),
-                          _headerItem(
-                            'employees'.tr,
-                            'assets/images/home/employees.svg',
-                            () {Get.toNamed('/admin/employees');},
-                          ),
-                          Spacer(),
-                          _headerItem(
-                            'attendance'.tr,
-                            'assets/images/home/attendance.svg',
-                            () {Get.toNamed('/admin/attendance');},
-                          ),
-                        ],
+                      SizedBox(height: 30),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(24, 0, 24, 12),
+                        child: Row(
+                          children: [
+                            _headerItem(
+                              'branches'.tr,
+                              'assets/images/home/branches.svg',
+                              () {
+                                Get.toNamed('/admin/branches');
+                              },
+                            ),
+                            Spacer(),
+                            _headerItem(
+                              'employees'.tr,
+                              'assets/images/home/employees.svg',
+                              () {
+                                Get.toNamed('/admin/employees');
+                              },
+                            ),
+                            Spacer(),
+                            _headerItem(
+                              'attendance'.tr,
+                              'assets/images/home/attendance.svg',
+                              () {
+                                Get.toNamed('/admin/attendance');
+                              },
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
           Expanded(
@@ -256,9 +268,7 @@ class Home extends GetView<HomeController> {
             top: 16,
             left: 24,
             child: InkWell(
-              onTap: (){
-
-              },
+              onTap: () {},
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [

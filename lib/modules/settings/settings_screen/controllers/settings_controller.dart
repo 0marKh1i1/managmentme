@@ -1,4 +1,3 @@
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:managementme/core/models/branch_model.dart';
@@ -32,9 +31,6 @@ class SettingsController extends GetxController {
     _userSub?.cancel();
     _userSub = SettingsRepo.getUserStream().listen((user) {
       currentUser = user;
-      if (currentUser != null) {
-        _fetchBranch(currentUser?.branchId ?? "");
-      }
       update();
     });
   }
@@ -52,12 +48,7 @@ class SettingsController extends GetxController {
     );
   }
 
-  Future<void> _fetchBranch(String branchID) async {
-    if (branchID.isEmpty) return;
-    branch = await SettingsRepo.getBranch(branchID);
-    debugPrint('$branchName this is the branch **************************************************');
-    update();
-  }
+
 
   Future<void> saveName(String newName) async {
     final trimmedName = newName.trim();

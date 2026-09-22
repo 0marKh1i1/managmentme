@@ -8,6 +8,6 @@ class RootBinding extends Bindings {
   void dependencies() {
     Get.put<RootController>(RootController());
     Get.put<HomeController>(HomeController());
-    Get.lazyPut<SettingsController>(() => SettingsController());
+    Get.lazyPut<SettingsController>(() => SettingsController() , fenix: true);
   }
 }

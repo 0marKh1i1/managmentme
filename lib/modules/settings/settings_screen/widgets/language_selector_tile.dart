@@ -64,7 +64,7 @@ class LanguageSelectorTile extends GetView<SettingsController> {
                   final isAr = Get.locale?.languageCode == 'ar';
                   return Container(
                     decoration: BoxDecoration(
-                      color: cs.surfaceContainerHighest.withValues(alpha: 0.5),
+                      color: cs.surfaceTint.withValues(alpha: 0.5),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     padding: const EdgeInsets.all(14),

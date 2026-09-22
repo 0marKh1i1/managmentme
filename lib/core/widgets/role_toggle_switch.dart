@@ -21,7 +21,7 @@ class RoleToggleSwitch extends StatelessWidget {
       height: 50,
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
-        color: cs.surfaceContainerHighest,
+        color: cs.surfaceTint,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppThemes {
-  static const Color primaryColor = Color(0xFFBDD6D8);
-  static const Color darkPrimaryColor = Color(0xFF799C9E);
+  static const Color primaryColor = Color.fromARGB(255, 157, 213, 218);
+  static const Color darkPrimaryColor = Color.fromARGB(255, 17, 124, 129);
 
   static const Color secondaryColor = Color(0xFF0721A9);
   static const Color darkSecondaryColor = Color.fromARGB(255, 9, 43, 212);
@@ -38,6 +38,7 @@ class AppThemes {
       surface: Colors.white,
       onSurface: Colors.black,
       surfaceDim: const Color.fromARGB(255, 241, 241, 241),
+      surfaceTint: Colors.white,
       primary: primaryColor,
       onPrimary: Colors.black,
       secondary: secondaryColor,
@@ -65,6 +66,7 @@ class AppThemes {
       surface: Color(0xFF1E1E1E),
       onSurface: Color(0xFFEEEEEE),
       surfaceDim: Color(0xFF2C2C2C),
+      surfaceTint: Colors.black87,
       primary: darkPrimaryColor,
       onPrimary: Colors.white,
       secondary: darkSecondaryColor,
