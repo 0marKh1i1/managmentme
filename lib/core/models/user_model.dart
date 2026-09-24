@@ -12,10 +12,6 @@ class UserModel {
   final String? photoUrl;
   final bool isCheckedIn;
   final bool isEnabled;
-  final DateTime? checkInTime;
-  final DateTime? checkOutTime;
-  final GeoPoint? checkInLocation;
-  final GeoPoint? checkOutLocation;
   
 
   UserModel({
@@ -28,10 +24,6 @@ class UserModel {
     this.isCheckedIn = false,
     this.isEnabled = true,
     this.photoUrl,
-    this.checkInTime,
-    this.checkOutTime,
-    this.checkInLocation,
-    this.checkOutLocation,
   });
   
   UserModel copyWith({
@@ -44,10 +36,7 @@ class UserModel {
     String? photoUrl,
     bool? isCheckedIn,
     bool? isEnabled,
-    DateTime? checkInTime,
-    DateTime? checkOutTime,
-    GeoPoint? checkInLocation,
-    GeoPoint? checkOutLocation,
+
   }) {
     return UserModel(
       id: id ?? this.id,
@@ -59,10 +48,6 @@ class UserModel {
       photoUrl: photoUrl ?? this.photoUrl,
       isCheckedIn: isCheckedIn ?? this.isCheckedIn,
       isEnabled: isEnabled ?? this.isEnabled,
-      checkInTime: checkInTime ?? this.checkInTime,
-      checkOutTime: checkOutTime ?? this.checkOutTime,
-      checkInLocation: checkInLocation ?? this.checkInLocation,
-      checkOutLocation: checkOutLocation ?? this.checkOutLocation,
     );
   }
 
@@ -81,18 +66,6 @@ class UserModel {
         (e) => e.name == data['role'],
         orElse: () => UserType.employee,
       ),
-      checkInTime: data['checkInTime'] != null
-          ? (data['checkInTime'] as Timestamp).toDate()
-          : null,
-      checkOutTime: data['checkOutTime'] != null
-          ? (data['checkOutTime'] as Timestamp).toDate()
-          : null,
-      checkInLocation: data['checkInLocation'] != null
-          ? (data['checkInLocation'] as GeoPoint)
-          : null,
-      checkOutLocation: data['checkOutLocation'] != null
-          ? (data['checkOutLocation'] as GeoPoint)
-          : null,
     );
   }
 
@@ -106,10 +79,6 @@ class UserModel {
       'isCheckedIn': isCheckedIn,
       'isEnabled': isEnabled,
       if (photoUrl != null) 'photoUrl': photoUrl,
-      if (checkInTime != null) 'checkInTime': Timestamp.fromDate(checkInTime!),
-      if (checkOutTime != null) 'checkOutTime': Timestamp.fromDate(checkOutTime!),
-      if (checkInLocation != null) 'checkInLocation': checkInLocation,
-      if (checkOutLocation != null) 'checkOutLocation': checkOutLocation,
     };
   }
 }

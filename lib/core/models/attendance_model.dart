@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-enum AttendanceStatus { present, late, absent, earlyLeave }
+enum AttendanceStatus { present, late, absent, earlyLeave, out}
 
 class AttendanceModel {
   final String id;

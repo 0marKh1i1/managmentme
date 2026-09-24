@@ -41,7 +41,7 @@ class Home extends GetView<HomeController> {
                 ),
               ),
               padding: EdgeInsets.only(top: topSafeHeight),
-              height: 230,
+              height: 250,
               child: Stack(
                 children: [
                   Positioned(

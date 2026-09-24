@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:managementme/core/models/attendance_model.dart';
 
 class AttendanceRepo {
@@ -33,5 +34,11 @@ class AttendanceRepo {
         .collection("attendances")
         .doc(attendance.id)
         .set(attendance.toMap(), SetOptions(merge: true));
+  }
+
+  static String getAttendanceID(DateTime time , String usrID){
+    final dateOnlyStr = DateFormat('yyyy-MM-dd').format(time);
+    final docID = "${usrID}_$dateOnlyStr"; 
+    return docID;
   }
 }

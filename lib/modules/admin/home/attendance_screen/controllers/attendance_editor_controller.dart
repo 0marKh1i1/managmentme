@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:managementme/core/models/attendance_model.dart';
 import 'package:managementme/core/models/branch_model.dart';
 import 'package:managementme/core/models/user_model.dart';
@@ -164,8 +163,7 @@ String _fmt(int totalMinutes) {
     update();
 
     try {
-      final dateOnlyStr = DateFormat('yyyy-MM-dd').format(selectedDate);
-      final docId = "${selectedUser!.id}_$dateOnlyStr";
+      final docId =  AttendanceRepo.getAttendanceID(selectedDate, selectedUser!.id);
 
       DateTime? finalCheckIn;
       if (checkInTime != null) {

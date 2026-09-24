@@ -123,29 +123,34 @@ class EmployeeHome extends GetView<EmployeeHomeController> {
                                       _buildTimeCard(
                                         context,
                                         "Check-In Time",
-                                        controller.checkInTime,
+                                        controller.checkInTimeStr,
                                       ),
                                       _buildTimeCard(
                                         context,
                                         "Check-Out Time",
-                                        controller.checkOutTime,
+                                        controller.checkOutTimeStr,
                                       ),
                                     ],
                                   ),
                                 ),
                                 MaterialButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    controller.onClockButton();
+                                  },
                                   color: cs.primary,
                                   height: 48,
+                                  minWidth: double.infinity,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(12.0),
                                   ),
-                                  child: Center(
-                                    child: Text(
-                                      "Clock In",
-                                      style: TextStyle(fontSize: 20),
-                                    ),
-                                  ),
+                                  child: controller.isSaving
+                                      ? CircularProgressIndicator()
+                                      : Center(
+                                          child: Text(
+                                            controller.checkButtonStr,
+                                            style: TextStyle(fontSize: 20),
+                                          ),
+                                        ),
                                 ),
                               ],
                             ),

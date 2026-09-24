@@ -13,8 +13,9 @@ class AuthService extends GetxService {
   final Rx<User?> firebaseUser = Rx<User?>(null);
   final Rx<UserModel?> currentUser = Rx<UserModel?>(null);
   final Rx<BranchModel?> branch = Rx<BranchModel?>(null);
-  
+
   StreamSubscription<DocumentSnapshot>? _userDocSubscription;
+  StreamSubscription<DocumentSnapshot>? _branchDocSubscription;
 
   Future<AuthService> init() async {
     try {
@@ -41,18 +42,18 @@ class AuthService extends GetxService {
       _clearUserData();
       if (Get.currentRoute != '/') Get.offAllNamed('/');
       return;
-    } 
+    }
 
     try {
       _userDocSubscription?.cancel();
-      
+
       final doc = await FirebaseFirestore.instance
           .collection('users')
           .doc(user.uid)
           .get();
-          
+
       if (!doc.exists) {
-        await _signOutWithError('user_not_found'.tr);
+        await signOutWithError('user_not_found'.tr);
         return;
       }
 
@@ -60,22 +61,20 @@ class AuthService extends GetxService {
       final isEnabled = data?['isEnabled'] ?? true;
 
       if (!isEnabled) {
-        await _signOutWithError('user_enable_error'.tr);
+        await signOutWithError('user_enable_error'.tr);
         return;
       }
 
       final userModel = UserModel.fromFirestore(doc);
-      final branchModel = await fetchBranch(userModel.branchId);
 
       currentUser.value = userModel;
-      branch.value = branchModel;
 
       if (Get.currentRoute != '/root') {
         Get.offAllNamed('/root');
       }
 
       _listenToUserUpdates(user.uid);
-
+      _listenToBranchUpdates(userModel.branchId);
     } catch (e) {
       debugPrint('Error initializing user: $e');
       _clearUserData();
@@ -89,34 +88,62 @@ class AuthService extends GetxService {
         .doc(uid)
         .snapshots()
         .listen(
-      (snapshot) async {
+          (snapshot) async {
+            if (!snapshot.exists) {
+              await signOutWithError('user_deleted'.tr);
+              return;
+            }
+
+            final snapData = snapshot.data();
+            final snapEnabled = snapData?['isEnabled'] ?? true;
+
+            if (!snapEnabled) {
+              await signOutWithError('user_enable_error'.tr);
+            } else {
+              final updatedUser = UserModel.fromFirestore(snapshot);
+              currentUser.value = updatedUser;
+
+              if (updatedUser.branchId != branch.value?.id) {
+                _listenToBranchUpdates(updatedUser.branchId);
+              }
+            }
+          },
+          onError: (error) {
+            debugPrint('Firestore subscription error: $error');
+          },
+        );
+  }
+
+  void _listenToBranchUpdates(String branchId) {
+    _branchDocSubscription?.cancel();
+
+    if (branchId.trim().isEmpty) {
+      branch.value = null;
+      return;
+    }
+
+    _branchDocSubscription = FirebaseFirestore.instance
+    .collection('branches')
+    .doc(branchId.trim())
+    .snapshots()
+    .listen(
+      (snapshot) {
         if (!snapshot.exists) {
-          await _signOutWithError('user_deleted'.tr);
+          branch.value = null;
           return;
         }
-
-        final snapData = snapshot.data();
-        final snapEnabled = snapData?['isEnabled'] ?? true;
-
-        if (!snapEnabled) {
-          await _signOutWithError('user_enable_error'.tr);
-        } else {
-          currentUser.value = UserModel.fromFirestore(snapshot);
-        }
+        branch.value = null; 
+        branch.value = BranchModel.fromFirestore(snapshot);
       },
       onError: (error) {
-        debugPrint('Firestore subscription error: $error');
+        debugPrint('Branch subscription error: $error');
       },
     );
-  }
-  
-  User? getUser() {
-    return FirebaseAuth.instance.currentUser;
   }
 
   Future<BranchModel?> fetchBranch(String branchID) async {
     if (branchID.trim().isEmpty) return null;
-    
+
     try {
       final doc = await FirebaseFirestore.instance
           .collection('branches')
@@ -129,7 +156,7 @@ class AuthService extends GetxService {
     }
   }
 
-  Future<void> _signOutWithError(String errorMessage) async {
+  Future<void> signOutWithError(String errorMessage) async {
     toast('Error', errorMessage);
     await FirebaseAuth.instance.signOut();
     _clearUserData();
@@ -137,6 +164,7 @@ class AuthService extends GetxService {
 
   void _clearUserData() {
     _userDocSubscription?.cancel();
+    _branchDocSubscription?.cancel();
     currentUser.value = null;
     branch.value = null;
   }
@@ -144,6 +172,7 @@ class AuthService extends GetxService {
   @override
   void onClose() {
     _userDocSubscription?.cancel();
+    _branchDocSubscription?.cancel();
     super.onClose();
   }
 }
