@@ -36,6 +36,9 @@ class AppTranslations extends Translations {
     'email_empty_error': 'Email cannot be empty',
     'enter_your_name': 'Enter Your Name',
     'error': 'Error',
+    'user_not_found': 'User not found',
+    'user_enable_error': 'Your account has been disabled. Please contact an administrator.',
+    'user_deleted': 'Your account has been deleted.',
     'failed_to_pick_image': 'Failed to pick image',
     'failed_to_remove_photo': 'Failed to remove photo',
     'failed_to_update_name': 'Failed to update name',
@@ -137,6 +140,10 @@ class AppTranslations extends Translations {
     "not_checked_in": "Not Checked In",
     "checked_in": "Checked In",
 
+    /* *employee home */
+    'Let’s Clock-In!': 'Let’s Clock-In!',
+    'Don’t miss your clock in schedule': 'Don’t miss your clock in schedule',
+
     /* *employees editor */
     'edit_employee': 'Edit Employee',
     'employee_name': 'Employee Name',
@@ -205,6 +212,9 @@ class AppTranslations extends Translations {
     'email_empty_error': 'لا يمكن أن يكون البريد الإلكتروني فارغاً',
     'enter_your_name': 'أدخل اسمك',
     'error': 'خطأ',
+    'user_not_found': 'المستخدم غير موجود',
+    'user_enable_error': 'تم تعطيل حسابك. يرجى التواصل مع المسؤول.',
+    'user_deleted': 'تم حذف حسابك.',
     'failed_to_pick_image': 'فشل في اختيار الصورة',
     'failed_to_remove_photo': 'فشل في إزالة الصورة',
     'failed_to_update_name': 'فشل في تحديث الاسم',
@@ -315,6 +325,10 @@ class AppTranslations extends Translations {
     'unkown': 'غير معروف',
     "not_checked_in": "ليس مسجل الدخول",
     "checked_in": "مسجل الدخول",
+
+    /* *employee home */
+    'Let’s Clock-In!': 'لنبدأ تسجيل الحضور!',
+    'Don’t miss your clock in schedule': 'لا تفوّت موعد تسجيل حضورك',
 
     /* *employees editor */
     'edit_employee': 'تعديل بيانات الموظف',

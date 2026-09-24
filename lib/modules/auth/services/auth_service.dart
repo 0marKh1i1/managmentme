@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:managementme/core/constants/firebase_options.dart';
+import 'package:managementme/core/models/branch_model.dart';
 import 'package:managementme/core/models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -9,8 +10,9 @@ import 'package:get/get.dart';
 import 'package:managementme/core/widgets/toast.dart';
 
 class AuthService extends GetxService {
-  Rx<User?> firebaseUser = Rx<User?>(null);
-  Rx<UserModel?> currentUser = Rx<UserModel?>(null);
+  final Rx<User?> firebaseUser = Rx<User?>(null);
+  final Rx<UserModel?> currentUser = Rx<UserModel?>(null);
+  final Rx<BranchModel?> branch = Rx<BranchModel?>(null);
   
   StreamSubscription<DocumentSnapshot>? _userDocSubscription;
 
@@ -34,106 +36,111 @@ class AuthService extends GetxService {
     ever(firebaseUser, _setInitialScreen);
   }
 
-  void _setInitialScreen(User? user) async {
+  Future<void> _setInitialScreen(User? user) async {
     if (user == null) {
-      _userDocSubscription?.cancel();
-      currentUser.value = null;
+      _clearUserData();
       if (Get.currentRoute != '/') Get.offAllNamed('/');
-    } else {
-      try {
-        _userDocSubscription?.cancel();
-        
-        final doc = await FirebaseFirestore.instance
-            .collection('users')
-            .doc(user.uid)
-            .get();
-            
-        if (doc.exists) {
-          final data = doc.data();
-          final isEnabled = data?['isEnabled'] ?? true;
+      return;
+    } 
 
-          if (isEnabled == false) {
-            toast('Error', 'user_enable_error'.tr);
-            await FirebaseAuth.instance.signOut();
-            return;
-          }
-
-          currentUser.value = UserModel.fromFirestore(doc);
-          debugPrint('Current User: ${currentUser.value!.role}');
+    try {
+      _userDocSubscription?.cancel();
+      
+      final doc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .get();
           
-          if (Get.currentRoute != '/root') {
-            Get.offAllNamed('/root');
-          }
-
-          _userDocSubscription = FirebaseFirestore.instance
-              .collection('users')
-              .doc(user.uid)
-              .snapshots()
-              .listen((snapshot) async {
-                
-            if (snapshot.exists) {
-              final snapData = snapshot.data();
-              final snapEnabled = snapData?['isEnabled'] ?? true;
-
-              if (snapEnabled == false) {
-                toast('Error', 'user_enable_error'.tr);
-                await FirebaseAuth.instance.signOut();
-              } else {
-                currentUser.value = UserModel.fromFirestore(snapshot);
-              }
-            } else {
-              await FirebaseAuth.instance.signOut();
-            }
-          });
-
-        } else {
-          await FirebaseAuth.instance.signOut();
-        }
-      } catch (e) {
-        debugPrint('Error initializing user: $e');
-        Get.offAllNamed('/');
+      if (!doc.exists) {
+        await _signOutWithError('user_not_found'.tr);
+        return;
       }
+
+      final data = doc.data();
+      final isEnabled = data?['isEnabled'] ?? true;
+
+      if (!isEnabled) {
+        await _signOutWithError('user_enable_error'.tr);
+        return;
+      }
+
+      final userModel = UserModel.fromFirestore(doc);
+      final branchModel = await fetchBranch(userModel.branchId);
+
+      currentUser.value = userModel;
+      branch.value = branchModel;
+
+      if (Get.currentRoute != '/root') {
+        Get.offAllNamed('/root');
+      }
+
+      _listenToUserUpdates(user.uid);
+
+    } catch (e) {
+      debugPrint('Error initializing user: $e');
+      _clearUserData();
+      Get.offAllNamed('/');
     }
   }
 
-  Future<String> getInitialScreen() async {
-    debugPrint('get initial screen');
-    User? user = getUser();
-
-    if (user == null) {
-      return '/';
-    } else {
-      try {
-        final doc = await FirebaseFirestore.instance
-            .collection('users')
-            .doc(user.uid)
-            .get();
-            
-        if (doc.exists) {
-          final data = doc.data();
-          final isEnabled = data?['isEnabled'] ?? true;
-
-          if (isEnabled == false) {
-            await FirebaseAuth.instance.signOut();
-            return '/';
-          }
-
-          currentUser.value = UserModel.fromFirestore(doc);
-          return '/root';
-        } else {
-          await FirebaseAuth.instance.signOut();
-          return '/';
+  void _listenToUserUpdates(String uid) {
+    _userDocSubscription = FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .snapshots()
+        .listen(
+      (snapshot) async {
+        if (!snapshot.exists) {
+          await _signOutWithError('user_deleted'.tr);
+          return;
         }
-      } catch (e) {
-        return '/';
-      }
-    }
-  }
 
+        final snapData = snapshot.data();
+        final snapEnabled = snapData?['isEnabled'] ?? true;
+
+        if (!snapEnabled) {
+          await _signOutWithError('user_enable_error'.tr);
+        } else {
+          currentUser.value = UserModel.fromFirestore(snapshot);
+        }
+      },
+      onError: (error) {
+        debugPrint('Firestore subscription error: $error');
+      },
+    );
+  }
+  
   User? getUser() {
     return FirebaseAuth.instance.currentUser;
   }
-  
+
+  Future<BranchModel?> fetchBranch(String branchID) async {
+    if (branchID.trim().isEmpty) return null;
+    
+    try {
+      final doc = await FirebaseFirestore.instance
+          .collection('branches')
+          .doc(branchID.trim())
+          .get();
+      return BranchModel.fromFirestore(doc);
+    } catch (e) {
+      debugPrint('Error fetching branch: $e');
+      return null;
+    }
+  }
+
+  Future<void> _signOutWithError(String errorMessage) async {
+    toast('Error', errorMessage);
+    await FirebaseAuth.instance.signOut();
+    _clearUserData();
+  }
+
+  void _clearUserData() {
+    _userDocSubscription?.cancel();
+    currentUser.value = null;
+    branch.value = null;
+  }
+
   @override
   void onClose() {
     _userDocSubscription?.cancel();

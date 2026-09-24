@@ -74,81 +74,86 @@ class EmployeeHome extends GetView<EmployeeHomeController> {
                   ],
                 ),
                 SizedBox(height: 24),
-                Column(
-                  children: [
-                    GetBuilder<EmployeeHomeController>(
-                      builder: (controller) {
-                        return Container(
-                          height: 275,
-                          width: double.infinity,
-                          margin: EdgeInsets.symmetric(horizontal: 8),
-                          decoration: BoxDecoration(
-                            color: cs.surfaceContainerHighest,
-                            borderRadius: BorderRadius.circular(18),
+                GetBuilder<EmployeeHomeController>(
+                  builder: (controller) {
+                    if (controller.isLoading) {
+                      return SizedBox(
+                        height: 500,
+                        width: 200,
+                        child: Center(
+                          child: CircularProgressIndicator(
+                            strokeWidth: 4,
+                            color: cs.onSurface,
                           ),
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 16,
-                            vertical: 24,
-                          ),
-                          child: Column(
-                            spacing: 20,
-                            children: [
-                              Row(
-                                children: [
-                                  Text(
-                                    "Amman Branch Working Hours:",
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight(800),
-                                    ),
-                                  ),
-                                  SizedBox(width: 4),
-                                  Text(
-                                    "8",
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight(800),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Expanded(
-                                child: Row(
-                                  spacing: 8,
+                        ),
+                      );
+                    } else {
+                      return Column(
+                        children: [
+                          Container(
+                            height: 275,
+                            width: double.infinity,
+                            margin: EdgeInsets.symmetric(horizontal: 8),
+                            decoration: BoxDecoration(
+                              color: cs.surfaceContainerHighest,
+                              borderRadius: BorderRadius.circular(18),
+                            ),
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 24,
+                            ),
+                            child: Column(
+                              spacing: 20,
+                              children: [
+                                Row(
                                   children: [
-                                    _buildTimeCard(
-                                      context,
-                                      "Check-In Time",
-                                      "08:40 AM",
-                                    ),
-                                    _buildTimeCard(
-                                      context,
-                                      "Check-Out Time",
-                                      "05:40 PM",
+                                    Text(
+                                      "${controller.branchName} Working Hours: ${controller.branchWorkingHours}",
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight(800),
+                                      ),
                                     ),
                                   ],
                                 ),
-                              ),
-                              MaterialButton(
-                                onPressed: () {},
-                                color: cs.primary,
-                                height: 48,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12.0),
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    "Clock In",
-                                    style: TextStyle(fontSize: 20),
+                                Expanded(
+                                  child: Row(
+                                    spacing: 8,
+                                    children: [
+                                      _buildTimeCard(
+                                        context,
+                                        "Check-In Time",
+                                        controller.checkInTime,
+                                      ),
+                                      _buildTimeCard(
+                                        context,
+                                        "Check-Out Time",
+                                        controller.checkOutTime,
+                                      ),
+                                    ],
                                   ),
                                 ),
-                              ),
-                            ],
+                                MaterialButton(
+                                  onPressed: () {},
+                                  color: cs.primary,
+                                  height: 48,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12.0),
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      "Clock In",
+                                      style: TextStyle(fontSize: 20),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        );
-                      }
-                    ),
-                  ],
+                        ],
+                      );
+                    }
+                  },
                 ),
                 SizedBox(height: bottomSafeHeight),
               ],

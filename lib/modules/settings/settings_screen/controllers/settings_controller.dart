@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:managementme/core/models/branch_model.dart';
 import 'package:managementme/core/models/user_model.dart';
 import 'package:managementme/modules/settings/settings_screen/repo/settings_repo.dart';
 import 'package:managementme/modules/settings/settings_screen/widgets/edit_name_dialog.dart';
@@ -14,8 +13,7 @@ class SettingsController extends GetxController {
   UserModel? currentUser;
   bool isUploadingImage = false;
   bool isUpdatingName = false;
-  BranchModel? branch;
-  String get branchName => (branch?.name ?? 'unkown'.tr) + 'branch'.tr;
+
 
   final ImagePicker _imagePicker = ImagePicker();
 
