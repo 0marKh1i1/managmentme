@@ -133,7 +133,6 @@ class SettingsController extends GetxController {
 
   Future<void> logout() async {
     Get.back();
-    Get.delete<SettingsController>();
     await SettingsRepo.logout();
   }
 

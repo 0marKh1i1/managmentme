@@ -9,7 +9,7 @@ import 'package:managementme/core/constants/app_themes.dart';
 import 'package:managementme/core/models/user_model.dart';
 import 'package:managementme/modules/admin/home/home_screen/views/home_view.dart'
     as admin_home;
-import 'package:managementme/modules/employee/home/home_screen/views/home_view.dart'
+import 'package:managementme/modules/employee/employee_home/employee_home_screen/views/employee_home_view.dart'
     as employee_home;
 import 'package:managementme/modules/auth/services/auth_service.dart';
 import 'package:managementme/modules/root/controllers/root_controller.dart';
@@ -25,7 +25,7 @@ class RootView extends GetView<RootController> {
           Get.find<AuthService>().currentUser.value?.role ?? UserType.employee;
       final List<Widget> pages = role == UserType.admin
           ? [const admin_home.Home(), const SettingsView()]
-          : [const employee_home.Home(), const SettingsView()];
+          : [const employee_home.EmployeeHome(), const SettingsView()];
       final List<Widget> items = role == UserType.admin
           ? [
               _buildNavItem(

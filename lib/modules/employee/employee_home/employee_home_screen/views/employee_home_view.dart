@@ -1,12 +1,12 @@
-import 'package:flutter/material.dart';
+import 'package:managementme/modules/employee/employee_home/employee_home_screen/controllers/employee_home_controller.dart';
+import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
-import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:managementme/modules/employee/home/home_screen/controllers/home_controller.dart';
+import 'package:flutter/material.dart';
 
-class Home extends GetView<HomeController> {
-  const Home({super.key});
+class EmployeeHome extends GetView<EmployeeHomeController> {
+  const EmployeeHome({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +76,7 @@ class Home extends GetView<HomeController> {
                 SizedBox(height: 24),
                 Column(
                   children: [
-                    GetBuilder<HomeController>(
+                    GetBuilder<EmployeeHomeController>(
                       builder: (controller) {
                         return Container(
                           height: 275,
