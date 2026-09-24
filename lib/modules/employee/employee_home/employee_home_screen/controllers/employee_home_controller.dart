@@ -7,7 +7,6 @@ import 'package:managementme/modules/auth/services/auth_service.dart';
 import 'package:managementme/core/models/branch_model.dart';
 
 class EmployeeHomeController extends GetxController {
-
   bool isLoading = true;
 
   final AuthService _authService = Get.find<AuthService>();
@@ -26,15 +25,14 @@ class EmployeeHomeController extends GetxController {
   }
 
   Future<void> _initData() async {
-    try {
-      isLoading = true;
-      update();
-
-      if (user == null) return;
-    } catch (e) {
+    try {} catch (e) {
       debugPrint("Error initializing data in EmployeeHomeController: $e");
     } finally {
-      isLoading = false;
+      if (user == null || branch == null) {
+        isLoading = true;
+      } else {
+        isLoading = false;
+      }
       update();
     }
   }
