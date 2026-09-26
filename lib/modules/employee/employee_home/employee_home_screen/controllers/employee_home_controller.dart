@@ -55,6 +55,16 @@ class EmployeeHomeController extends GetxController {
     return attendanceToday;
   }
 
+  bool isWithinRadius(GeoPoint point1, GeoPoint point2, double radiusInMeters) {
+    double distanceInMeters = Geolocator.distanceBetween(
+      point1.latitude,
+      point1.longitude,
+      point2.latitude,
+      point2.longitude,
+    );
+    return distanceInMeters <= radiusInMeters;
+  }
+
   Future<void> onClockButton() async {
     if (isSaving) return;
     if (user == null || branch == null) return;
@@ -70,6 +80,9 @@ class EmployeeHomeController extends GetxController {
 
       Position position = await LocationUtils.determinePosition();
       GeoPoint geoPoint = GeoPoint(position.latitude, position.longitude);
+      if (!isWithinRadius(geoPoint, branch!.location, branch!.fenceRadius)) {
+        throw Exception('outside_of_location'.tr);
+      }
 
       GeoPoint? finalCheckInLocation;
       GeoPoint? finalCheckOutLocation;
@@ -111,14 +124,15 @@ class EmployeeHomeController extends GetxController {
       update();
     } catch (e) {
       debugPrint(e.toString());
-      toast('error'.tr, e.toString());
+      final message = e.toString().replaceFirst('Exception: ', '');
+      toast('error'.tr, message);
       isSaving = false;
       if (!isClosed) update();
     }
   }
 
   // getters
-  String get branchName => branch?.name ?? "unknown_branch".tr;
+  String get branchName => branch?.name ?? 'unknown_branch'.tr;
 
   String get branchWorkingHours => branch?.workingHours.toHHMM() ?? "--";
 

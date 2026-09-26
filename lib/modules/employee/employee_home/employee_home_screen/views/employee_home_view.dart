@@ -45,7 +45,7 @@ class EmployeeHome extends GetView<EmployeeHomeController> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Let’s Clock-In!".tr,
+                              'employee_home_title'.tr,
                               style: GoogleFonts.inter(
                                 color: cs.onPrimary,
                                 fontSize: 24,
@@ -53,7 +53,7 @@ class EmployeeHome extends GetView<EmployeeHomeController> {
                               ),
                             ),
                             Text(
-                              "Don’t miss your clock in schedule".tr,
+                              'employee_home_subtitle'.tr,
                               style: GoogleFonts.inter(
                                 color: cs.onPrimary,
                                 fontSize: 14,
@@ -108,7 +108,7 @@ class EmployeeHome extends GetView<EmployeeHomeController> {
                                 Row(
                                   children: [
                                     Text(
-                                      "${controller.branchName} Working Hours: ${controller.branchWorkingHours}",
+                                      '${controller.branchName} ${'working_hours'.tr}: ${controller.branchWorkingHours}',
                                       style: TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight(800),
@@ -122,12 +122,12 @@ class EmployeeHome extends GetView<EmployeeHomeController> {
                                     children: [
                                       _buildTimeCard(
                                         context,
-                                        "Check-In Time",
+                                        'check_in_time'.tr,
                                         controller.checkInTimeStr,
                                       ),
                                       _buildTimeCard(
                                         context,
-                                        "Check-Out Time",
+                                        'check_out_time'.tr,
                                         controller.checkOutTimeStr,
                                       ),
                                     ],

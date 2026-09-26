@@ -37,7 +37,8 @@ class AppTranslations extends Translations {
     'enter_your_name': 'Enter Your Name',
     'error': 'Error',
     'user_not_found': 'User not found',
-    'user_enable_error': 'Your account has been disabled. Please contact an administrator.',
+    'user_enable_error':
+        'Your account has been disabled. Please contact an administrator.',
     'user_deleted': 'Your account has been deleted.',
     'failed_to_pick_image': 'Failed to pick image',
     'failed_to_remove_photo': 'Failed to remove photo',
@@ -118,6 +119,8 @@ class AppTranslations extends Translations {
     'date': 'Date',
     'check_in': 'Check In',
     'check_out': 'Check Out',
+    'clock_in': 'Clock In',
+    'clock_out': 'Clock Out',
     'check_in_time': 'Check-in Time',
     'check_out_time': 'Check-out Time',
     'status': 'Status',
@@ -129,7 +132,13 @@ class AppTranslations extends Translations {
     'enter_notes': 'Enter notes',
     'no_attendance_records': 'No attendance records',
     'unknown_user': 'Unknown user',
+    'no_user_found': 'No user found',
     'unknown_branch': 'Unknown branch',
+    'location_services_disabled': 'Location services are disabled.',
+    'location_permissions_denied': 'Location permissions are denied.',
+    'location_permissions_permanently_denied':
+        'Location permissions are permanently denied. Please enable location access in settings.',
+    'outside_of_location': 'You are outside the branch location.',
     'please_select_user': 'Please select a user before saving',
     'please_select_time': 'Please select at least one time before saving',
 
@@ -141,8 +150,8 @@ class AppTranslations extends Translations {
     "checked_in": "Checked In",
 
     /* *employee home */
-    'Let’s Clock-In!': 'Let’s Clock-In!',
-    'Don’t miss your clock in schedule': 'Don’t miss your clock in schedule',
+    'employee_home_title': 'Let’s Clock-In!',
+    'employee_home_subtitle': 'Don’t miss your clock in schedule',
 
     /* *employees editor */
     'edit_employee': 'Edit Employee',
@@ -167,7 +176,8 @@ class AppTranslations extends Translations {
     'employee_enabled_state': 'Allow employee to access and use the app',
 
     /* *branch editor */
-    'confirm_or_cancel_location': 'Please confirm or cancel the location selection',
+    'confirm_or_cancel_location':
+        'Please confirm or cancel the location selection',
     'select_location': 'Please select a location',
     'edit_branch': 'Edit Branch',
     'branch_name': 'Branch Name',
@@ -179,7 +189,6 @@ class AppTranslations extends Translations {
     'enter_branch_fence_radius': 'Enter fence radius',
     'working_hours': 'Working Hours',
     'first_check_out_time': 'First Check-out Time',
-    
   };
 
   static final Map<String, String> ar = {
@@ -305,6 +314,8 @@ class AppTranslations extends Translations {
     'date': 'التاريخ',
     'check_in': 'تسجيل الحضور',
     'check_out': 'تسجيل الانصراف',
+    'clock_in': 'تسجيل الحضور',
+    'clock_out': 'تسجيل الانصراف',
     'check_in_time': 'وقت تسجيل الحضور',
     'check_out_time': 'وقت تسجيل الانصراف',
     'present': 'حاضر',
@@ -315,7 +326,13 @@ class AppTranslations extends Translations {
     'enter_notes': 'أدخل الملاحظات',
     'no_attendance_records': 'لا توجد سجلات حضور',
     'unknown_user': 'مستخدم غير معروف',
+    'no_user_found': 'لم يتم العثور على المستخدم',
     'unknown_branch': 'فرع غير معروف',
+    'location_services_disabled': 'خدمات الموقع معطلة.',
+    'location_permissions_denied': 'تم رفض أذونات الموقع.',
+    'location_permissions_permanently_denied':
+        'تم رفض أذونات الموقع بشكل دائم. يرجى تفعيل الوصول إلى الموقع من الإعدادات.',
+    'outside_of_location': 'أنت خارج موقع الفرع.',
     'please_select_user': 'الرجاء اختيار المستخدم قبل الحفظ',
     'please_select_time': 'الرجاء اختيار وقت واحد على الأقل قبل الحفظ',
 
@@ -327,8 +344,8 @@ class AppTranslations extends Translations {
     "checked_in": "مسجل الدخول",
 
     /* *employee home */
-    'Let’s Clock-In!': 'لنبدأ تسجيل الحضور!',
-    'Don’t miss your clock in schedule': 'لا تفوّت موعد تسجيل حضورك',
+    'employee_home_title': 'لنبدأ تسجيل الحضور!',
+    'employee_home_subtitle': 'لا تفوّت موعد تسجيل حضورك',
 
     /* *employees editor */
     'edit_employee': 'تعديل بيانات الموظف',
@@ -351,7 +368,7 @@ class AppTranslations extends Translations {
     'employee_check_in_state': 'حالة تسجيل الحضور',
     'enable_employee': 'تفعيل الموظف',
     'employee_enabled_state': 'السماح للموظف بالوصول إلى النظام واستخدامه',
-    
+
     /* *branch editor */
     'confirm_or_cancel_location': 'يرجى تأكيد أو إلغاء تحديد الموقع',
     'select_location': 'يرجى تحديد الموقع',
